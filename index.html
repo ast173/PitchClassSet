@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Pitch Class Set Calculator</title>
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <h1>Pitch Class Set Calculator</h1>
+        <hr>
+
+        <div class="outputs">
+            <div class="outputs-column">
+                <label for="normal-order">Normal Order:</label>
+                <label for="prime-form">Prime Form:</label>
+                <label for="ic-vector">IC Vector:</label>
+                <label for="complement">Complement:</label>
+                <label for="z-mate">Z Mate:</label>
+                <label for="forte-number">Forte Number:</label>
+            </div>
+            <div class="outputs-column">
+                <input type="text" id="normal-order" readonly>
+                <input type="text" id="prime-form" readonly>
+                <input type="text" id="ic-vector" readonly>
+                <input type="text" id="complement" readonly>
+                <input type="text" id="z-mate" readonly>
+                <input type="text" id="forte-number" readonly>
+            </div>
+        </div>
+        <hr>
+
+        <label for="forte-rahn">Forte Number:</label>
+        <select id="forte-rahn">
+            <option value="rahn">Rahn</option>
+            <option value="forte">Forte</option>
+        </select>
+        <hr>
+
+        <div class="pc-inputs">
+            <div class="pc-inputs-column">
+                <label for="0">C</label>
+                <label for="1">C#/Db</label>
+                <label for="2">D</label>
+                <label for="3">D#/Eb</label>
+                <label for="4">E</label>
+                <label for="5">F</label>
+                <label for="6">F#/Gb</label>
+                <label for="7">G</label>
+                <label for="8">G#/Ab</label>
+                <label for="9">A</label>
+                <label for="10">A#/Bb</label>
+                <label for="11">B</label>
+            </div>
+            <div class="pc-inputs-column">
+                <label for="0">0</label>
+                <label for="1">1</label>
+                <label for="2">2</label>
+                <label for="3">3</label>
+                <label for="4">4</label>
+                <label for="5">5</label>
+                <label for="6">6</label>
+                <label for="7">7</label>
+                <label for="8">8</label>
+                <label for="9">9</label>
+                <label for="10">10</label>
+                <label for="11">11</label>
+            </div>
+            <div class="pc-inputs-column">
+                <input type="checkbox" class="pc" id="0">
+                <input type="checkbox" class="pc" id="1">
+                <input type="checkbox" class="pc" id="2">
+                <input type="checkbox" class="pc" id="3">
+                <input type="checkbox" class="pc" id="4">
+                <input type="checkbox" class="pc" id="5">
+                <input type="checkbox" class="pc" id="6">
+                <input type="checkbox" class="pc" id="7">
+                <input type="checkbox" class="pc" id="8">
+                <input type="checkbox" class="pc" id="9">
+                <input type="checkbox" class="pc" id="10">
+                <input type="checkbox" class="pc" id="11">
+            </div>
+        </div>
+        <input type="text" id="output" readonly>
+        <br>
+        <button id="reset" onclick="reset()">Reset</button>
+        <br>
+        <button id="complement-btn" onclick="complement_btn()">Complement</button>
+        <hr>
+
+        <label for="Tn-text">Tₙ:</label>
+        <input type="number" id="Tn-text" min="0"  class="Tn"
+               max="11" value="0">
+        <select id="Tn-select" class="Tn">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+        </select>
+        <input type="text" id="Tn-output" readonly>
+        <br>
+
+        <label for="TnI-text">TₙI:</label>
+        <input type="number" id="TnI-text"  class="TnI"
+               min="0" max="11" value="0">
+        <select id="TnI-select" class="TnI">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+        </select>
+        <input type="text" id="TnI-output" readonly>
+        <hr>
+
+        <button id="calculate" onclick="calculate()">Calculate</button>
+    </body>
+
+    <script src="index.js"></script>
+</html>
