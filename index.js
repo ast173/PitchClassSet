@@ -198,6 +198,95 @@ const primeToForte = new Map([
 
     // cardinality 6 (50 total prime forms)
     ["0, 1, 2, 3, 4, 5", "6-1"],
+    ["0, 1, 2, 3, 4, 6", "6-2"],
+    ["0, 1, 2, 3, 5, 6", "6-Z3"],
+    ["0, 1, 2, 4, 5, 6", "6-Z4"],
+    ["0, 1, 2, 3, 6, 7", "6-5"],
+    ["0, 1, 2, 5, 6, 7", "6-Z6"],
+    ["0, 1, 2, 6, 7, 8", "6-7"],
+    ["0, 2, 3, 4, 5, 7", "6-8"],
+    ["0, 1, 2, 3, 5, 7", "6-9"],
+    ["0, 1, 3, 4, 5, 7", "6-Z10"],
+    ["0, 1, 2, 4, 5, 7", "6-Z11"],
+    ["0, 1, 2, 4, 6, 7", "6-Z12"],
+    ["0, 1, 3, 4, 6, 7", "6-Z13"],
+    ["0, 1, 3, 4, 5, 8", "6-14"],
+    ["0, 1, 2, 4, 5, 8", "6-15"],
+    ["0, 1, 4, 5, 6, 8", "6-16"],
+    ["0, 1, 2, 4, 7, 8", "6-Z17"],
+    ["0, 1, 2, 5, 7, 8", "6-18"],
+    ["0, 1, 3, 4, 7, 8", "6-Z19"],
+    ["0, 1, 4, 5, 8, 9", "6-20"],
+    ["0, 2, 3, 4, 6, 8", "6-21"],
+    ["0, 1, 2, 4, 6, 8", "6-22"],
+    ["0, 2, 3, 5, 6, 8", "6-Z23"],
+    ["0, 1, 3, 4, 6, 8", "6-Z24"],
+    ["0, 1, 3, 5, 6, 8", "6-Z25"],
+    ["0, 1, 3, 5, 7, 8", "6-Z26"],
+    ["0, 1, 3, 4, 6, 9", "6-27"],
+    ["0, 1, 3, 5, 6, 9", "6-Z28"],
+    ["0, 2, 3, 6, 7, 9", "6-Z29"], // Forte: 6-Z29: (013689)
+    ["0, 1, 3, 6, 7, 9", "6-30"],
+    ["0, 1, 4, 5, 7, 9", "6-31"], // Forte: 6-31: (013589)
+    ["0, 2, 4, 5, 7, 9", "6-32"],
+    ["0, 2, 3, 5, 7, 9", "6-33"],
+    ["0, 1, 3, 5, 7, 9", "6-34"],
+    ["0, 2, 4, 6, 8, 10", "6-35"],
+    ["0, 1, 2, 3, 4, 7", "6-Z36"],
+    ["0, 1, 2, 3, 4, 8", "6-Z37"],
+    ["0, 1, 2, 3, 7, 8", "6-Z38"],
+    ["0, 2, 3, 4, 5, 8", "6-Z39"],
+    ["0, 1, 2, 3, 5, 8", "6-Z40"],
+    ["0, 1, 2, 3, 6, 8", "6-Z41"],
+    ["0, 1, 2, 3, 6, 9", "6-Z42"],
+    ["0, 1, 2, 5, 6, 8", "6-Z43"],
+    ["0, 1, 2, 5, 6, 9", "6-Z44"],
+    ["0, 2, 3, 4, 6, 9", "6-Z45"],
+    ["0, 1, 2, 4, 6, 9", "6-Z46"],
+    ["0, 1, 2, 4, 7, 9", "6-Z47"],
+    ["0, 1, 2, 5, 7, 9", "6-Z48"],
+    ["0, 1, 3, 4, 7, 9", "6-Z49"],
+    ["0, 1, 4, 6, 7, 9", "6-Z50"],
+
+    // cardinality 7 (38 total prime forms)
+    ["0, 1, 2, 3, 4, 5, 6", "7-1"],
+    ["0, 1, 2, 3, 4, 5, 7", "7-2"],
+    ["0, 1, 2, 3, 4, 5, 8", "7-3"],
+    ["0, 1, 2, 3, 4, 6, 7", "7-4"],
+    ["0, 1, 2, 3, 5, 6, 7", "7-5"],
+    ["0, 1, 2, 3, 4, 7, 8", "7-6"],
+    ["0, 1, 2, 3, 6, 7, 8", "7-7"],
+    ["0, 2, 3, 4, 5, 6, 8", "7-8"],
+    ["0, 1, 2, 3, 4, 6, 8", "7-9"],
+    ["0, 1, 2, 3, 4, 6, 9", "7-10"],
+    ["0, 1, 3, 4, 5, 6, 8", "7-11"],
+    ["0, 1, 2, 3, 4, 7, 9", "7-Z12"],
+    ["0, 1, 2, 4, 5, 6, 8", "7-13"],
+    ["0, 1, 2, 3, 5, 7, 8", "7-14"],
+    ["0, 1, 2, 4, 6, 7, 8", "7-15"],
+    ["0, 1, 2, 3, 5, 6, 9", "7-16"],
+    ["0, 1, 2, 4, 5, 6, 9", "7-Z17"],
+    ["0, 1, 4, 5, 6, 7, 9", "7-Z18"], // Forte: 7-Z18: (0123589)
+    ["0, 1, 2, 3, 6, 7, 9", "7-19"],
+    ["0, 1, 2, 5, 6, 7, 9", "7-20"], // Forte: 7-20: (0124789)
+    ["0, 1, 2, 4, 5, 8, 9", "7-21"],
+    ["0, 1, 2, 5, 6, 8, 9", "7-22"],
+    ["0, 2, 3, 4, 5, 7, 9", "7-23"],
+    ["0, 1, 2, 3, 5, 7, 9", "7-24"],
+    ["0, 2, 3, 4, 6, 7, 9", "7-25"],
+    ["0, 1, 3, 4, 5, 7, 9", "7-26"],
+    ["0, 1, 2, 4, 5, 7, 9", "7-27"],
+    ["0, 1, 3, 5, 6, 7, 9", "7-28"],
+    ["0, 1, 2, 4, 6, 7, 9", "7-29"],
+    ["0, 1, 2, 4, 6, 8, 9", "7-30"],
+    ["0, 1, 3, 4, 6, 7, 9", "7-31"],
+    ["0, 1, 3, 4, 6, 8, 9", "7-32"],
+    ["0, 1, 2, 4, 6, 8, 10", "7-33"],
+    ["0, 1, 3, 4, 6, 8, 10", "7-34"],
+    ["0, 1, 3, 5, 6, 8, 10", "7-35"],
+    ["0, 1, 2, 3, 5, 6, 8", "7-Z36"],
+    ["0, 1, 3, 4, 5, 7, 8", "7-Z37"],
+    ["0, 1, 2, 4, 5, 7, 8", "7-Z38"],
 
     // cardinality 8 (29 total IC vectors)
     ["0, 1, 2, 3, 4, 5, 6, 7", "8-1"],
@@ -225,7 +314,7 @@ const primeToForte = new Map([
     ["0, 1, 2, 3, 5, 7, 8, 10", "8-23"],
     ["0, 1, 2, 4, 5, 6, 8, 10", "8-24"],
     ["0, 1, 2, 4, 6, 7, 8, 10", "8-25"],
-    ["0, 1, 3, 4, 5, 7, 8, 10", "8-26"], // Forte: 8-26: ([")0124579T)
+    ["0, 1, 3, 4, 5, 7, 8, 10", "8-26"], // Forte: 8-26: (0124579T)
     ["0, 1, 2, 4, 5, 7, 8, 10", "8-27"],
     ["0, 1, 3, 4, 6, 7, 9, 10", "8-28"],
     ["0, 1, 2, 3, 5, 6, 7, 9", "8-Z29"],
@@ -274,7 +363,37 @@ const zSets = new Map([
     ["5-Z18", "5-Z38"],
     ["5-Z38", "5-Z18"],
 
-    // cardinality 6 ("" total z-sets)
+    // cardinality 6 (15 total z-sets)
+    ["6-Z3", "6-Z36"],
+    ["6-Z36", "6-Z3"],
+    ["6-Z4", "6-Z37"],
+    ["6-Z37", "6-Z4"],
+    ["6-Z6", "6-Z38"],
+    ["6-Z38", "6-Z6"],
+    ["6-Z10", "6-Z39"],
+    ["6-Z39", "6-Z10"],
+    ["6-Z11", "6-Z40"],
+    ["6-Z40", "6-Z11"],
+    ["6-Z12", "6-Z41"],
+    ["6-Z41", "6-Z12"],
+    ["6-Z13", "6-Z42"],
+    ["6-Z42", "6-Z13"],
+    ["6-Z17", "6-Z43"],
+    ["6-Z43", "6-Z17"],
+    ["6-Z19", "6-Z44"],
+    ["6-Z44", "6-Z19"],
+    ["6-Z23", "6-Z45"],
+    ["6-Z45", "6-Z23"],
+    ["6-Z24", "6-Z46"],
+    ["6-Z46", "6-Z24"],
+    ["6-Z25", "6-Z47"],
+    ["6-Z47", "6-Z25"],
+    ["6-Z26", "6-Z48"],
+    ["6-Z48", "6-Z26"],
+    ["6-Z28", "6-Z49"],
+    ["6-Z49", "6-Z28"],
+    ["6-Z29", "6-Z50"],
+    ["6-Z50", "6-Z29"],
 
     // cardinality 7 (3 total z-sets)
     ["7-Z12", "7-Z36"],
@@ -289,6 +408,7 @@ const zSets = new Map([
     ["8-Z29", "8-Z15"],
 ])
 
+// import zSets from "./util.js"
 function getZMate() {
     return zSets.has(getForteNumber(pcs)) ?
         zSets.get(getForteNumber(pcs)) :
@@ -297,13 +417,15 @@ function getZMate() {
 
 function getTn(pcs, n) {
     return pcs.map(pc => mod12(pc + n))
+    // return pcs.map(pc => mod12(pc + n)).sort((a, b) => a - b)
 }
 
 function getTnI(pcs, n) {
-    return pcs.map(pc => mod12(-pc + n)).sort((a, b) => a - b)
+    return pcs.map(pc => mod12(-pc + n))
+    // return pcs.map(pc => mod12(-pc + n)).sort((a, b) => a - b)
 }
 
-
+console.log(getTn([6, 7, 9], 4)) // [1, 10, 11]
 
 
 // index.html
@@ -316,6 +438,8 @@ const forte_number = document.getElementById("forte-number");
 const z_mate = document.getElementById("z-mate");
 const Tn_output = document.getElementById("Tn-output")
 const TnI_output = document.getElementById("TnI-output")
+const Tn_select = document.getElementById("Tn-select");
+const TnI_select = document.getElementById("TnI-select");
 
 const pitch_classes = document.getElementsByClassName("pc");
 let pcs = [];
@@ -323,18 +447,18 @@ let pcs = [];
 function calculate() {
     pcs = getAllPC();
 
-    output.value = `[${pcs.replaceAll(",", ", ")}]`
+    output.value = `[${pcs.join(", ")}]`
 
-    normal_order.value = `[${getNormalOrder(pcs).replaceAll(",", ", ")}]`;
-    prime_form.value = `(${getPrimeForm(pcs).replaceAll(",", " ")})`;
-    ic_vector.value = `<${getICVector(pcs).replaceAll(",", " ")}>`;
-    complement.value = `[${getComplement(pcs).replaceAll(",", ", ")}]`;
+    normal_order.value = `[${getNormalOrder(pcs).join(", ")}]`;
+    prime_form.value = `(${getPrimeForm(pcs).join(" ")})`;
+    ic_vector.value = `<${getICVector(pcs).join(" ")}>`;
+    complement.value = `[${getComplement(pcs).join(", ")}]`;
 
     forte_number.value = getForteNumber(pcs);
     z_mate.value = getZMate(pcs);
 
-    Tn_output.value = `[${getTn(pcs, parseInt(document.getElementById("Tn-select").value)).replaceAll(",", ", ")}]`;
-    TnI_output.value = `[${getTnI(pcs, parseInt(document.getElementById("TnI-select").value)).replaceAll(",", ", ")}]`;
+    Tn_output.value = `[${getTn(pcs, parseInt(Tn_select.value)).join(", ")}]`;
+    TnI_output.value = `[${getTnI(pcs, parseInt(TnI_select.value)).join(", ")}]`;
 }
 
 function getAllPC() {
@@ -368,8 +492,71 @@ function reset() {
     }
 }
 
-function complement_btn() {
+function switchToComplement() {
     for (let i = 0; i < pitch_classes.length; i++) {
-        pitch_classes.item(i).checked = !pitch_classes.item(i).checked
+        toggle(i)
     }
+    calculate()
 }
+
+function toggle(pc) {
+    pc = mod12(pc)
+    pitch_classes.item(pc).checked = !pitch_classes.item(pc).checked
+}
+
+Tn_select.addEventListener("change", () => {
+    Tn_output.value = `[${getTn(pcs, parseInt(Tn_select.value)).join(", ")}]`;
+});
+
+TnI_select.addEventListener("change", () => {
+    TnI_output.value = `[${getTnI(pcs, parseInt(TnI_select.value)).join(", ")}]`;
+});
+
+let letterToPC = new Map([
+    ["a", 9],
+    ["b", 11],
+    ["c", 0],
+    ["d", 2],
+    ["e", 4],
+    ["f", 5],
+    ["g", 7],
+]);
+
+let semitoneValue = new Map([
+    ["#", 1],
+    ["b", -1],
+]);
+
+let lastInputTime = 0;
+const FLAT_TIME = 500; // ms
+let lastNote = "";
+document.addEventListener("keydown", e => {
+    let key = e.key;
+
+    // letter inputs
+    if (/^[acdefg]$/i.test(key) || (key === "b" && (!lastNote || Date.now() - lastInputTime >= FLAT_TIME))) {
+        toggle(letterToPC.get(key));
+        lastNote = key;
+        lastInputTime = Date.now();
+    } else if ((key === "#" || key === "b") && lastNote) {
+        toggle(letterToPC.get(lastNote));
+        toggle(letterToPC.get(lastNote) + semitoneValue.get(key));
+        lastNote = "";
+    } else if (!/^[a-g#]$/i.test(key) && key !== "Shift") {
+        lastNote = "";
+    }
+
+    // numerical inputs
+    if (/^[0-9]$/.test(key)) {
+        toggle(parseInt(key))
+    } else if (key === "t") {
+        toggle(10)
+    }
+
+    else if (key === "Enter") {
+        e.preventDefault();
+        calculate()
+    } else if (key === "Escape") {
+        reset()
+    }
+});
