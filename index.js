@@ -15,7 +15,7 @@ function getNormalOrder(pcs) {
             order = rotation;
             minRange = range;
         } else if (range === minRange) {
-            order = tiebreak(order, rotation);
+            order = tiebreakRahn(order, rotation);
         }
     }
 
@@ -36,7 +36,7 @@ function rotate(arr, n) {
     return arr.slice(n).concat(arr.slice(0, n));
 }
 
-function tiebreak(oldCand, newCand) {
+function tiebreakForte(oldCand, newCand) {
     for (let i = 0; i < oldCand.length; i++) {
         if (oldCand[i] < newCand[i]) {
             return oldCand;
@@ -47,7 +47,16 @@ function tiebreak(oldCand, newCand) {
     return oldCand;
 }
 
-console.log(getNormalOrder([5, 10, 8, 1, 3])); // [0,2,4,7,9]
+function tiebreakRahn(oldCand, newCand) {
+    for (let i = oldCand.length - 1; i >= 0; i--) {
+        if (oldCand[i] < newCand[i]) {
+            return oldCand;
+        } else if (oldCand[i] > newCand[i]) {
+            return newCand;
+        }
+    }
+    return oldCand;
+}
 
 function getPrimeForm(pcs) {
     pcs = transposeAndSort(pcs);
@@ -55,15 +64,12 @@ function getPrimeForm(pcs) {
     let pcsr = [...pcs];
     pcsr = transposeAndSort(invert(pcsr));
 
-    return tiebreak(getNormalOrder(pcs), getNormalOrder(pcsr));
+    return tiebreakRahn(getNormalOrder(pcs), getNormalOrder(pcsr));
 }
 
 function invert(pcs) {
     return transposeAndSort(pcs.map(pc => mod12(-pc)));
 }
-
-console.log(getPrimeForm([5, 10, 8, 1, 3])); // (0 2 4 7 9)
-console.log(getPrimeForm([2, 3, 4, 8, 11])); // (0 1 2 5 8)
 
 function getICVector(pcs) {
     let icVector = [0, 0, 0, 0, 0, 0];
@@ -85,8 +91,6 @@ function getIC(interval) {
     return 6 - (interval - 6)
 }
 
-console.log(getICVector([2, 3, 4, 8, 11])); // <2 1 2 2 2 1>
-
 function getComplement(pcs) {
     let complement = []
 
@@ -96,10 +100,8 @@ function getComplement(pcs) {
         }
     }
 
-    return getNormalOrder(complement);
+    return complement;
 }
-
-console.log(getComplement([2, 3, 4, 8, 11])); // [0, 1, 5, 6, 7, 9, 10]
 
 const primeToForte = new Map([
     ["", "0-1"],
@@ -176,7 +178,8 @@ const primeToForte = new Map([
     ["0, 1, 3, 4, 8", "5-Z17"],
     ["0, 1, 4, 5, 7", "5-Z18"],
     ["0, 1, 3, 6, 7", "5-19"],
-    ["0, 1, 5, 6, 8", "5-20"], // Forte: "0, 1, 3, 7, 8", "5-20"
+    ["0, 1, 5, 6, 8", "5-20"], // Rahn: "0, 1, 5, 6, 8", "5-20"
+    ["0, 1, 3, 7, 8", "5-20"], // Forte: "0, 1, 3, 7, 8", "5-20"
     ["0, 1, 4, 5, 8", "5-21"],
     ["0, 1, 4, 7, 8", "5-22"],
     ["0, 2, 3, 5, 7", "5-23"],
@@ -225,9 +228,11 @@ const primeToForte = new Map([
     ["0, 1, 3, 5, 7, 8", "6-Z26"],
     ["0, 1, 3, 4, 6, 9", "6-27"],
     ["0, 1, 3, 5, 6, 9", "6-Z28"],
-    ["0, 2, 3, 6, 7, 9", "6-Z29"], // Forte: 6-Z29: (013689)
+    ["0, 2, 3, 6, 7, 9", "6-Z29"], // Rahn: "0, 2, 3, 6, 7, 9", "6-Z29"
+    ["0, 1, 3, 6, 8, 9", "6-Z29"], // Forte: "0, 1, 3, 6, 8, 9", "6-Z29"
     ["0, 1, 3, 6, 7, 9", "6-30"],
-    ["0, 1, 4, 5, 7, 9", "6-31"], // Forte: 6-31: (013589)
+    ["0, 1, 4, 5, 7, 9", "6-31"], // Rahn: "0, 1, 4, 5, 7, 9", "6-31"
+    ["0, 1, 3, 5, 8, 9", "6-31"], // Forte: "0, 1, 3, 5, 8, 9", "6-31"
     ["0, 2, 4, 5, 7, 9", "6-32"],
     ["0, 2, 3, 5, 7, 9", "6-33"],
     ["0, 1, 3, 5, 7, 9", "6-34"],
@@ -266,9 +271,11 @@ const primeToForte = new Map([
     ["0, 1, 2, 4, 6, 7, 8", "7-15"],
     ["0, 1, 2, 3, 5, 6, 9", "7-16"],
     ["0, 1, 2, 4, 5, 6, 9", "7-Z17"],
-    ["0, 1, 4, 5, 6, 7, 9", "7-Z18"], // Forte: 7-Z18: (0123589)
+    ["0, 1, 4, 5, 6, 7, 9", "7-Z18"], // Rahn: "0, 1, 4, 5, 6, 7, 9", "7-Z18"
+    ["0, 1, 2, 3, 5, 8, 9", "7-Z18"], // Forte: "0, 1, 2, 3, 5, 8, 9", "7-Z18"
     ["0, 1, 2, 3, 6, 7, 9", "7-19"],
-    ["0, 1, 2, 5, 6, 7, 9", "7-20"], // Forte: 7-20: (0124789)
+    ["0, 1, 2, 5, 6, 7, 9", "7-20"], // Rahn: "0, 1, 2, 5, 6, 7, 9", "7-20"
+    ["0, 1, 2, 4, 7, 8, 9", "7-20"], // Forte: "0, 1, 2, 4, 7, 8, 9", "7-20"
     ["0, 1, 2, 4, 5, 8, 9", "7-21"],
     ["0, 1, 2, 5, 6, 8, 9", "7-22"],
     ["0, 2, 3, 4, 5, 7, 9", "7-23"],
@@ -314,7 +321,8 @@ const primeToForte = new Map([
     ["0, 1, 2, 3, 5, 7, 8, 10", "8-23"],
     ["0, 1, 2, 4, 5, 6, 8, 10", "8-24"],
     ["0, 1, 2, 4, 6, 7, 8, 10", "8-25"],
-    ["0, 1, 3, 4, 5, 7, 8, 10", "8-26"], // Forte: 8-26: (0124579T)
+    ["0, 1, 3, 4, 5, 7, 8, 10", "8-26"], // Rahn: "0, 1, 3, 4, 5, 7, 8, 10", "8-26" TODO
+    ["0, 1, 2, 4, 5, 7, 9, 10", "8-26"], // Forte: "0, 1, 2, 4, 5, 7, 9, 10", "8-26"
     ["0, 1, 2, 4, 5, 7, 8, 10", "8-27"],
     ["0, 1, 3, 4, 6, 7, 9, 10", "8-28"],
     ["0, 1, 2, 3, 5, 6, 7, 9", "8-Z29"],
@@ -415,19 +423,50 @@ function getZMate() {
         "None"
 }
 
+// TODO: may change, T0 and T0I are sorted, all other n values are based on n = 0
 function getTn(pcs, n) {
     return pcs.map(pc => mod12(pc + n))
-    // return pcs.map(pc => mod12(pc + n)).sort((a, b) => a - b)
 }
 
 function getTnI(pcs, n) {
-    return pcs.map(pc => mod12(-pc + n))
-    // return pcs.map(pc => mod12(-pc + n)).sort((a, b) => a - b)
+    let T0I = pcs.map(pc => mod12(-pc)).sort((a, b) => a - b);
+    return T0I.map(pc => mod12(pc + n))
 }
 
-console.log(getTn([6, 7, 9], 4)) // [1, 10, 11]
+function getAllTn(pcs) {
+    let res = [];
+    for (let i = 0; i <= 12; i++) {
+        let transposition = pcs.map(pc => mod12(pc + i));
+        res.push(transposition);
+    }
+    return res;
+}
+
+function getAllTnI(pcs) {
+    let res = [];
+    let T0I = pcs.map(pc => mod12(-pc)).sort((a, b) => a - b);
+    for (let i = 0; i <= 12; i++) {
+        let inversion = T0I.map(pc => mod12(pc + i));
+        res.push(inversion);
+    }
+    return res;
+}
 
 
+
+
+
+
+
+
+
+
+
+// TODO: 10/11 or T/E
+// TODO: display all Tn and TnI or only one
+// TODO: Rahn vs Forte prime forms (Rahn is packed from the right, Forte is packed to the left)
+// TODO: manual input?
+// TODO: typing 10 for 10 and 11 for 11?
 // index.html
 const output = document.getElementById("output");
 const normal_order = document.getElementById("normal-order");
@@ -448,6 +487,7 @@ function calculate() {
     pcs = getAllPC();
 
     output.value = `[${pcs.join(", ")}]`
+    // output.value = `History: [${history.join(", ")}]\nPointer Location: ${pointer}`;
 
     normal_order.value = `[${getNormalOrder(pcs).join(", ")}]`;
     prime_form.value = `(${getPrimeForm(pcs).join(" ")})`;
@@ -466,7 +506,7 @@ function getAllPC() {
 
     for (let i = 0; i < pitch_classes.length; i++) {
         if (pitch_classes.item(i).checked) {
-            pcs.push(parseInt(pitch_classes.item(i).id));
+            pcs.push(parseInt(pitch_classes.item(i).id)); // TODO change this
         }
     }
 
@@ -474,7 +514,7 @@ function getAllPC() {
 }
 
 function reset() {
-    output.value = ""
+    output.value = "";
 
     normal_order.value = "";
     prime_form.value = "";
@@ -484,24 +524,95 @@ function reset() {
     forte_number.value = "";
     z_mate.value = "";
 
-    Tn_output.value = ""
-    TnI_output.value = ""
+    Tn_output.value = "";
+    TnI_output.value = "";
+
+    resetHistory();
 
     for (let i = 0; i < pitch_classes.length; i++) {
-        pitch_classes.item(i).checked = false
+        pitch_classes.item(i).checked = false;
     }
 }
 
 function switchToComplement() {
     for (let i = 0; i < pitch_classes.length; i++) {
-        toggle(i)
+        toggle(i);
     }
-    calculate()
+    resetHistory();
+    calculate();
 }
 
 function toggle(pc) {
-    pc = mod12(pc)
-    pitch_classes.item(pc).checked = !pitch_classes.item(pc).checked
+    pc = mod12(pc);
+    let pc_checkbox = document.getElementById(pc.toString());
+    pc_checkbox.checked = !pc_checkbox.checked;
+
+    remember(pc);
+    calculate();
+}
+
+function generateRandom() {
+    for (let pc of pitch_classes) {
+        let state = Math.floor(Math.random() * 2);
+        pc.checked = !!state;
+    }
+    resetHistory();
+    calculate();
+}
+
+let history = [];
+let pointer = 0;
+function undo() {
+    if (pointer === -history.length) return;
+    pointer--;
+
+    const [action, i] = history.at(pointer);
+
+    if (action === "turn_on") {
+        pitch_classes.item(i).checked = false;
+    } else {
+        pitch_classes.item(i).checked = true;
+    }
+}
+
+function redo() {
+    if (pointer === 0) return;
+
+    const [action, i] = history.at(pointer);
+
+    if (action === "turn_on") {
+        pitch_classes.item(i).checked = true;
+    } else {
+        pitch_classes.item(i).checked = false;
+    }
+
+    pointer++;
+}
+
+function remember(i) {
+    if (pointer <= -1) {
+        history = history.slice(0, pointer);
+        pointer = 0;
+    }
+
+    if (pitch_classes.item(i).checked) {
+        history.push(["turn_on", i]);
+    } else {
+        history.push(["turn_off", i]);
+    }
+}
+
+function resetHistory() {
+    history.length = 0;
+    pointer = 0;
+}
+
+// event listeners
+for (let i = 0; i < pitch_classes.length; i++) {
+    pitch_classes.item(i).addEventListener("input", () => {
+        remember(i);
+        calculate();
+    })
 }
 
 Tn_select.addEventListener("change", () => {
@@ -511,21 +622,6 @@ Tn_select.addEventListener("change", () => {
 TnI_select.addEventListener("change", () => {
     TnI_output.value = `[${getTnI(pcs, parseInt(TnI_select.value)).join(", ")}]`;
 });
-
-let letterToPC = new Map([
-    ["a", 9],
-    ["b", 11],
-    ["c", 0],
-    ["d", 2],
-    ["e", 4],
-    ["f", 5],
-    ["g", 7],
-]);
-
-let semitoneValue = new Map([
-    ["#", 1],
-    ["b", -1],
-]);
 
 let lastInputTime = 0;
 const FLAT_TIME = 500; // ms
@@ -548,15 +644,63 @@ document.addEventListener("keydown", e => {
 
     // numerical inputs
     if (/^[0-9]$/.test(key)) {
-        toggle(parseInt(key))
+        toggle(parseInt(key));
     } else if (key === "t") {
-        toggle(10)
+        toggle(10);
     }
 
     else if (key === "Enter") {
         e.preventDefault();
-        calculate()
+        calculate();
     } else if (key === "Escape") {
-        reset()
+        reset();
+    } else if (key === "Backspace" || key === "Delete" || ((e.ctrlKey || e.metaKey) && key.toLowerCase() === "z")) {
+        e.preventDefault();
+        undo();
+        calculate();
+    } else if ((e.ctrlKey || e.metaKey) && key.toLowerCase() === "y") {
+        e.preventDefault();
+        redo();
+        calculate();
+    }
+});
+
+let letterToPC = new Map([
+    ["a", 9],
+    ["b", 11],
+    ["c", 0],
+    ["d", 2],
+    ["e", 4],
+    ["f", 5],
+    ["g", 7],
+]);
+
+let semitoneValue = new Map([
+    ["#", 1],
+    ["b", -1],
+]);
+
+
+
+
+
+
+
+
+// settings
+document.addEventListener("DOMContentLoaded", () => {
+    const setting1 = localStorage.getItem("setting-pc-display");
+    const pc_btns = document.getElementsByClassName("pc-btn");
+
+    if (!pc_btns) return;
+
+    if (setting1 === "true") {
+        for (let btn of pc_btns) {
+            btn.textContent = btn.getAttribute("data-number");
+        }
+    } else {
+        for (let btn of pc_btns) {
+            btn.textContent = btn.getAttribute("data-note");
+        }
     }
 });

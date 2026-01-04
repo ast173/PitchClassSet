@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Settings</title>
+
+        <link rel="stylesheet" href="style2.css">
+        <script src="settings.js" defer></script>
+    </head>
+
+    <body>
+        <h1>Settings</h1>
+        <button id="back" onclick="location.href='index.html'">Back</button>
+        <br><br>
+
+        <label for="notes-number">Notes or letters: </label>
+        <br>
+        <label class="switch">
+            <input type="checkbox" id="notes-number">
+            <span class="slider"></span>
+        </label>
+        <br><br>
+
+        <label for="ten-eleven">Numbers or letters: </label>
+        <br>
+        <label class="switch">
+            <input type="checkbox" id="ten-eleven">
+            <span class="slider"></span>
+        </label>
+        <br><br>
+
+        <label for="forte-rahn">Type of prime form: </label>
+        <pre>Rahn is packed from the right, Forte is packed to the left</pre>
+        <label class="switch">
+            <input type="checkbox" id="forte-rahn">
+            <span class="slider"></span>
+        </label>
+        <br><br>
+
+        <label for="one-or-all">For Tₙ and TₙI, one or all: </label>
+        <br>
+        <label class="switch">
+            <input type="checkbox" id="one-or-all">
+            <span class="slider"></span>
+        </label>
+    </body>
+</html>

@@ -1,3 +1,25 @@
+:root {
+    --font: "Segoe UI", Tahoma, Geneva, Verdana, serif;
+
+    --btn-text-color: white;
+    --btn-bg-color: #1f3a4c;
+    --btn-hover-text-color: #838687;
+    --btn-hover-bg-color: #1e436c;
+    --btn-active-text-color: #4e4f50;
+    --btn-active-bg-color: #2a6381;
+    --btn-font: "Segoe UI", Tahoma, Geneva, Verdana, serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+hr {
+    width: 50%;
+}
+
 .outputs {
     display: inline-grid;
     grid-template-columns: 1fr 1fr;
@@ -12,15 +34,61 @@
 }
 
 .pc-inputs {
-    display: inline-grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
-.pc-inputs-column {
-    display: grid;
-    grid-template-rows: repeat(12, 1fr);
+.pc-inputs-row {
+    display: flex;
     justify-items: center;
-    gap: 5px;
+    gap: 10px;
     margin-bottom: 10px;
+}
+
+.pc-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+
+    color: var(--btn-text-color);
+    background-color: var(--btn-bg-color);
+    /*background-image: linear-gradient(#3b4a57, #1f2a33);*/
+
+    font: var(--btn-font);
+    font-size: x-large;
+
+    box-shadow: 0 4px 0 black, 0 6px 8px rgba(0,0,0,0.4);
+
+    display: block;
+    text-align: center;
+    line-height: 200%;
+}
+
+.pc-btn:hover {
+    color: var(--btn-hover-text-color);
+    background-color: var(--btn-hover-bg-color);
+}
+
+.pc-btn:active {
+    /*transform: translateY(2px);*/
+    transform: scale(95%);
+}
+
+.pc:checked + label {
+    color: var(--btn-active-text-color);
+    background-color: var(--btn-active-bg-color);
+    /*transform: translateY(2px);*/
+    transform: scale(95%);
+}
+
+.pc {
+    display: none;
+}
+
+.pc-btn#piano-space {
+    visibility: hidden;
+    pointer-events: none;
 }

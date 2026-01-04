@@ -8,6 +8,7 @@
         <title>Pitch Class Set Calculator</title>
 
         <link rel="stylesheet" href="style.css">
+        <script src="index.js" defer></script>
     </head>
 
     <body>
@@ -20,82 +21,71 @@
                 <label for="prime-form">Prime Form:</label>
                 <label for="ic-vector">IC Vector:</label>
                 <label for="complement">Complement:</label>
-                <label for="z-mate">Z Mate:</label>
                 <label for="forte-number">Forte Number:</label>
+                <label for="z-mate">Z Mate:</label>
             </div>
             <div class="outputs-column">
                 <input type="text" id="normal-order" readonly>
                 <input type="text" id="prime-form" readonly>
                 <input type="text" id="ic-vector" readonly>
                 <input type="text" id="complement" readonly>
-                <input type="text" id="z-mate" readonly>
                 <input type="text" id="forte-number" readonly>
+                <input type="text" id="z-mate" readonly>
             </div>
         </div>
-        <hr>
-
-        <label for="forte-rahn">Forte Number:</label>
-        <select id="forte-rahn">
-            <option value="rahn">Rahn</option>
-            <option value="forte">Forte</option>
-        </select>
         <hr>
 
         <div class="pc-inputs">
-            <div class="pc-inputs-column">
-                <label for="0">C</label>
-                <label for="1">C#/Db</label>
-                <label for="2">D</label>
-                <label for="3">D#/Eb</label>
-                <label for="4">E</label>
-                <label for="5">F</label>
-                <label for="6">F#/Gb</label>
-                <label for="7">G</label>
-                <label for="8">G#/Ab</label>
-                <label for="9">A</label>
-                <label for="10">A#/Bb</label>
-                <label for="11">B</label>
-            </div>
-            <div class="pc-inputs-column">
-                <label for="0">0</label>
-                <label for="1">1</label>
-                <label for="2">2</label>
-                <label for="3">3</label>
-                <label for="4">4</label>
-                <label for="5">5</label>
-                <label for="6">6</label>
-                <label for="7">7</label>
-                <label for="8">8</label>
-                <label for="9">9</label>
-                <label for="10">10</label>
-                <label for="11">11</label>
-            </div>
-            <div class="pc-inputs-column">
-                <input type="checkbox" class="pc" id="0">
+            <div class="pc-inputs-row">
                 <input type="checkbox" class="pc" id="1">
-                <input type="checkbox" class="pc" id="2">
+                <label for="1" class="pc-btn" data-note="C#/Db" data-number="1"></label>
+
                 <input type="checkbox" class="pc" id="3">
-                <input type="checkbox" class="pc" id="4">
-                <input type="checkbox" class="pc" id="5">
+                <label for="3" class="pc-btn" data-note="D#/Eb" data-number="3"></label>
+
+                <label id="piano-space" class="pc-btn"></label>
+
                 <input type="checkbox" class="pc" id="6">
-                <input type="checkbox" class="pc" id="7">
+                <label for="6" class="pc-btn" data-note="F#/Gb" data-number="6"></label>
+
                 <input type="checkbox" class="pc" id="8">
-                <input type="checkbox" class="pc" id="9">
+                <label for="8" class="pc-btn" data-note="G#/Ab" data-number="8"></label>
+
                 <input type="checkbox" class="pc" id="10">
+                <label for="10" class="pc-btn" data-note="A#/Bb" data-number="10"></label>
+            </div>
+            <div class="pc-inputs-row">
+                <input type="checkbox" class="pc" id="0">
+                <label for="0" class="pc-btn" data-note="C" data-number="0"></label>
+
+                <input type="checkbox" class="pc" id="2">
+                <label for="2" class="pc-btn" data-note="D" data-number="2"></label>
+
+                <input type="checkbox" class="pc" id="4">
+                <label for="4" class="pc-btn" data-note="E" data-number="4"></label>
+
+                <input type="checkbox" class="pc" id="5">
+                <label for="5" class="pc-btn" data-note="F" data-number="5"></label>
+
+                <input type="checkbox" class="pc" id="7">
+                <label for="7" class="pc-btn" data-note="G" data-number="7"></label>
+
+                <input type="checkbox" class="pc" id="9">
+                <label for="9" class="pc-btn" data-note="A" data-number="9"></label>
+
                 <input type="checkbox" class="pc" id="11">
+                <label for="11" class="pc-btn" data-note="B" data-number="11"></label>
             </div>
         </div>
-        <br>
+        
+        <label for="output">Unmodified Set:</label>
         <input type="text" id="output" readonly>
-        <br>
         <button id="reset" onclick="reset()">Reset</button>
-        <br>
         <button id="complement-btn" onclick="switchToComplement()">Complement</button>
+        <button id="random" onclick="generateRandom()">Random</button>
         <hr>
 
-        <label for="Tn-text">Tₙ:</label>
-        <input type="number" id="Tn-text" min="0"  class="Tn"
-               max="11" value="0">
+        <label for="Tn-select">Tₙ:</label>
         <select id="Tn-select" class="Tn">
             <option value="0">0</option>
             <option value="1">1</option>
@@ -111,11 +101,8 @@
             <option value="11">11</option>
         </select>
         <input type="text" id="Tn-output" readonly>
-        <br>
 
-        <label for="TnI-text">TₙI:</label>
-        <input type="number" id="TnI-text"  class="TnI"
-               min="0" max="11" value="0">
+        <label for="TnI-select">TₙI:</label>
         <select id="TnI-select" class="TnI">
             <option value="0">0</option>
             <option value="1">1</option>
@@ -133,8 +120,8 @@
         <input type="text" id="TnI-output" readonly>
         <hr>
 
-        <button id="calculate" onclick="calculate()">Calculate</button>
+        <button id="calculate" onclick="calculate()">Calculate</button> <!-- TODO: remove this button -->
+        <button id="settings" onclick="location.href='settings.html'">Settings</button>
+        <button id="help" onclick="window.open('help.html', 'helpWindow', 'width=600, height=500, resizable=yes, scrollbars=yes')">Help</button>
     </body>
-
-    <script src="index.js"></script>
 </html>
