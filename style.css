@@ -73,14 +73,17 @@ hr {
 }
 
 .pc-btn:active {
-    /*transform: translateY(2px);*/
     transform: scale(95%);
+}
+
+.pc-btn#space {
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .pc:checked + label {
     color: var(--btn-active-text-color);
     background-color: var(--btn-active-bg-color);
-    /*transform: translateY(2px);*/
     transform: scale(95%);
 }
 
@@ -88,7 +91,15 @@ hr {
     display: none;
 }
 
-.pc-btn#piano-space {
+#Tn-output, #TnI-output {
+    width: 300px;
+    resize: none;
+    text-align: center;
+}
+
+.hidden {
     visibility: hidden;
     pointer-events: none;
+    height: 0;
+    width: 0;
 }

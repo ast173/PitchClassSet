@@ -20,7 +20,7 @@
                 <label for="normal-order">Normal Order:</label>
                 <label for="prime-form">Prime Form:</label>
                 <label for="ic-vector">IC Vector:</label>
-                <label for="complement">Complement:</label>
+                <label for="complement">Complement (Unordered):</label>
                 <label for="forte-number">Forte Number:</label>
                 <label for="z-mate">Z Mate:</label>
             </div>
@@ -37,48 +37,48 @@
 
         <div class="pc-inputs">
             <div class="pc-inputs-row">
-                <input type="checkbox" class="pc" id="1">
-                <label for="1" class="pc-btn" data-note="C#/Db" data-number="1"></label>
+                <input type="checkbox" id="1" class="pc">
+                <label for="1" class="pc-btn" pc-note="C#/Db" pc-number="1"></label>
 
-                <input type="checkbox" class="pc" id="3">
-                <label for="3" class="pc-btn" data-note="D#/Eb" data-number="3"></label>
+                <input type="checkbox" id="3" class="pc">
+                <label for="3" class="pc-btn" pc-note="D#/Eb" pc-number="3"></label>
 
-                <label id="piano-space" class="pc-btn"></label>
+                <label id="space" class="pc-btn"></label>
 
-                <input type="checkbox" class="pc" id="6">
-                <label for="6" class="pc-btn" data-note="F#/Gb" data-number="6"></label>
+                <input type="checkbox" id="6" class="pc">
+                <label for="6" class="pc-btn" pc-note="F#/Gb" pc-number="6"></label>
 
-                <input type="checkbox" class="pc" id="8">
-                <label for="8" class="pc-btn" data-note="G#/Ab" data-number="8"></label>
+                <input type="checkbox" id="8" class="pc">
+                <label for="8" class="pc-btn" pc-note="G#/Ab" pc-number="8"></label>
 
-                <input type="checkbox" class="pc" id="10">
-                <label for="10" class="pc-btn" data-note="A#/Bb" data-number="10"></label>
+                <input type="checkbox" id="10" class="pc">
+                <label for="10" class="pc-btn" pc-note="A#/Bb" pc-number="10"></label>
             </div>
             <div class="pc-inputs-row">
-                <input type="checkbox" class="pc" id="0">
-                <label for="0" class="pc-btn" data-note="C" data-number="0"></label>
+                <input type="checkbox" id="0" class="pc">
+                <label for="0" class="pc-btn" pc-note="C" pc-number="0"></label>
 
-                <input type="checkbox" class="pc" id="2">
-                <label for="2" class="pc-btn" data-note="D" data-number="2"></label>
+                <input type="checkbox" id="2" class="pc">
+                <label for="2" class="pc-btn" pc-note="D" pc-number="2"></label>
 
-                <input type="checkbox" class="pc" id="4">
-                <label for="4" class="pc-btn" data-note="E" data-number="4"></label>
+                <input type="checkbox" id="4" class="pc">
+                <label for="4" class="pc-btn" pc-note="E" pc-number="4"></label>
 
-                <input type="checkbox" class="pc" id="5">
-                <label for="5" class="pc-btn" data-note="F" data-number="5"></label>
+                <input type="checkbox" id="5" class="pc">
+                <label for="5" class="pc-btn" pc-note="F" pc-number="5"></label>
 
-                <input type="checkbox" class="pc" id="7">
-                <label for="7" class="pc-btn" data-note="G" data-number="7"></label>
+                <input type="checkbox" id="7" class="pc">
+                <label for="7" class="pc-btn" pc-note="G" pc-number="7"></label>
 
-                <input type="checkbox" class="pc" id="9">
-                <label for="9" class="pc-btn" data-note="A" data-number="9"></label>
+                <input type="checkbox" id="9" class="pc">
+                <label for="9" class="pc-btn" pc-note="A" pc-number="9"></label>
 
-                <input type="checkbox" class="pc" id="11">
-                <label for="11" class="pc-btn" data-note="B" data-number="11"></label>
+                <input type="checkbox" id="11" class="pc">
+                <label for="11" class="pc-btn" pc-note="B" pc-number="11"></label>
             </div>
         </div>
-        
-        <label for="output">Unmodified Set:</label>
+
+        <label for="output">Unordered Set:</label>
         <input type="text" id="output" readonly>
         <button id="reset" onclick="reset()">Reset</button>
         <button id="complement-btn" onclick="switchToComplement()">Complement</button>
@@ -100,7 +100,7 @@
             <option value="10">10</option>
             <option value="11">11</option>
         </select>
-        <input type="text" id="Tn-output" readonly>
+        <textarea id="Tn-output" readonly></textarea>
 
         <label for="TnI-select">TₙI:</label>
         <select id="TnI-select" class="TnI">
@@ -117,10 +117,10 @@
             <option value="10">10</option>
             <option value="11">11</option>
         </select>
-        <input type="text" id="TnI-output" readonly>
+        <textarea id="TnI-output" readonly></textarea>
         <hr>
 
-        <button id="calculate" onclick="calculate()">Calculate</button> <!-- TODO: remove this button -->
+        <button id="calculate" onclick="calculate()">Calculate</button>
         <button id="settings" onclick="location.href='settings.html'">Settings</button>
         <button id="help" onclick="window.open('help.html', 'helpWindow', 'width=600, height=500, resizable=yes, scrollbars=yes')">Help</button>
     </body>
