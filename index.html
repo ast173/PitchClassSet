@@ -8,7 +8,7 @@
         <title>Pitch Class Set Calculator</title>
 
         <link rel="stylesheet" href="style.css">
-        <script src="index.js" defer></script>
+        <script type="module" src="index.js" defer></script>
     </head>
 
     <body>
@@ -23,6 +23,7 @@
                 <label for="complement">Complement (Unordered):</label>
                 <label for="forte-number">Forte Number:</label>
                 <label for="z-mate">Z Mate:</label>
+                <label for="known">Known Chord:</label>
             </div>
             <div class="outputs-column">
                 <input type="text" id="normal-order" readonly>
@@ -31,6 +32,7 @@
                 <input type="text" id="complement" readonly>
                 <input type="text" id="forte-number" readonly>
                 <input type="text" id="z-mate" readonly>
+                <input type="text" id="known" readonly>
             </div>
         </div>
         <hr>
@@ -78,6 +80,8 @@
             </div>
         </div>
 
+        <label for="input">Input A Set:</label>
+        <input type="text" id="input">
         <label for="output">Unordered Set:</label>
         <input type="text" id="output" readonly>
         <button id="reset" onclick="reset()">Reset</button>
@@ -85,43 +89,50 @@
         <button id="random" onclick="generateRandom()">Random</button>
         <hr>
 
-        <label for="Tn-select">Tₙ:</label>
-        <select id="Tn-select" class="Tn">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-        </select>
+        <label for="Tn-output">Transposition (Tₙ):</label>
+        <div class="bottom-row">
+            <label for="Tn-select">n =</label>
+            <select id="Tn-select" class="Tn">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+            </select>
+        </div>
         <textarea id="Tn-output" readonly></textarea>
 
-        <label for="TnI-select">TₙI:</label>
-        <select id="TnI-select" class="TnI">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-        </select>
+        <label for="TnI-output">Inversion (TₙI):</label>
+        <div class="bottom-row">
+            <label for="TnI-select">n =</label>
+            <select id="TnI-select" class="TnI">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+            </select>
+        </div>
         <textarea id="TnI-output" readonly></textarea>
         <hr>
 
         <button id="calculate" onclick="calculate()">Calculate</button>
         <button id="settings" onclick="location.href='settings.html'">Settings</button>
         <button id="help" onclick="window.open('help.html', 'helpWindow', 'width=600, height=500, resizable=yes, scrollbars=yes')">Help</button>
+<!--        <button id="back-to-home" onclick="location.href='../index.html'">Back To Home</button>-->
     </body>
 </html>

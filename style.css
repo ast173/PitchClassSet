@@ -2,11 +2,11 @@
     --font: "Segoe UI", Tahoma, Geneva, Verdana, serif;
 
     --btn-text-color: white;
-    --btn-bg-color: #1f3a4c;
-    --btn-hover-text-color: #838687;
-    --btn-hover-bg-color: #1e436c;
+    --btn-bg-gradient: linear-gradient(#3b4a57, #1f2a33);
+    --btn-hover-text-color: #989d9f;
+    --btn-hover-bg-gradient: linear-gradient(#254255, #152029);
     --btn-active-text-color: #4e4f50;
-    --btn-active-bg-color: #2a6381;
+    --btn-active-bg-gradient: linear-gradient(#252f40, #121d27);
     --btn-font: "Segoe UI", Tahoma, Geneva, Verdana, serif;
 }
 
@@ -17,7 +17,7 @@ body {
 }
 
 hr {
-    width: 50%;
+    width: 30rem;
 }
 
 .outputs {
@@ -54,8 +54,7 @@ hr {
     border-radius: 5px;
 
     color: var(--btn-text-color);
-    background-color: var(--btn-bg-color);
-    /*background-image: linear-gradient(#3b4a57, #1f2a33);*/
+    background-image: var(--btn-bg-gradient);
 
     font: var(--btn-font);
     font-size: x-large;
@@ -69,7 +68,7 @@ hr {
 
 .pc-btn:hover {
     color: var(--btn-hover-text-color);
-    background-color: var(--btn-hover-bg-color);
+    background-image: var(--btn-hover-bg-gradient);
 }
 
 .pc-btn:active {
@@ -83,7 +82,7 @@ hr {
 
 .pc:checked + label {
     color: var(--btn-active-text-color);
-    background-color: var(--btn-active-bg-color);
+    background-image: var(--btn-active-bg-gradient);
     transform: scale(95%);
 }
 
@@ -97,9 +96,12 @@ hr {
     text-align: center;
 }
 
+div.bottom-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25em;
+}
+
 .hidden {
-    visibility: hidden;
-    pointer-events: none;
-    height: 0;
-    width: 0;
+    display: none;
 }

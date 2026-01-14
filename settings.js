@@ -1,44 +1,17 @@
-// settings
-// 0, 1, ... or C, C#, ...
-const htmlElement1 = document.getElementById("notes-number");
-const setting1 = localStorage.getItem("setting-pc-display");
-const usePCNumbers = setting1 === "true";
+function getStorageAndSet(htmlID, storageItem) {
+    const htmlCheckbox = document.getElementById(htmlID);
+    const setting = localStorage.getItem(storageItem);
+    const use = setting === "true";
 
-htmlElement1.checked = usePCNumbers;
+    htmlCheckbox.checked = use;
 
-htmlElement1.addEventListener("change", () => {
-    localStorage.setItem("setting-pc-display", htmlElement1.checked.toString());
-});
+    htmlCheckbox.addEventListener("change", () => {
+        localStorage.setItem(storageItem, htmlCheckbox.checked.toString());
+    });
+}
 
-// 10/11 or T/E
-const htmlElement2 = document.getElementById("ten-eleven");
-const setting2 = localStorage.getItem("setting-ten-eleven");
-const useTAndE = setting2 === "true";
-
-htmlElement2.checked = useTAndE;
-
-htmlElement2.addEventListener("change", () => {
-    localStorage.setItem("setting-ten-eleven", htmlElement2.checked.toString());
-});
-
-// Rahn or Forte
-const htmlElement3 = document.getElementById("forte-rahn");
-const setting3 = localStorage.getItem("setting-packing-type");
-const useRahn = setting3 === "true";
-
-htmlElement3.checked = useRahn;
-
-htmlElement3.addEventListener("change", () => {
-    localStorage.setItem("setting-packing-type", htmlElement3.checked.toString());
-});
-
-// One or All
-const htmlElement4 = document.getElementById("one-or-all");
-const setting4 = localStorage.getItem("setting-one-or-all");
-const displayAll = setting4 === "true";
-
-htmlElement4.checked = displayAll;
-
-htmlElement4.addEventListener("change", () => {
-    localStorage.setItem("setting-one-or-all", htmlElement4.checked.toString());
-});
+getStorageAndSet("notes-number", "setting:pc-display");
+getStorageAndSet("ten-eleven", "setting:ten-eleven");
+getStorageAndSet("forte-rahn", "setting:packing-type");
+getStorageAndSet("one-or-all", "setting:one-or-all");
+getStorageAndSet("manual-input", "setting:manual-input");

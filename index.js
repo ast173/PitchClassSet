@@ -42,7 +42,7 @@ function rotate(arr, i) {
     return arr.slice(i).concat(arr.slice(0, i));
 }
 
-function tiebreak(oldSet, newSet, type) { // TODO: optimize
+function tiebreak(oldSet, newSet, type) {
     if (type === FORTE) {
         for (let i = 0; i < oldSet.length; i++) {
             if (oldSet[i] < newSet[i]) {
@@ -429,6 +429,33 @@ const zSets = new Map([
     ["8-Z29", "8-Z15"],
 ]);
 
+// known chords
+function tryMatchForKnown() {
+    return forteToKnown.has(getForteNumber(pcs)) ?
+        forteToKnown.get(getForteNumber(pcs)) :
+        "";
+}
+
+const forteToKnown = new Map([
+    ["3-8", "Italian 6th"],
+    ["3-9", "Suspended Chord/Quartal Chord"],
+    ["3-10", "Diminished Triad"],
+    ["3-11", "Major/Minor Triad"],
+    ["3-12", "Augmented Triad"],
+
+    ["4-20", "Major 7th"],
+    ["4-23", "Quartal Chord (4)"],
+    ["4-25", "French 6th"],
+    ["4-26", "Minor 7th"],
+    ["4-27", "Dominant 7th/Half Diminished 7th"],
+    ["4-28", "Diminished 7th"],
+
+    ["5-35", "Pentatonic Scale"],
+    ["6-35", "Whole Tone Scale"],
+    ["7-35", "Major/Minor Scale"],
+    ["8-28", "Octatonic Scale"],
+]);
+
 // transposition and inversion
 function getTn(pcs, n) {
     return pcs.map(pc => mod12(pc + n));
@@ -439,27 +466,28 @@ function getTnI(pcs, n) {
     return T0I.map(pc => mod12(pc + n));
 }
 
-function getAllTn(pcs) {
-    let allTn = [];
-
-    for (let n = 0; n < MAX_SEMITONES; n++) {
-        let transposition = pcs.map(pc => mod12(pc + n));
-        allTn.push(transposition);
+function handleTranspositionAndInversion() {
+    if (!displayAll) {
+        Tn_output.value = formatOutput(getTn(pcs, parseInt(Tn_select.value)), UNORDERED);
+        TnI_output.value = formatOutput(getTnI(pcs, parseInt(TnI_select.value)), UNORDERED);
+        return;
     }
 
-    return allTn;
-}
-
-function getAllTnI(pcs) {
-    let allTnI = [];
-    let T0I = invert(pcs).sort((a, b) => a - b);
-
-    for (let n = 0; n < MAX_SEMITONES; n++) {
-        let inversion = T0I.map(pc => mod12(pc + n));
-        allTnI.push(inversion);
+    if (pcs.length === 0) {
+        Tn_output.value = "[]";
+        TnI_output.value = "[]";
+        return;
     }
 
-    return allTnI;
+    Tn_output.value = [...Array(MAX_SEMITONES).keys()]
+        .map(pc => formatOutput(getTn(pcs, pc), UNORDERED)).join("\n");
+    TnI_output.value = [...Array(MAX_SEMITONES).keys()]
+        .map(pc => formatOutput(getTnI(pcs, pc), UNORDERED)).join("\n");
+}
+
+function resizeHeight(textarea) {
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + "px";
 }
 
 
@@ -470,12 +498,11 @@ function getAllTnI(pcs) {
 
 
 
-// pc is an Integer from 0-11 inclusive representing the pitch class
-// pcs is a list of pc
-
-// TODO: display all Tn and TnI or only one
+// TODO: add option to show repeats for Tn and TnI?
 // TODO: manual input?
 // TODO: forte number manual input
+// TODO: add supersets and subsets
+// TODO: add 'is subset of' options
 
 // index.html
 const output = document.getElementById("output");
@@ -489,6 +516,7 @@ const ic_vector = document.getElementById("ic-vector");
 const complement = document.getElementById("complement");
 const forte_number = document.getElementById("forte-number");
 const z_mate = document.getElementById("z-mate");
+const known = document.getElementById("known");
 
 const Tn_output = document.getElementById("Tn-output");
 const TnI_output = document.getElementById("TnI-output");
@@ -500,35 +528,17 @@ const NORMAL_ORDER = Symbol("normal_order");
 const PRIME_FORM = Symbol("prime_form");
 const IC_VECTOR = Symbol("ic_vector");
 
-function tryLoadPCS() {
-    let storedData = localStorage.getItem("pcs");
-
-    if (!storedData) {
-        pcs = [];
-        return;
+function calculate(manualOn) {
+    if (manualOn) {
+        for (let checkbox of pc_checkboxes) {
+            checkbox.checked = false;
+        }
+        pcs = parseInput();
+        setCheckboxStates();
+    } else {
+        pcs = getAllPC();
     }
-
-    pcs = storedData.split(",").map(pc => parseInt(pc)); // TODO .map(parseInt) doesn't work for some reason
-
-    for (let pc of pcs) {
-        let checkbox = document.getElementById(pc.toString());
-        if (checkbox) checkbox.checked = true;
-    }
-
-    calculate();
-}
-
-function savePCS() {
-    if (!pcs) {
-        pcs = [];
-        return;
-    }
-    // let data = !!pcs ? pcs.join(",") : null;
-    localStorage.setItem("pcs", pcs.join(","));
-}
-
-function calculate() {
-    pcs = getAllPC();
+    pcs = pcs.sort((a, b) => a - b);
     savePCS();
 
     output.value = formatOutput(pcs, UNORDERED);
@@ -540,22 +550,9 @@ function calculate() {
 
     forte_number.value = getForteNumber(pcs);
     z_mate.value = getZMate(pcs);
+    known.value = tryMatchForKnown(pcs);
 
-    if (displayAll) {
-        Tn_output.value = "";
-        TnI_output.value = "";
-        for (let n = 0; n < MAX_SEMITONES; n++) {
-            Tn_output.value += formatOutput(getTn(pcs, n), UNORDERED);
-            TnI_output.value += formatOutput(getTnI(pcs, n), UNORDERED);
-            if (n !== 11) {
-                Tn_output.value += "\n";
-                TnI_output.value += "\n";
-            }
-        }
-    } else {
-        Tn_output.value = formatOutput(getTn(pcs, parseInt(Tn_select.value)), UNORDERED);
-        TnI_output.value = formatOutput(getTnI(pcs, parseInt(TnI_select.value)), UNORDERED);
-    }
+    handleTranspositionAndInversion();
     resizeHeight(Tn_output);
     resizeHeight(TnI_output);
 }
@@ -564,40 +561,37 @@ function getAllPC() {
     let pcs = [];
     for (let checkbox of pc_checkboxes) {
         if (checkbox.checked) {
-            pcs.push(parseInt(checkbox.id)); // TODO change this to not use id
+            pcs.push(parseInt(checkbox.id));
         }
     }
     return pcs;
 }
 
+function savePCS() {
+    if (useManualInput) localStorage.setItem("input-text", input.value);
+    localStorage.setItem("pcs", pcs.join(","));
+}
+
 function formatOutput(pcs, formatting) {
     let formatted = "";
-    switch (formatting) {
-        case NORMAL_ORDER:
-        case UNORDERED:
-            formatted = `[${pcs.join(", ")}]`;
-            break;
-        case PRIME_FORM:
-            formatted = `(${pcs.join(" ")})`;
-            break;
-        case IC_VECTOR:
-            formatted = `<${pcs.join(" ")}>`;
-            break;
-        default:
-            throw new Error("Unknown formatting " + formatting);
+    if (formatting === NORMAL_ORDER || formatting === UNORDERED) {
+        formatted = `[${pcs.join(", ")}]`;
+    } else if (formatting === PRIME_FORM) {
+        formatted = `(${pcs.join(" ")})`;
+    } else if (formatting === IC_VECTOR) {
+        formatted = `<${pcs.join(" ")}>`;
+    } else {
+        throw new Error("Unknown formatting " + formatting);
     }
 
     return useTAndE ?
-        formatted.replace("10", "T").replace("11", "E") :
+        formatted.replaceAll("10", "T").replaceAll("11", "E") :
         formatted;
 }
 
-function resizeHeight(textarea) {
-    textarea.style.height = "auto";
-    textarea.style.height = textarea.scrollHeight + "px";
-}
-
+// button functions
 function reset() {
+    input.value = "";
     output.value = "";
 
     normal_order.value = "";
@@ -607,6 +601,7 @@ function reset() {
 
     forte_number.value = "";
     z_mate.value = "";
+    known.value = "";
 
     Tn_output.value = "";
     TnI_output.value = "";
@@ -626,9 +621,10 @@ function reset() {
 function switchToComplement() {
     for (let pc = 0; pc < MAX_SEMITONES; pc++) {
         toggle(pc);
+        calculate(useManualInput);
     }
     resetHistory();
-    calculate();
+    calculate(useManualInput);
 }
 
 function toggle(pc) {
@@ -637,18 +633,106 @@ function toggle(pc) {
     checkbox.checked = !checkbox.checked;
 
     remember(pc);
-    calculate();
 }
 
 function generateRandom() {
     for (let checkbox of pc_checkboxes) {
         let state = Math.floor(Math.random() * 2);
-        checkbox.checked = !!state;
+        checkbox.checked = Boolean(state);
     }
     resetHistory();
-    calculate();
+    calculate(useManualInput);
 }
 
+
+
+
+
+
+
+// event listeners
+for (let check of pc_checkboxes) {
+    check.addEventListener("input", () => {
+        remember(parseInt(check.id));
+        calculate(false);
+    });
+}
+
+Tn_select.addEventListener("change", () => {
+    Tn_output.value = formatOutput(getTn(pcs, parseInt(Tn_select.value)), UNORDERED);
+});
+
+TnI_select.addEventListener("change", () => {
+    TnI_output.value = formatOutput(getTnI(pcs, parseInt(TnI_select.value)), UNORDERED);
+});
+
+let letterToPC = new Map([
+    ["a", 9], ["b", 11], ["c", 0], ["d", 2], ["e", 4], ["f", 5], ["g", 7],
+]);
+
+let semitoneValue = new Map([
+    ["#", 1], ["b", -1],
+]);
+
+let lastInputTime = 0;
+const FLAT_TIME_MS = 500;
+let lastNote = "";
+document.addEventListener("keydown", e => {
+    if (!useManualInput || document.activeElement === input) return;
+
+    let key = e.key;
+
+    if ((e.ctrlKey || e.metaKey)) {
+        if (key.toLowerCase() === "z") {
+            e.preventDefault();
+            undo();
+            calculate(false);
+        } else if (key.toLowerCase() === "y") {
+            e.preventDefault();
+            redo();
+            calculate(false);
+        }
+        return;
+    }
+
+    // letter inputs
+    if (/^[acdefg]$/i.test(key) || (key === "b" && (!lastNote || Date.now() - lastInputTime >= FLAT_TIME_MS))) {
+        toggle(letterToPC.get(key));
+        calculate(false);
+        lastNote = key;
+        lastInputTime = Date.now();
+    } else if ((key === "#" || key === "b") && lastNote) {
+        toggle(letterToPC.get(lastNote));
+        toggle(letterToPC.get(lastNote) + semitoneValue.get(key));
+        calculate(false);
+        lastNote = "";
+    } else if (!/^[a-g#]$/i.test(key) && key !== "Shift") {
+        lastNote = "";
+    }
+
+    // numerical inputs
+    if (/^[0-9]$/.test(key)) {
+        toggle(parseInt(key));
+        calculate(false);
+    } else if (key === "t") {
+        toggle(10);
+        calculate(false);
+    }
+
+    // other inputs
+    else if (key === "Enter") {
+        e.preventDefault();
+        calculate(false);
+    } else if (key === "Escape") {
+        reset();
+    } else if (key === "Backspace" || key === "Delete") {
+        e.preventDefault();
+        undo();
+        calculate(false);
+    }
+});
+
+// undo and redo
 let history = [];
 let pointer = 0;
 function undo() {
@@ -675,7 +759,6 @@ function remember(pc) {
         history = history.slice(0, pointer);
         pointer = 0;
     }
-
     history.push(pc);
 }
 
@@ -684,96 +767,24 @@ function resetHistory() {
     pointer = 0;
 }
 
+const input = document.getElementById("input");
+input.addEventListener("change", () => {
+    calculate(useManualInput);
+    resetHistory();
+});
 
+function parseInput() {
+    let text = input.value.toLowerCase();
 
+    let pcs = (text.match(/\b(1[01]|[0-9]|t|e)\b/g) || [])
+        .map(pc => {
+            if (pc === "t") return 10;
+            if (pc === "e") return 11;
+            return Number(pc);
+        });
 
-
-
-
-
-
-// event listeners
-for (let check of pc_checkboxes) {
-    check.addEventListener("input", () => {
-        remember(parseInt(check.id));
-        calculate();
-    })
+    return [...new Set(pcs)];
 }
-
-Tn_select.addEventListener("change", () => {
-    Tn_output.value = `[${getTn(pcs, parseInt(Tn_select.value)).join(", ")}]`;
-});
-
-TnI_select.addEventListener("change", () => {
-    TnI_output.value = `[${getTnI(pcs, parseInt(TnI_select.value)).join(", ")}]`;
-});
-
-let lastInputTime = 0;
-const FLAT_TIME_MS = 500;
-let lastNote = "";
-document.addEventListener("keydown", e => {
-    let key = e.key;
-
-    if ((e.ctrlKey || e.metaKey)) {
-        if (key.toLowerCase() === "z") {
-            e.preventDefault();
-            undo();
-            calculate();
-        } else if (key.toLowerCase() === "y") {
-            e.preventDefault();
-            redo();
-            calculate();
-        }
-        return;
-    }
-
-    // letter inputs
-    if (/^[acdefg]$/i.test(key) || (key === "b" && (!lastNote || Date.now() - lastInputTime >= FLAT_TIME_MS))) {
-        toggle(letterToPC.get(key));
-        lastNote = key;
-        lastInputTime = Date.now();
-    } else if ((key === "#" || key === "b") && lastNote) {
-        toggle(letterToPC.get(lastNote));
-        toggle(letterToPC.get(lastNote) + semitoneValue.get(key));
-        lastNote = "";
-    } else if (!/^[a-g#]$/i.test(key) && key !== "Shift") {
-        lastNote = "";
-    }
-
-    // numerical inputs
-    if (/^[0-9]$/.test(key)) {
-        toggle(parseInt(key));
-    } else if (key === "t") {
-        toggle(10);
-    }
-
-    // other inputs
-    else if (key === "Enter") {
-        e.preventDefault();
-        calculate();
-    } else if (key === "Escape") {
-        reset();
-    } else if (key === "Backspace" || key === "Delete") {
-        e.preventDefault();
-        undo();
-        calculate();
-    }
-});
-
-let letterToPC = new Map([
-    ["a", 9],
-    ["b", 11],
-    ["c", 0],
-    ["d", 2],
-    ["e", 4],
-    ["f", 5],
-    ["g", 7],
-]);
-
-let semitoneValue = new Map([
-    ["#", 1],
-    ["b", -1],
-]);
 
 
 
@@ -783,30 +794,28 @@ let semitoneValue = new Map([
 
 
 // settings
-const setting1 = localStorage.getItem("setting-pc-display");
+const setting1 = localStorage.getItem("setting:pc-display");
 const usePCNumbers = setting1 === "true";
-const setting2 = localStorage.getItem("setting-ten-eleven");
+const setting2 = localStorage.getItem("setting:ten-eleven");
 const useTAndE = setting2 === "true";
-const setting3 = localStorage.getItem("setting-packing-type");
+const setting3 = localStorage.getItem("setting:packing-type");
 const useRahn = setting3 === "true";
-const setting4 = localStorage.getItem("setting-one-or-all");
+const setting4 = localStorage.getItem("setting:one-or-all");
 const displayAll = setting4 === "true";
-document.addEventListener("DOMContentLoaded", () => {
+const setting5 = localStorage.getItem("setting:manual-input");
+const useManualInput = setting5 === "true";
+function loadSettings() {
     const pc_btns = document.getElementsByClassName("pc-btn");
     const btn_10 = document.querySelector('.pc-btn[pc-number="10"]');
     const btn_11 = document.querySelector('.pc-btn[pc-number="11"]');
+    const bottom_rows = document.querySelectorAll('div.bottom-row');
 
     packingType = useRahn ? RAHN : FORTE;
 
-    if (!pc_btns) return;
-    if (!btn_10 || !btn_11) return;
-
     for (let btn of pc_btns) {
-        if (usePCNumbers) {
-            btn.textContent = btn.getAttribute("pc-number");
-        } else {
+        btn.textContent = usePCNumbers ?
+            btn.getAttribute("pc-number") :
             btn.textContent = btn.getAttribute("pc-note");
-        }
     }
 
     if (usePCNumbers && useTAndE) {
@@ -815,12 +824,51 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (displayAll) {
-        Tn_select.classList.add("hidden");
-        TnI_select.classList.add("hidden");
+        for (let row of bottom_rows) {
+            row.classList.add("hidden");
+        }
     } else {
-        Tn_select.classList.remove("hidden");
-        TnI_select.classList.remove("hidden");
+        for (let row of bottom_rows) {
+            row.classList.remove("hidden");
+        }
     }
 
+    const inputLabel = document.querySelector("label[for='input']");
+    if (useManualInput) {
+        input.classList.remove("hidden");
+        inputLabel.classList.remove("hidden");
+    } else {
+        input.classList.add("hidden");
+        inputLabel.classList.add("hidden");
+    }
+}
+
+function tryLoadPCS() {
+    let storedData = localStorage.getItem("pcs");
+
+    if (!storedData) {
+        pcs = [];
+        return;
+    }
+
+    pcs = storedData.split(",").map(pc => parseInt(pc));
+
+    setCheckboxStates();
+
+    let inputText = localStorage.getItem("input-text");
+    input.value = Boolean(inputText) ? inputText : "";
+
+    calculate(false);
+}
+
+function setCheckboxStates() {
+    for (let pc of pcs) {
+        let checkbox = document.getElementById(pc.toString());
+        checkbox.checked = true;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadSettings();
     tryLoadPCS();
 });

@@ -2,105 +2,100 @@
     --font: "Segoe UI", Tahoma, Geneva, Verdana, serif;
 }
 
-/*hide checkbox*/
-.switch input {
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 150%;
+}
+
+.settings {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    width: 100%;
+    max-width: 15em
+}
+
+#back {
+    margin-top: 10px;
+}
+
+input[type="checkbox"].toggle {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.switch {
+input[type="checkbox"].toggle + label {
+    display: flex;
     position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-
-.slider {
-    position: absolute;
+    align-items: center;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-    border-radius: 34px;
 }
 
-/*knob*/
-.slider::before {
+input[type="checkbox"].toggle + label::before {
+    content: "";
+    width: 2em;
+    height: 1em;
+    border-radius: 1em;
+    margin-right: 0.25em;
+
+    background-color: #ddd;
+}
+
+input[type="checkbox"].toggle + label::after {
     content: "";
     position: absolute;
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border-radius: 50%;
+
+    left: 0.1em;
+    width: 0.9em;
+    height: 0.9em;
+    border-radius: 1em;
+
+    background-color: red;
+    transition: 200ms ease-in-out;
 }
 
-input:checked + .slider {
-    background-color: #0fc628;
+input[type="checkbox"].toggle:checked + label::after {
+    transform: translateX(100%);
+    background-color: green;
 }
 
-input:focus + .slider {
-    box-shadow: 0 0 1px #0fc628;
-}
-
-input:checked + .slider::before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-/*text*/
-.slider::after {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 10px;
-    color: white;
-    font-family: var(--font);
-}
-
-input:checked + .slider::after {
-    left: 8px;
-    right: auto;
-}
-
-#notes-number + .slider::after {
+#notes-number + label::after {
     content: "C, C#, ...";
 }
 
-#notes-number:checked + .slider::after {
+#notes-number:checked + label::after {
     content: "0, 1, ...";
 }
 
-#ten-eleven + .slider::after {
+#ten-eleven + label::after {
     content: "10/11";
 }
 
-#ten-eleven:checked + .slider::after {
+#ten-eleven:checked + label::after {
     content: "T/E";
 }
 
-#forte-rahn + .slider::after {
+#forte-rahn + label::after {
     content: "Forte";
 }
 
-#forte-rahn:checked + .slider::after {
+#forte-rahn:checked + label::after {
     content: "Rahn";
 }
 
-#one-or-all + .slider::after {
+#one-or-all + label::after {
     content: "One";
 }
 
-#one-or-all:checked + .slider::after {
+#one-or-all:checked + label::after {
     content: "All";
 }

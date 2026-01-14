@@ -13,38 +13,37 @@
 
     <body>
         <h1>Settings</h1>
-        <button id="back" onclick="location.href='index.html'">Back</button>
-        <br><br>
+            <div class="settings-row">
+                <label>Notes or letters:</label>
+                <input type="checkbox" id="notes-number" class="toggle">
+                <label for="notes-number"></label>
+            </div>
 
-        <label for="notes-number">Notes or letters: </label>
-        <br>
-        <label class="switch">
-            <input type="checkbox" id="notes-number">
-            <span class="slider"></span>
-        </label>
-        <br><br>
+            <div class="settings-row">
+                <label>Numbers or letters:</label>
+                <input type="checkbox" id="ten-eleven" class="toggle">
+                <label for="ten-eleven"></label>
+            </div>
 
-        <label for="ten-eleven">Numbers or letters: </label>
-        <br>
-        <label class="switch">
-            <input type="checkbox" id="ten-eleven">
-            <span class="slider"></span>
-        </label>
-        <br><br>
+            <div class="settings-row">
+                <label>Type of prime form:</label>
+                <input type="checkbox" id="forte-rahn" class="toggle">
+                <label for="forte-rahn"></label>
+<!--                <pre>Rahn is packed from the right, Forte is packed to the left</pre>-->
+            </div>
 
-        <label for="forte-rahn">Type of prime form: </label>
-        <pre>Rahn is packed from the right, Forte is packed to the left</pre>
-        <label class="switch">
-            <input type="checkbox" id="forte-rahn">
-            <span class="slider"></span>
-        </label>
-        <br><br>
+            <div class="settings-row">
+                <label>For Tₙ and TₙI, one or all:</label>
+                <input type="checkbox" id="one-or-all" class="toggle">
+                <label for="one-or-all"></label>
+            </div>
 
-        <label for="one-or-all">For Tₙ and TₙI, one or all: </label>
-        <br>
-        <label class="switch">
-            <input type="checkbox" id="one-or-all">
-            <span class="slider"></span>
-        </label>
+            <div class="settings-row">
+                <label>Manual input on?</label>
+                <input type="checkbox" id="manual-input" class="toggle">
+                <label for="manual-input"></label>
+            </div>
+
+            <button id="back" onclick="location.href='index.html'">Back</button>
     </body>
 </html>
