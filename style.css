@@ -7,7 +7,6 @@
     --btn-hover-bg-gradient: linear-gradient(#254255, #152029);
     --btn-active-text-color: #4e4f50;
     --btn-active-bg-gradient: linear-gradient(#252f40, #121d27);
-    --btn-font: "Segoe UI", Tahoma, Geneva, Verdana, serif;
 }
 
 body {
@@ -23,6 +22,7 @@ hr {
 .outputs {
     display: inline-grid;
     grid-template-columns: 1fr 1fr;
+    gap: 0.3rem;
 }
 
 .outputs-column {
@@ -30,7 +30,7 @@ hr {
     flex-direction: column;
     justify-items: flex-end;
     justify-content: space-between;
-    gap: 5px;
+    gap: 0.3rem;
 }
 
 .pc-inputs {
@@ -56,7 +56,7 @@ hr {
     color: var(--btn-text-color);
     background-image: var(--btn-bg-gradient);
 
-    font: var(--btn-font);
+    font: var(--font);
     font-size: x-large;
 
     box-shadow: 0 4px 0 black, 0 6px 8px rgba(0,0,0,0.4);
@@ -93,15 +93,30 @@ hr {
 #Tn-output, #TnI-output {
     width: 300px;
     resize: none;
-    text-align: center;
 }
 
 div.bottom-row {
     display: flex;
-    flex-direction: row;
-    gap: 0.25em;
+    gap: 0.3rem;
 }
 
-.hidden {
+.hidden, .bottom-row.hidden {
     display: none;
+}
+
+button {
+    width: 7rem;
+    height: 1.5rem;
+}
+
+div.button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.3rem;
+}
+
+div.button-container2 {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
 }

@@ -10,6 +10,11 @@ body {
     font-size: 150%;
 }
 
+button {
+    width: 7rem;
+    height: 1.5rem;
+}
+
 .settings {
     display: flex;
     flex-direction: column;
@@ -98,4 +103,12 @@ input[type="checkbox"].toggle:checked + label::after {
 
 #one-or-all:checked + label::after {
     content: "All";
+}
+
+#manual-input + label::after, #show-unique + label::after {
+    content: "Off";
+}
+
+#manual-input:checked + label::after, #show-unique:checked + label::after {
+    content: "On";
 }

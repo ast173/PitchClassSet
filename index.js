@@ -364,6 +364,8 @@ const primeToForte = new Map([
     ["0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11", "12-1"]
 ]);
 
+const forteToPrime = new Map([...primeToForte].map(([k, v]) => [v, k]));
+
 // z sets
 function getZMate() {
     return zSets.has(getForteNumber(pcs)) ?
@@ -480,9 +482,14 @@ function handleTranspositionAndInversion() {
     }
 
     Tn_output.value = [...Array(MAX_SEMITONES).keys()]
-        .map(pc => formatOutput(getTn(pcs, pc), UNORDERED)).join("\n");
+        .map(pc => textStart(pc) + formatOutput(getTn(pcs, pc), UNORDERED)).join("\n");
     TnI_output.value = [...Array(MAX_SEMITONES).keys()]
-        .map(pc => formatOutput(getTnI(pcs, pc), UNORDERED)).join("\n");
+        .map(pc => textStart(pc) + formatOutput(getTnI(pcs, pc), UNORDERED)).join("\n");
+}
+
+function textStart(pc) {
+    let spaces = "             ";
+    return pc.toString().length === 1 ? spaces + ` n = ${pc}: ` : spaces + `n = ${pc}: `;
 }
 
 function resizeHeight(textarea) {
@@ -498,12 +505,9 @@ function resizeHeight(textarea) {
 
 
 
-// TODO: add option to show repeats for Tn and TnI?
-// TODO: manual input?
 // TODO: forte number manual input
 // TODO: add supersets and subsets
 // TODO: add 'is subset of' options
-
 // index.html
 const output = document.getElementById("output");
 const pc_checkboxes = document.getElementsByClassName("pc");
@@ -533,7 +537,7 @@ function calculate(manualOn) {
         for (let checkbox of pc_checkboxes) {
             checkbox.checked = false;
         }
-        pcs = parseInput();
+        pcs = parseManualInput();
         setCheckboxStates();
     } else {
         pcs = getAllPC();
@@ -621,10 +625,10 @@ function reset() {
 function switchToComplement() {
     for (let pc = 0; pc < MAX_SEMITONES; pc++) {
         toggle(pc);
-        calculate(useManualInput);
+        calculate(false);
     }
     resetHistory();
-    calculate(useManualInput);
+    calculate(false);
 }
 
 function toggle(pc) {
@@ -641,7 +645,7 @@ function generateRandom() {
         checkbox.checked = Boolean(state);
     }
     resetHistory();
-    calculate(useManualInput);
+    calculate(false);
 }
 
 
@@ -678,7 +682,7 @@ let lastInputTime = 0;
 const FLAT_TIME_MS = 500;
 let lastNote = "";
 document.addEventListener("keydown", e => {
-    if (!useManualInput || document.activeElement === input) return;
+    if (useManualInput && document.activeElement === input) return;
 
     let key = e.key;
 
@@ -773,15 +777,27 @@ input.addEventListener("change", () => {
     resetHistory();
 });
 
-function parseInput() {
-    let text = input.value.toLowerCase();
+function parseManualInput() {
+    let text = input.value.toLowerCase().trim();
 
-    let pcs = (text.match(/\b(1[01]|[0-9]|t|e)\b/g) || [])
-        .map(pc => {
-            if (pc === "t") return 10;
-            if (pc === "e") return 11;
-            return Number(pc);
-        });
+    let forte = (text.toUpperCase().match(/^(?:1[01]|[0-9])-Z?(?:\d\d|\d)$/) || [])[0];
+    if (forte) {
+        let key = forteToPrime.has(forte) ? forte : forte.replace("-", "-Z")
+        if (forteToPrime.has(key)) {
+            return forteToPrime.get(key).split(", ");
+        }
+    }
+
+    let pcs = (text.match(/1[01]|[0-9]|t|[a-g][#b]?/g) || []).map(pc => {
+        if (pc === "t") return 10;
+        if (/^[a-g]$/.test(pc)) {
+            return letterToPC.get(pc);
+        }
+        if (/^[a-g][#b]$/.test(pc)) {
+            return mod12(letterToPC.get(pc[0]) + semitoneValue.get(pc[1]));
+        }
+        return parseInt(pc);
+    });
 
     return [...new Set(pcs)];
 }
@@ -804,34 +820,31 @@ const setting4 = localStorage.getItem("setting:one-or-all");
 const displayAll = setting4 === "true";
 const setting5 = localStorage.getItem("setting:manual-input");
 const useManualInput = setting5 === "true";
+const setting6 = localStorage.getItem("setting:show-unique");
+const showUnique = setting6 === "true";
 function loadSettings() {
     const pc_btns = document.getElementsByClassName("pc-btn");
-    const btn_10 = document.querySelector('.pc-btn[pc-number="10"]');
-    const btn_11 = document.querySelector('.pc-btn[pc-number="11"]');
-    const bottom_rows = document.querySelectorAll('div.bottom-row');
-
-    packingType = useRahn ? RAHN : FORTE;
-
     for (let btn of pc_btns) {
         btn.textContent = usePCNumbers ?
             btn.getAttribute("pc-number") :
             btn.textContent = btn.getAttribute("pc-note");
     }
 
+    const btn_10 = document.querySelector(".pc-btn[pc-number='10']");
+    const btn_11 = document.querySelector(".pc-btn[pc-number='11']");
     if (usePCNumbers && useTAndE) {
         btn_10.textContent = "T";
         btn_11.textContent = "E";
     }
 
-    if (displayAll) {
-        for (let row of bottom_rows) {
-            row.classList.add("hidden");
-        }
-    } else {
-        for (let row of bottom_rows) {
-            row.classList.remove("hidden");
-        }
+    packingType = useRahn ? RAHN : FORTE;
+
+    const bottom_rows = document.querySelectorAll("div.bottom-row");
+    for (let row of bottom_rows) {
+        displayAll ? row.classList.add("hidden") : row.classList.remove("hidden");
     }
+    document.getElementById("Tn-output").style.textAlign = displayAll ? "left" : "center";
+    document.getElementById("TnI-output").style.textAlign = displayAll ? "left" : "center";
 
     const inputLabel = document.querySelector("label[for='input']");
     if (useManualInput) {

@@ -8,7 +8,7 @@
         <title>Pitch Class Set Calculator</title>
 
         <link rel="stylesheet" href="style.css">
-        <script type="module" src="index.js" defer></script>
+        <script src="index.js" defer></script>
     </head>
 
     <body>
@@ -23,7 +23,7 @@
                 <label for="complement">Complement (Unordered):</label>
                 <label for="forte-number">Forte Number:</label>
                 <label for="z-mate">Z Mate:</label>
-                <label for="known">Known Chord:</label>
+                <label for="known">Recognized Set:</label>
             </div>
             <div class="outputs-column">
                 <input type="text" id="normal-order" readonly>
@@ -84,9 +84,14 @@
         <input type="text" id="input">
         <label for="output">Unordered Set:</label>
         <input type="text" id="output" readonly>
-        <button id="reset" onclick="reset()">Reset</button>
-        <button id="complement-btn" onclick="switchToComplement()">Complement</button>
-        <button id="random" onclick="generateRandom()">Random</button>
+        <div class="button-container">
+            <button id="calculate" onclick="calculate()">Calculate</button>
+            <button id="reset" onclick="reset()">Reset</button>
+            <button id="complement-btn" onclick="switchToComplement()">Complement</button>
+            <button id="random" onclick="generateRandom()">Random</button>
+            <button class="undo" onclick="undo()">Undo</button>
+            <button class="redo" onclick="redo()">Redo</button>
+        </div>
         <hr>
 
         <label for="Tn-output">Transposition (Tₙ):</label>
@@ -130,9 +135,11 @@
         <textarea id="TnI-output" readonly></textarea>
         <hr>
 
-        <button id="calculate" onclick="calculate()">Calculate</button>
-        <button id="settings" onclick="location.href='settings.html'">Settings</button>
-        <button id="help" onclick="window.open('help.html', 'helpWindow', 'width=600, height=500, resizable=yes, scrollbars=yes')">Help</button>
-<!--        <button id="back-to-home" onclick="location.href='../index.html'">Back To Home</button>-->
+        <div class="button-container2">
+            <button id="settings" onclick="location.href='settings.html'">Settings</button>
+            <button id="help" onclick="window.open('help.html', 'helpWindow', 'width=600, height=500, resizable=yes, scrollbars=yes')">Help</button>
+            <button id="exit" onclick="window.close()">Exit</button>
+<!--            <button id="exit" onclick="location.href='../index.html'">Exit</button>-->
+        </div>
     </body>
 </html>
