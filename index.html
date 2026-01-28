@@ -5,10 +5,14 @@
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pitch Class Set Calculator</title>
 
         <link rel="stylesheet" href="style.css">
-        <script src="index.js" defer></script>
+        <!-- <script src="index.js" defer></script> -->
+        <script type="module" src="./modules/onStart.js" defer></script>
+        <script type="module" src="./modules/index.js" defer></script>
+        <script type="module" src="./modules/loadSettings.js" defer></script>
     </head>
 
     <body>
@@ -84,6 +88,7 @@
         <input type="text" id="input">
         <label for="output">Unordered Set:</label>
         <input type="text" id="output" readonly>
+        <!-- <textarea id="output" readonly></textarea> -->
         <div class="button-container">
             <button id="calculate" onclick="calculate()">Calculate</button>
             <button id="reset" onclick="reset()">Reset</button>
@@ -136,7 +141,7 @@
         <hr>
 
         <div class="button-container2">
-            <button id="settings" onclick="location.href='settings.html'">Settings</button>
+            <button id="settings" onclick="location.href='./settings/settings.html'">Settings</button>
             <button id="help" onclick="window.open('help.html', 'helpWindow', 'width=600, height=500, resizable=yes, scrollbars=yes')">Help</button>
             <button id="exit" onclick="window.close()">Exit</button>
 <!--            <button id="exit" onclick="location.href='../index.html'">Exit</button>-->

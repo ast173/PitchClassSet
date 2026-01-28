@@ -12,5 +12,5 @@ getStorageAndSet("notes-number", "setting:pc-display");
 getStorageAndSet("ten-eleven", "setting:ten-eleven");
 getStorageAndSet("forte-rahn", "setting:packing-type");
 getStorageAndSet("one-or-all", "setting:one-or-all");
-getStorageAndSet("manual-input", "setting:manual-input");
 getStorageAndSet("show-unique", "setting:show-unique");
+getStorageAndSet("manual-input", "setting:manual-input");

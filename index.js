@@ -508,7 +508,7 @@ function resizeHeight(textarea) {
 // TODO: forte number manual input
 // TODO: add supersets and subsets
 // TODO: add 'is subset of' options
-// index.html
+// ==================== CONNECTS TO index.html ====================
 const output = document.getElementById("output");
 const pc_checkboxes = document.getElementsByClassName("pc");
 let pcs = [];
@@ -540,12 +540,13 @@ function calculate(manualOn) {
         pcs = parseManualInput();
         setCheckboxStates();
     } else {
-        pcs = getAllPC();
+        pcs = getPCS();
     }
     pcs = pcs.sort((a, b) => a - b);
     savePCS();
 
     output.value = formatOutput(pcs, UNORDERED);
+    // output.value = JSON.stringify(history, null, 2) +`\nLength: ${history.length}\nPointer: ${pointer}`;
 
     normal_order.value = formatOutput(getNormalOrder(pcs), NORMAL_ORDER);
     prime_form.value = formatOutput(getPrimeForm(pcs), PRIME_FORM);
@@ -559,21 +560,6 @@ function calculate(manualOn) {
     handleTranspositionAndInversion();
     resizeHeight(Tn_output);
     resizeHeight(TnI_output);
-}
-
-function getAllPC() {
-    let pcs = [];
-    for (let checkbox of pc_checkboxes) {
-        if (checkbox.checked) {
-            pcs.push(parseInt(checkbox.id));
-        }
-    }
-    return pcs;
-}
-
-function savePCS() {
-    if (useManualInput) localStorage.setItem("input-text", input.value);
-    localStorage.setItem("pcs", pcs.join(","));
 }
 
 function formatOutput(pcs, formatting) {
@@ -623,28 +609,41 @@ function reset() {
 }
 
 function switchToComplement() {
+    let lastState = getPCS();
+    
     for (let pc = 0; pc < MAX_SEMITONES; pc++) {
         toggle(pc);
         calculate(false);
     }
-    resetHistory();
+    
+    let currentState = getPCS();
+    history.push(getToToggle(lastState, currentState));
+
     calculate(false);
+}
+
+function toggleAndRemember(pc) {
+    toggle(pc);
+    remember(pc);
 }
 
 function toggle(pc) {
     pc = mod12(pc);
     let checkbox = document.getElementById(pc.toString());
     checkbox.checked = !checkbox.checked;
-
-    remember(pc);
 }
 
 function generateRandom() {
+    let lastPCS = getPCS();
+
     for (let checkbox of pc_checkboxes) {
-        let state = Math.floor(Math.random() * 2);
+        let state = Math.random() < 0.5;
         checkbox.checked = Boolean(state);
     }
-    resetHistory();
+
+    let currentPCS = getPCS();
+    history.push(getToToggle(lastPCS, currentPCS));
+
     calculate(false);
 }
 
@@ -654,10 +653,46 @@ function generateRandom() {
 
 
 
-// event listeners
+// ==================== DATA ====================
+// getPCS(): void -> Array[Number...]
+function getPCS() {
+    return [...pc_checkboxes]
+                .filter(check => check.checked)
+                .map(check => getPC(check));
+}
+
+function getPC(check) {
+    return parseInt(check.id);
+}
+
+function savePCS() {
+    if (useManualInput) localStorage.setItem("input-text", input.value);
+    localStorage.setItem("pcs", pcs.join(","));
+}
+
+function getToToggle(last, cur) {
+    return [
+        ...cur.filter(pc => !last.includes(pc)),
+        ...last.filter(pc => !cur.includes(pc))
+    ];
+}
+
+// toggleAll(): Array[Number...] -> void
+function toggleAll(pcs) {
+    for (let pc of pcs) {
+        toggle(pc);
+    }
+}
+
+
+
+
+
+
+// ==================== EVENT LISTENERS / KEYBOARD ====================
 for (let check of pc_checkboxes) {
     check.addEventListener("input", () => {
-        remember(parseInt(check.id));
+        remember(getPC(check));
         calculate(false);
     });
 }
@@ -701,13 +736,13 @@ document.addEventListener("keydown", e => {
 
     // letter inputs
     if (/^[acdefg]$/i.test(key) || (key === "b" && (!lastNote || Date.now() - lastInputTime >= FLAT_TIME_MS))) {
-        toggle(letterToPC.get(key));
+        toggleAndRemember(letterToPC.get(key));
         calculate(false);
         lastNote = key;
         lastInputTime = Date.now();
     } else if ((key === "#" || key === "b") && lastNote) {
-        toggle(letterToPC.get(lastNote));
-        toggle(letterToPC.get(lastNote) + semitoneValue.get(key));
+        toggleAndRemember(letterToPC.get(lastNote));
+        toggleAndRemember(letterToPC.get(lastNote) + semitoneValue.get(key));
         calculate(false);
         lastNote = "";
     } else if (!/^[a-g#]$/i.test(key) && key !== "Shift") {
@@ -716,10 +751,10 @@ document.addEventListener("keydown", e => {
 
     // numerical inputs
     if (/^[0-9]$/.test(key)) {
-        toggle(parseInt(key));
+        toggleAndRemember(parseInt(key));
         calculate(false);
     } else if (key === "t") {
-        toggle(10);
+        toggleAndRemember(10);
         calculate(false);
     }
 
@@ -736,41 +771,7 @@ document.addEventListener("keydown", e => {
     }
 });
 
-// undo and redo
-let history = [];
-let pointer = 0;
-function undo() {
-    if (pointer === -history.length) return;
-    pointer--;
-
-    let pc = history.at(pointer);
-    let pc_checkbox = document.getElementById(pc.toString());
-    pc_checkbox.checked = !pc_checkbox.checked;
-}
-
-function redo() {
-    if (pointer === 0) return;
-
-    let pc = history.at(pointer);
-    let pc_checkbox = document.getElementById(pc.toString());
-    pc_checkbox.checked = !pc_checkbox.checked;
-
-    pointer++;
-}
-
-function remember(pc) {
-    if (pointer <= -1) {
-        history = history.slice(0, pointer);
-        pointer = 0;
-    }
-    history.push(pc);
-}
-
-function resetHistory() {
-    history.length = 0;
-    pointer = 0;
-}
-
+// manual input
 const input = document.getElementById("input");
 input.addEventListener("change", () => {
     calculate(useManualInput);
@@ -807,9 +808,61 @@ function parseManualInput() {
 
 
 
+// ==================== HISTORY ====================
+let history = [];
+let pointer = 0;
+function undo() {
+    if (pointer === -history.length) return;
+    pointer--;
+
+    let data = history.at(pointer);
+    if (Array.isArray(data)) {
+        let pcs = data;
+        toggleAll(pcs);
+    } else {
+        let pc = data
+        let pc_checkbox = document.getElementById(pc.toString());
+        pc_checkbox.checked = !pc_checkbox.checked;
+    }
+}
+
+function redo() {
+    if (pointer === 0) return;
+
+    let data = history.at(pointer);
+    if (Array.isArray(data)) {
+        let pcs = data;
+        toggleAll(pcs);
+    } else {
+        let pc = data
+        let pc_checkbox = document.getElementById(pc.toString());
+        pc_checkbox.checked = !pc_checkbox.checked;
+    }
+
+    pointer++;
+}
+
+function remember(pc) {
+    if (pointer <= -1) {
+        history = history.slice(0, pointer);
+        pointer = 0;
+    }
+    history.push(pc);
+}
+
+function resetHistory() {
+    history.length = 0;
+    pointer = 0;
+}
 
 
-// settings
+
+
+
+
+
+
+// ==================== LOAD SETTINGS ====================
 const setting1 = localStorage.getItem("setting:pc-display");
 const usePCNumbers = setting1 === "true";
 const setting2 = localStorage.getItem("setting:ten-eleven");

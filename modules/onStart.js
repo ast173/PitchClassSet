@@ -1,0 +1,13 @@
+console.log("==================== ON START ====================");
+console.log("In \"./index.html\" load order:");
+console.log("\"./modules/onStart.js\"");
+console.log("\"./modules/index.js\"");
+console.log("\"./modules/loadSettings.js\"");
+console.log("Load order:");
+console.log("1. UTIL");
+console.log("2. DEEP");
+console.log("3. MAPS");
+console.log("4. HISTORY");
+console.log("5. LOAD SETTINGS");
+console.log("6. KEYBOARD");
+console.log("7. INDEX");
