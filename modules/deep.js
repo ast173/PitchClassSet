@@ -9,7 +9,7 @@ export { getNormalOrder, getICVector,
 export { getPrimeForm }; // to "./index.js", "./maps.js";
 
 // ==================== DEEP ====================
-// normal order
+// getNormalOrder(Array[Number...], Symbol) -> Array[Number...]
 function getNormalOrder(pcs, packingType) {
     pcs = transposeAndSort(pcs);
 
@@ -35,6 +35,7 @@ function getNormalOrder(pcs, packingType) {
 }
 
 // private
+// transposeAndSort(Array[Number...], Number) -> Array[Number...]
 function transposeAndSort(pcs) {
     let first = pcs[0];
     pcs = pcs.map(pc => mod12(pc - first));
@@ -42,13 +43,15 @@ function transposeAndSort(pcs) {
 }
 
 // private
+// rotate(Array[Number...], Number) -> Array[Number...]
 function rotate(arr, i) {
     return arr.slice(i).concat(arr.slice(0, i));
 }
 
 // private
-function tiebreak(oldSet, newSet, type) {
-    if (type === FORTE) {
+// tiebreak(Array[Number...], Array[Number...], Symbol) -> Array[Number...]
+function tiebreak(oldSet, newSet, packingType) {
+    if (packingType === FORTE) {
         for (let i = 0; i < oldSet.length; i++) {
             if (oldSet[i] < newSet[i]) {
                 return oldSet;
@@ -56,7 +59,7 @@ function tiebreak(oldSet, newSet, type) {
                 return newSet;
             }
         }
-    } else if (type === RAHN) {
+    } else if (packingType === RAHN) {
         for (let i = oldSet.length - 1; i >= 0; i--) {
             if (oldSet[i] < newSet[i]) {
                 return oldSet;
@@ -68,7 +71,7 @@ function tiebreak(oldSet, newSet, type) {
     return oldSet;
 }
 
-// prime form
+// getPrimeForm(Array[Number...], Symbol) -> Array[Number...]
 function getPrimeForm(pcs, packingType) {
     pcs = transposeAndSort(pcs);
     let pcsr = transposeAndSort(invert([...pcs]));
@@ -77,11 +80,12 @@ function getPrimeForm(pcs, packingType) {
 }
 
 // private
+// invert(Array[Number...]) -> Array[Number...]
 function invert(pcs) {
     return pcs.map(pc => mod12(-pc));
 }
 
-// ic vector
+// getICVector(Array[Number...]) -> Array[Number, Number, Number, Number, Number, Number]
 function getICVector(pcs) {
     let icVector = [0, 0, 0, 0, 0, 0];
     let primeForm = getPrimeForm(pcs);
