@@ -818,16 +818,16 @@ const setting3 = localStorage.getItem("setting:packing-type");
 const useRahn = setting3 === "true";
 const setting4 = localStorage.getItem("setting:one-or-all");
 const displayAll = setting4 === "true";
-const setting5 = localStorage.getItem("setting:manual-input");
-const useManualInput = setting5 === "true";
-const setting6 = localStorage.getItem("setting:show-unique");
-const showUnique = setting6 === "true";
+const setting5 = localStorage.getItem("setting:show-unique");
+const showUnique = setting5 === "true";
+const setting6 = localStorage.getItem("setting:manual-input");
+const useManualInput = setting6 === "true";
 function loadSettings() {
     const pc_btns = document.getElementsByClassName("pc-btn");
     for (let btn of pc_btns) {
         btn.textContent = usePCNumbers ?
             btn.getAttribute("pc-number") :
-            btn.textContent = btn.getAttribute("pc-note");
+            btn.getAttribute("pc-note");
     }
 
     const btn_10 = document.querySelector(".pc-btn[pc-number='10']");
