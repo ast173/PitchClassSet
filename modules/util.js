@@ -25,6 +25,7 @@ let letterToPC = new Map([
 
 let semitoneValue = new Map([
     ["#", 1], ["b", -1],
+    ["+", 1], ["-", -1],
 ]);
 
 const FLAT_TIME_MS = 500;

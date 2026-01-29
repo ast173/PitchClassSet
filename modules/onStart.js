@@ -15,6 +15,8 @@ console.log("7. INDEX");
 /*
 TODO: add supersets and subsets
 TODO: add 'is subset of' options
+TODO: there is an extra redo needed at the start of history
+TODO: refine help menu text
 TODO:HTML needs work
 
 DATATYPES
@@ -25,6 +27,7 @@ let a Integer be of datatype Number and to be an integer
 let a Natural be of datatype Integer and to be non negative
 check "./util.js" for definitions of PackingType and FormatingType
 
+FUNCTION VISIBILITY
 private means only used within its own .js file
 public means exported and used in other .js files
 */

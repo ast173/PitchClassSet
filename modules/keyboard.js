@@ -1,7 +1,7 @@
 console.log("==================== KEYBOARD ====================");
 
 import { undo, redo } from "./history.js";
-import { input, calculate, toggleAndRemember } from "./index.js";
+import { input, calculate, toggleAndRemember, onReset } from "./index.js";
 import { useManualInput } from "./loadSettings.js";
 import { forteToPrime } from "./maps.js";
 import { letterToPC, semitoneValue, FLAT_TIME_MS } from "./util.js";
@@ -47,12 +47,12 @@ document.addEventListener("keydown", e => {
         calculate(false);
         lastNote = key;
         lastInputTime = Date.now();
-    } else if ((key === "#" || key === "b") && lastNote) {
+    } else if (/^[#b+\-]$/.test(key) && lastNote) {
         toggleAndRemember(letterToPC.get(lastNote));
         toggleAndRemember(letterToPC.get(lastNote) + semitoneValue.get(key));
         calculate(false);
         lastNote = "";
-    } else if (!/^[a-g#]$/i.test(key) && key !== "Shift") {
+    } else if (!/^[a-g#+\-]$/i.test(key) && key !== "Shift") {
         lastNote = "";
     }
 
@@ -70,7 +70,7 @@ document.addEventListener("keydown", e => {
         e.preventDefault();
         calculate(false);
     } else if (key === "Escape") {
-        reset();
+        onReset();
     } else if (key === "Backspace" || key === "Delete") {
         e.preventDefault();
         undo();
@@ -102,12 +102,12 @@ function parseManualInput() {
         }
     }
 
-    let pcs = (text.match(/1[01]|[0-9]|t|[a-g][#b]?/g) || []).map(pc => {
+    let pcs = (text.match(/1[01]|[0-9]|t|[a-g][#b+\-]?/g) || []).map(pc => {
         if (pc === "t") return 10;
         if (/^[a-g]$/.test(pc)) {
             return letterToPC.get(pc);
         }
-        if (/^[a-g][#b]$/.test(pc)) {
+        if (/^[a-g][#b+\-]$/.test(pc)) {
             return mod12(letterToPC.get(pc[0]) + semitoneValue.get(pc[1]));
         }
         return parseInt(pc);

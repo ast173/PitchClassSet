@@ -1,5 +1,7 @@
 console.log("==================== HISTORY ====================");
-console.log("\"./history.js\" has no imports");
+import { toggle } from "./index.js";
+console.log("Imported items from \"./history.js\"");
+console.log(`Test 4.1\n${toggle}`);
 
 export { remember }; // to "./index.js"
 export { undo, redo, rememberChangeOfState }; // to "./index.js", "./keyboard.js"

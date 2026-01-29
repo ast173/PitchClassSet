@@ -133,7 +133,7 @@ function formatOutput(pcs, formatting) {
 }
 
 // button functions
-// private function
+// public function
 // onReset() -> undefined
 function onReset() {
     input.value = "";
@@ -186,7 +186,7 @@ function toggleAndRemember(pc) {
     remember(pc);
 }
 
-// private function
+// public function
 // toggle(PC) -> undefined
 function toggle(pc) {
     pc = mod12(pc);
@@ -242,7 +242,8 @@ function savePCSToStorage() {
 
 // KEYBOARD
 import { parseManualInput } from "./keyboard.js";
-export { input, calculate, toggleAndRemember } // to "./keyboard.js";
+export { input, calculate, toggleAndRemember, onReset } // to "./keyboard.js";
+export { getPCS }; // to "./keyboard.js";
 
 // EVENT LISTENERS
 for (let check of pc_checkboxes) {
@@ -262,7 +263,7 @@ TnI_select.addEventListener("change", () => {
 
 // HISTORY
 import { undo, redo, remember, rememberChangeOfState } from "./history.js";
-export { getPCS }; // to "./keyboard.js";
+export { toggle }; // to "./history.js";
 
 // ==================== LOAD SETTINGS ====================
 import { useTAndE, displayAll, useManualInput } from "./loadSettings.js";

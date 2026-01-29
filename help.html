@@ -15,38 +15,80 @@
         <h2>About Inputs</h2>
         <pre>
             To enter a pitch class (PC):
-             - Click the check boxes to toggle their coresponding pc
-             - Type the note letter (this also supports sharps and flats) (eg: type 'c' and then '#' for the note C#)
-             - Type the number coresponding to the pc (eg: '0' for 0, '1' for 1, all the way to 't' for 10) (Note 'e' will always enter the note E and not the pc 11)
+             - Click the square buttons to toggle their coresponding PC
+             - Type the note letter using the keyboard
+                - This also supports sharps and flats, eg: typing 'c' and then '#' will register as C#
+                - Alteratively, use '+' for sharps and '-' for flats
+             - Type the number coresponding to the PC using the keyboard
+                - Eg: '0' for 0, '1' for 1, all the way to 't' for 10
+             - Alteratively, in settings, you can turn on manual input. A new textfield will appear which accepts:
+                1. Pitch classes in the form described above (number or letters)
+                2. Forte numbers
+
+            * Note: 'e' will always refer to the note E and not the PC 11
         </pre>
 
         <h2>About Outputs</h2>
         <pre>
-            Outputs:
+            This program outputs:
              - Normal Order
              - Prime form
              - IC Vector
              - Complement (In no particular order)
              - Forte Number
              - Z Mate (if it exists)
+             - Recognized set (only if the set is known by another name, like a type of chord or scale)
+             - Unordered set (In no particular order)
         </pre>
 
         <h2>About Buttons</h2>
         <pre>
-            Reset: Clears all checkboxes and outputs
-            Complement: Gives the complement (when all checkboxes are toggled)
+            Reset: Clears all square buttons and outputs (pressing 'ESC' also resets)
+            Complement: Gives the complement (all square buttons are toggled)
             Random: Gives a random set
+            Undo: Undos an action (go to section "About History" for more)
+            Redo: Redos an action (go to section "About History" for more)
+
+            Settings: Switches the current tab to the settings tab
+            Help: Opens this menu
         </pre>
 
-        <h2>About Transposition (Tₙ) and Inversion (TₙI)</h2>
+        <!-- <h2>About Transposition (Tₙ) and Inversion (TₙI)</h2>
         <pre>
             T0 and T0I are sorted, all other n values are based on n = 0
+        </pre> -->
+
+        <h2>About History</h2>
+        <pre>
+            Press Backspace, Delete, CTRL + Z, or the undo button to undo an action
+            Press CTRL + Y or the redo button to redo an action
+
+            An action includes:
+             - Any inputs
+             - Resetting
+             - Pressing the complement button
+             - Pressing the random button
+
+            * Note: You cannot undo or redo after refreshing the main page or going from settings back to the main page
         </pre>
 
-        <h2>Other</h2>
+        <h2>About Settings</h2>
         <pre>
-            Press Backspace, Delete, or CTRL + Z to undo
-            Press CTRL + Y to redo
+            Notes or letters:
+             - For the square buttons, whether they show the note letter or the PC
+            10/11 or T/E:
+             - Doesn't need the above condition to be on
+             - Changes 10 and 11 to T and E respectively
+             - This affects the square buttons and all outputs
+            Type of packing:
+             - Rahn is packed from the right, Forte is packed to the left
+             - This only affects a total of 6 prime forms: 5-20, 6-Z29, 6-31, 7-Z18, 7-20, 8-26
+            For Tₙ and TₙI, one or all:
+             - Whether to show only transposition and inversion one at a time or to show all 12 simultaneously
+            Show Unique Inversions?
+             - Does nothing so far
+            Manual input on?
+             - A textfield appears
         </pre>
     </body>
 </html>
