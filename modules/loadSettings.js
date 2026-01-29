@@ -23,6 +23,9 @@ const displayAll = setting4 === "true";
 // const showUnique = setting5 === "true";
 const setting6 = localStorage.getItem("setting:manual-input");
 const useManualInput = setting6 === "true";
+
+// private function
+// loadSettings() -> undefined
 function loadSettings() {
     const pc_btns = document.getElementsByClassName("pc-btn");
     for (let btn of pc_btns) {

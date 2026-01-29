@@ -8,9 +8,12 @@ export { letterToPC, semitoneValue, FLAT_TIME_MS }; // to "./keyboard.js"
 
 // ==================== UTIL ====================
 const MAX_SEMITONES = 12;
+
+// let a PackingType be of datatype Symbol and to be one of the following:
 const FORTE = Symbol("forte");
 const RAHN = Symbol("rahn");
 
+// let a FormatingType be of datatype Symbol and to be one of the following:
 const UNORDERED = Symbol("unordered");
 const NORMAL_ORDER = Symbol("normal_order");
 const PRIME_FORM = Symbol("prime_form");
@@ -26,6 +29,8 @@ let semitoneValue = new Map([
 
 const FLAT_TIME_MS = 500;
 
+// public function
+// mod12(Integer) -> PC
 function mod12(pc) {
     return ((pc % 12) + 12) % 12;
 }

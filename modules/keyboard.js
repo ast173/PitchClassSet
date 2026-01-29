@@ -19,7 +19,9 @@ console.log(`Test 6.5:\n${FLAT_TIME_MS}`);
 export { parseManualInput }; // to "./index.js"
 
 // ==================== KEYBOARD ====================
+// private variable
 let lastInputTime = 0;
+// private variable
 let lastNote = "";
 document.addEventListener("keydown", e => {
     if (useManualInput && document.activeElement === input) return;
@@ -87,6 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// public function
+// parseManualInput() -> PCS
 function parseManualInput() {
     let text = input.value.toLowerCase().trim();
 

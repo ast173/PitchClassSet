@@ -8,27 +8,32 @@ export { getForteNumber, getZMate, tryMatchForKnown }; // to "./index.js"
 export { forteToPrime }; // to "./keyboard.js"
 
 // ==================== MAPS ====================
-// forte number
+// public function
+// getForteNumber(PCS) -> String
 function getForteNumber(pcs) {
     return primeToForte.has(getPrimeForm(pcs).join(", ")) ?
         primeToForte.get(getPrimeForm(pcs).join(", ")) :
         "None";
 }
 
-// z sets
+// public function
+// getZMate(PCS) -> String
 function getZMate(pcs) {
     return zSets.has(getForteNumber(pcs)) ?
         zSets.get(getForteNumber(pcs)) :
         "None";
 }
 
-// known chords
+// public function
+// tryMatchForKnown(PCS) -> String
 function tryMatchForKnown(pcs) {
     return forteToKnown.has(getForteNumber(pcs)) ?
         forteToKnown.get(getForteNumber(pcs)) :
         "";
 }
 
+// private constant
+// primeToForte = Map[String -> String]
 const primeToForte = new Map([
     ["", "0-1"],
     ["0", "1-1"],
@@ -277,8 +282,12 @@ const primeToForte = new Map([
     ["0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11", "12-1"]
 ]);
 
+// public constant
+// forteToPrime = Map[String -> String]
 const forteToPrime = new Map([...primeToForte].map(([k, v]) => [v, k]));
 
+// private constant
+// zSets = Map[String -> String]
 const zSets = new Map([
     // cardinality 4 (1 total z-set)
     ["4-Z15", "4-Z29"],
@@ -337,6 +346,8 @@ const zSets = new Map([
     ["8-Z29", "8-Z15"],
 ]);
 
+// private constant
+// forteToKnown = Map[String -> String]
 const forteToKnown = new Map([
     ["2-1", "Minor 2nd/Major 7th"],
     ["2-2", "Major 2nd/Minor 7th"],

@@ -12,6 +12,8 @@ console.log("Imported items from \"./deep.js\"");
 console.log(`Test 7.3:\n${getNormalOrder}`);
 
 // ==================== INDEX ====================
+// private function
+// handleTranspositionAndInversion() -> undefined
 function handleTranspositionAndInversion() {
     if (!displayAll) {
         Tn_output.value = formatOutput(getTn(pcs, parseInt(Tn_select.value)), UNORDERED);
@@ -31,12 +33,15 @@ function handleTranspositionAndInversion() {
         .map(pc => textStart(pc) + formatOutput(getTnI(pcs, pc), UNORDERED)).join("\n");
 }
 
-// private
+// private function
+// resizeHeight(PC) -> String
 function textStart(pc) {
     let spaces = "             ";
     return pc.toString().length === 1 ? spaces + ` n = ${pc}: ` : spaces + `n = ${pc}: `;
 }
 
+// private function
+// resizeHeight(TODO:HTML) -> undefined
 function resizeHeight(textarea) {
     textarea.style.height = "auto";
     textarea.style.height = textarea.scrollHeight + "px";
@@ -50,13 +55,15 @@ function resizeHeight(textarea) {
 
 
 
-// TODO: add supersets and subsets
-// TODO: add 'is subset of' options
+
 // ==================== CONNECTS TO index.html ====================
+const input = document.getElementById("input");
 const output = document.getElementById("output");
 const pc_checkboxes = document.getElementsByClassName("pc");
 let pcs = [];
 let packingType;
+// public function
+// setPackingType(PackingType) -> undefined
 function setPackingType(type) {
     packingType = type;
 }
@@ -74,6 +81,8 @@ const TnI_output = document.getElementById("TnI-output");
 const Tn_select = document.getElementById("Tn-select");
 const TnI_select = document.getElementById("TnI-select");
 
+// public function
+// calculate(Boolean) -> undefined
 function calculate(manualOn) {
     if (manualOn) {
         for (let checkbox of pc_checkboxes) {
@@ -104,6 +113,8 @@ function calculate(manualOn) {
     resizeHeight(TnI_output);
 }
 
+// private function
+// formatOutput(PCS, FormatingType) -> String
 function formatOutput(pcs, formatting) {
     let formatted = "";
     if (formatting === NORMAL_ORDER || formatting === UNORDERED) {
@@ -122,8 +133,9 @@ function formatOutput(pcs, formatting) {
 }
 
 // button functions
-const input = document.getElementById("input");
-function reset() {
+// private function
+// onReset() -> undefined
+function onReset() {
     input.value = "";
     output.value = "";
 
@@ -151,6 +163,8 @@ function reset() {
     savePCSToStorage();
 }
 
+// private function
+// switchToComplement() -> undefined
 function switchToComplement() {
     let lastState = getPCS();
     
@@ -165,17 +179,23 @@ function switchToComplement() {
     calculate(false);
 }
 
+// public function
+// toggleAndRemember(PC) -> undefined
 function toggleAndRemember(pc) {
     toggle(pc);
     remember(pc);
 }
 
+// private function
+// toggle(PC) -> undefined
 function toggle(pc) {
     pc = mod12(pc);
     let checkbox = document.getElementById(pc.toString());
     checkbox.checked = !checkbox.checked;
 }
 
+// private function
+// generateRandom() -> undefined
 function generateRandom() {
     let lastPCS = getPCS();
 
@@ -197,17 +217,22 @@ function generateRandom() {
 
 
 // ==================== DATA ====================
-// getPCS(): void -> Array[Number...]
+// public function
+// getPCS() -> PCS
 function getPCS() {
     return [...pc_checkboxes]
                 .filter(check => check.checked)
                 .map(check => getPC(check));
 }
 
+// private function
+// getPC(TODO:HTML) -> PC
 function getPC(check) {
     return parseInt(check.id);
 }
 
+// private function
+// savePCSToStorage() -> undefined
 function savePCSToStorage() {
     if (useManualInput) localStorage.setItem("input-text", input.value);
     localStorage.setItem("pcs", pcs.join(","));
@@ -239,12 +264,12 @@ TnI_select.addEventListener("change", () => {
 import { undo, redo, remember, rememberChangeOfState } from "./history.js";
 export { getPCS }; // to "./keyboard.js";
 
-
-
-
-// ==================== LOAD SETTINGS / DATA ====================
+// ==================== LOAD SETTINGS ====================
 import { useTAndE, displayAll, useManualInput } from "./loadSettings.js";
 export { setPackingType, tryLoadPCS }; // to "./loadSettings.js"
+
+// public function
+// tryLoadPCS() -> undefined
 function tryLoadPCS() {
     let storedData = localStorage.getItem("pcs");
 
@@ -263,6 +288,8 @@ function tryLoadPCS() {
     calculate(false);
 }
 
+// private function
+// setCheckboxStates() -> undefined
 function setCheckboxStates() {
     for (let pc of pcs) {
         let checkbox = document.getElementById(pc.toString());
@@ -272,7 +299,7 @@ function setCheckboxStates() {
 
 // ==================== Elements accessible from index.html ====================
 window.calculate = calculate;
-window.reset = reset;
+window.onReset = onReset;
 window.switchToComplement = switchToComplement;
 window.generateRandom = generateRandom;
 window.undo = undo;

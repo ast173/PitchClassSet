@@ -9,7 +9,8 @@ export { getNormalOrder, getICVector,
 export { getPrimeForm }; // to "./index.js", "./maps.js";
 
 // ==================== DEEP ====================
-// getNormalOrder(Array[Number...], Symbol) -> Array[Number...]
+// public function
+// getNormalOrder(PCS, PackingType) -> PCS
 function getNormalOrder(pcs, packingType) {
     pcs = transposeAndSort(pcs);
 
@@ -34,22 +35,22 @@ function getNormalOrder(pcs, packingType) {
     return order;
 }
 
-// private
-// transposeAndSort(Array[Number...], Number) -> Array[Number...]
+// private function
+// transposeAndSort(PCS) -> PCS
 function transposeAndSort(pcs) {
     let first = pcs[0];
     pcs = pcs.map(pc => mod12(pc - first));
     return pcs.sort((a, b) => a - b);
 }
 
-// private
-// rotate(Array[Number...], Number) -> Array[Number...]
+// private function
+// rotate(Array, Number) -> Array
 function rotate(arr, i) {
     return arr.slice(i).concat(arr.slice(0, i));
 }
 
-// private
-// tiebreak(Array[Number...], Array[Number...], Symbol) -> Array[Number...]
+// private function
+// tiebreak(NormalOrder, NormalOrder, PackingType) -> NormalOrder
 function tiebreak(oldSet, newSet, packingType) {
     if (packingType === FORTE) {
         for (let i = 0; i < oldSet.length; i++) {
@@ -71,7 +72,8 @@ function tiebreak(oldSet, newSet, packingType) {
     return oldSet;
 }
 
-// getPrimeForm(Array[Number...], Symbol) -> Array[Number...]
+// public function
+// getPrimeForm(PCS, PackingType) -> NormalOrder
 function getPrimeForm(pcs, packingType) {
     pcs = transposeAndSort(pcs);
     let pcsr = transposeAndSort(invert([...pcs]));
@@ -79,13 +81,14 @@ function getPrimeForm(pcs, packingType) {
     return tiebreak(getNormalOrder(pcs, packingType), getNormalOrder(pcsr, packingType), packingType);
 }
 
-// private
-// invert(Array[Number...]) -> Array[Number...]
+// private function
+// invert(PCS) -> PCS
 function invert(pcs) {
     return pcs.map(pc => mod12(-pc));
 }
 
-// getICVector(Array[Number...]) -> Array[Number, Number, Number, Number, Number, Number]
+// public function
+// getICVector(PCS) -> Array[Natural, Natural, Natural, Natural, Natural, Natural]
 function getICVector(pcs) {
     let icVector = [0, 0, 0, 0, 0, 0];
     let primeForm = getPrimeForm(pcs);
@@ -100,14 +103,16 @@ function getICVector(pcs) {
     return icVector;
 }
 
-// private
+// private function
+// getIC(Number) -> Natural [0, 6]
 function getIC(interval) {
     interval = mod12(interval);
     if (interval === 0) throw new Error("Interval must be non zero");
     return interval <= 6 ? interval : 12 - interval;
 }
 
-// complement
+// public function
+// getComplement(PCS) -> PCS
 function getComplement(pcs) {
     let complement = [];
 
@@ -120,11 +125,14 @@ function getComplement(pcs) {
     return complement;
 }
 
-// transposition and inversion
+// public function
+// getTn(PCS, Natural [0, 11]) -> PCS
 function getTn(pcs, n) {
     return pcs.map(pc => mod12(pc + n));
 }
 
+// public function
+// getTnI(PCS, Natural [0, 11]) -> PCS
 function getTnI(pcs, n) {
     let T0I = invert(pcs).sort((a, b) => a - b);
     return T0I.map(pc => mod12(pc + n));
