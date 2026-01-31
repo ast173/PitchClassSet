@@ -28,7 +28,7 @@ document.addEventListener("keydown", e => {
 
     let key = e.key;
 
-    if ((e.ctrlKey || e.metaKey)) {
+    if (e.ctrlKey || e.metaKey) {
         if (key.toLowerCase() === "z") {
             e.preventDefault();
             undo();

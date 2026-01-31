@@ -14,81 +14,110 @@
 
         <h2>About Inputs</h2>
         <pre>
-            To enter a pitch class (PC):
-             - Click the square buttons to toggle their coresponding PC
-             - Type the note letter using the keyboard
-                - This also supports sharps and flats, eg: typing 'c' and then '#' will register as C#
-                - Alteratively, use '+' for sharps and '-' for flats
-             - Type the number coresponding to the PC using the keyboard
-                - Eg: '0' for 0, '1' for 1, all the way to 't' for 10
-             - Alteratively, in settings, you can turn on manual input. A new textfield will appear which accepts:
-                1. Pitch classes in the form described above (number or letters)
-                2. Forte numbers
+            To enter a pitch class:
+             - Click the square buttons to toggle their corresponding pitch class.
 
-            * Note: 'e' will always refer to the note E and not the PC 11
+             - Type a note letter using the keyboard.
+                - Sharps and flats are supported.
+                   - Example: typing 'c' followed by '#' registers as C#.
+                - Alternatively, use '+' for sharps and '-' for flats.
+
+             - Type the number corresponding to the pitch class.
+                - Example: '0' for 0, '1' for 1, all the way to 't' for 10.
+
+             - Alternatively, enable manual input in settings.
+                - A new text field will apear that accepts:
+                   1. Pitch classes (numbers or letters)
+                   2. Forte numbers
+
+            * Note: 'e' will always refer to the note E, not pitch class 11.
         </pre>
 
         <h2>About Outputs</h2>
         <pre>
-            This program outputs:
-             - Normal Order
+            This program outputs the following information:
+             - Normal order
              - Prime form
-             - IC Vector
-             - Complement (In no particular order)
-             - Forte Number
-             - Z Mate (if it exists)
-             - Recognized set (only if the set is known by another name, like a type of chord or scale)
-             - Unordered set (In no particular order)
+             - Interval-class vector (IC vector)
+             - Complement (unordered)
+             - Forte number
+             - Z-mate (if it exists)
+             - Recognized set
+                - Displayed only if the set has a known name, such as a chord or scale.
+             - Unordered set (unordered)
         </pre>
 
         <h2>About Buttons</h2>
         <pre>
-            Reset: Clears all square buttons and outputs (pressing 'ESC' also resets)
-            Complement: Gives the complement (all square buttons are toggled)
-            Random: Gives a random set
-            Undo: Undos an action (go to section "About History" for more)
-            Redo: Redos an action (go to section "About History" for more)
+            Reset:
+             - Clears all square buttons and outputs.
+             - Pessing 'ESC' also resets.
 
-            Settings: Switches the current tab to the settings tab
-            Help: Opens this menu
+            Complement:
+             - Gives the complement of the current set.
+             - By definition, all square buttons are toggled.
+
+            Random:
+             - Generates a random pitch class set.
+
+            Undo:
+             - Undoes an action (see "About History").
+
+            Redo:
+             - Redoes an action.
+
+            Settings:
+             - Switches to the settings page.
+
+            Help:
+             - Opens this menu.
         </pre>
-
-        <!-- <h2>About Transposition (Tₙ) and Inversion (TₙI)</h2>
-        <pre>
-            T0 and T0I are sorted, all other n values are based on n = 0
-        </pre> -->
 
         <h2>About History</h2>
         <pre>
-            Press Backspace, Delete, CTRL + Z, or the undo button to undo an action
-            Press CTRL + Y or the redo button to redo an action
+            Undo shortcuts:
+             - Backspace
+             - Delete
+             - CTRL + Z
+             - Undo button
+
+            Redo shortcuts:
+             - CTRL + Y
+             - Redo button
 
             An action includes:
              - Any inputs
-             - Resetting
-             - Pressing the complement button
-             - Pressing the random button
+             - Reset
+             - Complement
+             - Random
 
-            * Note: You cannot undo or redo after refreshing the main page or going from settings back to the main page
+            * Note: History is cleared after refreshing the page or returning from the settings page.
         </pre>
 
         <h2>About Settings</h2>
         <pre>
             Notes or letters:
-             - For the square buttons, whether they show the note letter or the PC
+             - Determines whether square buttons show note names or pitch class numbers.
+
             10/11 or T/E:
-             - Doesn't need the above condition to be on
-             - Changes 10 and 11 to T and E respectively
-             - This affects the square buttons and all outputs
+             - Independent of the notes or letters setting.
+             - Displays pitch classes 10 and 11 as T and E.
+             - Affects square buttons and all outputs.
+
             Type of packing:
-             - Rahn is packed from the right, Forte is packed to the left
-             - This only affects a total of 6 prime forms: 5-20, 6-Z29, 6-31, 7-Z18, 7-20, 8-26
+             - Rahn: packed from the right.
+             - Forte: packed to the left.
+             - Only affects 6 total prime forms:
+                - 5-20, 6-Z29, 6-31, 7-Z18, 7-20, 8-26
+
             For Tₙ and TₙI, one or all:
-             - Whether to show only transposition and inversion one at a time or to show all 12 simultaneously
+             - Displays either a single transposition/inversion or all 12 simultaneously.
+            
             Show Unique Inversions?
-             - Does nothing so far
+             - Currently has no effect.
+            
             Manual input on?
-             - A textfield appears
+             - Displays a text field for direct input.
         </pre>
     </body>
 </html>
