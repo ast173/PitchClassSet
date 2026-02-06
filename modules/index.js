@@ -16,8 +16,8 @@ console.log(`Test 7.3:\n${getNormalOrder}`);
 // handleTranspositionAndInversion() -> undefined
 function handleTranspositionAndInversion() {
     if (!displayAll) {
-        Tn_output.value = formatOutput(getTn(pcs, parseInt(Tn_select.value)), UNORDERED);
-        TnI_output.value = formatOutput(getTnI(pcs, parseInt(TnI_select.value)), UNORDERED);
+        Tn_output.value = formatOutput(getTn([...pcs], parseInt(Tn_select.value)), UNORDERED);
+        TnI_output.value = formatOutput(getTnI([...pcs], parseInt(TnI_select.value)), UNORDERED);
         return;
     }
 
@@ -28,9 +28,9 @@ function handleTranspositionAndInversion() {
     }
 
     Tn_output.value = [...Array(MAX_SEMITONES).keys()]
-        .map(pc => textStart(pc) + formatOutput(getTn(pcs, pc), UNORDERED)).join("\n");
+        .map(pc => textStart(pc) + formatOutput(getTn([...pcs], pc), UNORDERED)).join("\n");
     TnI_output.value = [...Array(MAX_SEMITONES).keys()]
-        .map(pc => textStart(pc) + formatOutput(getTnI(pcs, pc), UNORDERED)).join("\n");
+        .map(pc => textStart(pc) + formatOutput(getTnI([...pcs], pc), UNORDERED)).join("\n");
 }
 
 // private function
@@ -94,19 +94,28 @@ function calculate(manualOn) {
         pcs = getPCS();
     }
     pcs = pcs.sort((a, b) => a - b);
-    savePCSToStorage();
+    savePCSToStorage([...pcs]);
 
-    output.value = formatOutput(pcs, UNORDERED);
+    output.value = formatOutput([...pcs], UNORDERED);
     // output.value = JSON.stringify(history, null, 2) +`\nLength: ${history.length}\nPointer: ${pointer}`;
 
-    normal_order.value = formatOutput(getNormalOrder(pcs, packingType), NORMAL_ORDER);
-    prime_form.value = formatOutput(getPrimeForm(pcs, packingType), PRIME_FORM);
-    ic_vector.value = formatOutput(getICVector(pcs), IC_VECTOR);
-    complement.value = formatOutput(getComplement(pcs), UNORDERED);
+    // console.log("Normal Order");
+    normal_order.value = formatOutput(getNormalOrder([...pcs], packingType), NORMAL_ORDER);
+    // console.log("Prime Form");
+    let prime = getPrimeForm([...pcs], packingType);
+    prime_form.value = formatOutput(prime, PRIME_FORM);
+    // console.log("IC Vector");
+    ic_vector.value = formatOutput(getICVector([...pcs]), IC_VECTOR);
+    // console.log("Complement");
+    complement.value = formatOutput(getComplement([...pcs]), UNORDERED);
 
-    forte_number.value = getForteNumber(pcs);
-    z_mate.value = getZMate(pcs);
-    known.value = tryMatchForKnown(pcs);
+    // console.log("Forte Number");
+    // TODO: temporary solution
+    forte_number.value = getForteNumber([...prime]);
+    // console.log("Z Mate");
+    z_mate.value = getZMate([...pcs]);
+    // console.log("Known");
+    known.value = tryMatchForKnown([...pcs]);
 
     handleTranspositionAndInversion();
     resizeHeight(Tn_output);
@@ -160,7 +169,7 @@ function onReset() {
     }
 
     pcs = [];
-    savePCSToStorage();
+    savePCSToStorage([...pcs]);
 }
 
 // private function
@@ -232,8 +241,8 @@ function getPC(check) {
 }
 
 // private function
-// savePCSToStorage() -> undefined
-function savePCSToStorage() {
+// savePCSToStorage(PCS) -> undefined
+function savePCSToStorage(pcs) {
     if (useManualInput) localStorage.setItem("input-text", input.value);
     localStorage.setItem("pcs", pcs.join(","));
 }
@@ -254,11 +263,11 @@ for (let check of pc_checkboxes) {
 }
 
 Tn_select.addEventListener("change", () => {
-    Tn_output.value = formatOutput(getTn(pcs, parseInt(Tn_select.value)), UNORDERED);
+    Tn_output.value = formatOutput(getTn([...pcs], parseInt(Tn_select.value)), UNORDERED);
 });
 
 TnI_select.addEventListener("change", () => {
-    TnI_output.value = formatOutput(getTnI(pcs, parseInt(TnI_select.value)), UNORDERED);
+    TnI_output.value = formatOutput(getTnI([...pcs], parseInt(TnI_select.value)), UNORDERED);
 });
 
 // HISTORY

@@ -1,3 +1,5 @@
+import { logHistory } from "./history.js";
+
 console.log("==================== ON START ====================");
 console.log("In \"./index.html\" load order:");
 console.log("\"./modules/onStart.js\"");
@@ -11,6 +13,8 @@ console.log("4. HISTORY");
 console.log("5. LOAD SETTINGS");
 console.log("6. KEYBOARD");
 console.log("7. INDEX");
+
+logHistory();
 
 /*
 TODO: add supersets and subsets

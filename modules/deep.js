@@ -12,12 +12,12 @@ export { getPrimeForm }; // to "./index.js", "./maps.js";
 // public function
 // getNormalOrder(PCS, PackingType) -> PCS
 function getNormalOrder(pcs, packingType) {
-    pcs = transposeAndSort(pcs);
+    let pcsCopy = transposeAndSort(pcs);
 
     let minRange = MAX_SEMITONES;
-    let order = pcs;
-    for (let i = 0; i < pcs.length; i++) {
-        let rotation = rotate(pcs, i);
+    let order = [...pcsCopy];
+    for (let i = 0; i < pcsCopy.length; i++) {
+        let rotation = rotate(pcsCopy, i);
 
         let first = rotation[0];
         rotation = rotation.map(pc => mod12(pc - first));
@@ -25,7 +25,7 @@ function getNormalOrder(pcs, packingType) {
         let range = rotation.at(-1) - rotation.at(0);
 
         if (range < minRange) {
-            order = rotation;
+            order = [...rotation];
             minRange = range;
         } else if (range === minRange) {
             order = tiebreak(order, rotation, packingType);
@@ -38,15 +38,19 @@ function getNormalOrder(pcs, packingType) {
 // private function
 // transposeAndSort(PCS) -> PCS
 function transposeAndSort(pcs) {
-    let first = pcs[0];
-    pcs = pcs.map(pc => mod12(pc - first));
-    return pcs.sort((a, b) => a - b);
+    let pcsCopy = [...pcs]
+    pcsCopy = pcsCopy.sort((a, b) => a - b);
+    let first = pcsCopy[0];
+    pcsCopy = pcsCopy.map(pc => mod12(pc - first));
+
+    return pcsCopy.sort((a, b) => a - b);
 }
 
 // private function
 // rotate(Array, Number) -> Array
 function rotate(arr, i) {
-    return arr.slice(i).concat(arr.slice(0, i));
+    let arrCopy = [...arr];
+    return arrCopy.slice(i).concat(arrCopy.slice(0, i));
 }
 
 // private function
@@ -55,36 +59,35 @@ function tiebreak(oldSet, newSet, packingType) {
     if (packingType === FORTE) {
         for (let i = 0; i < oldSet.length; i++) {
             if (oldSet[i] < newSet[i]) {
-                return oldSet;
+                return [...oldSet];
             } else if (oldSet[i] > newSet[i]) {
-                return newSet;
+                return [...newSet];
             }
         }
     } else if (packingType === RAHN) {
         for (let i = oldSet.length - 1; i >= 0; i--) {
             if (oldSet[i] < newSet[i]) {
-                return oldSet;
+                return [...oldSet];
             } else if (oldSet[i] > newSet[i]) {
-                return newSet;
+                return [...newSet];
             }
         }
     }
-    return oldSet;
+    return [...oldSet];
 }
 
 // public function
 // getPrimeForm(PCS, PackingType) -> NormalOrder
 function getPrimeForm(pcs, packingType) {
-    pcs = transposeAndSort(pcs);
+    pcs = transposeAndSort([...pcs]);
     let pcsr = transposeAndSort(invert([...pcs]));
-
     return tiebreak(getNormalOrder(pcs, packingType), getNormalOrder(pcsr, packingType), packingType);
 }
 
 // private function
 // invert(PCS) -> PCS
 function invert(pcs) {
-    return pcs.map(pc => mod12(-pc));
+    return [...pcs].map(pc => mod12(-pc));
 }
 
 // public function
