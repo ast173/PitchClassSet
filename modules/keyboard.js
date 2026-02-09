@@ -6,15 +6,15 @@ import { useManualInput } from "./loadSettings.js";
 import { forteToPrime } from "./maps.js";
 import { letterToPC, semitoneValue, FLAT_TIME_MS } from "./util.js";
 console.log("Imported items from \"./history.js\"")
-console.log(`Test 6.1:\n${undo}`);
+// console.log(`Test 6.1:\n${undo}`);
 console.log("Imported items from \"./index.js\"")
-console.log(`Test 6.2:\n${toggleAndRemember}`);
+// console.log(`Test 6.2:\n${toggleAndRemember}`);
 console.log("Imported items from \"./loadSettings.js\"")
-console.log(`Test 6.3:\n${useManualInput}`);
+// console.log(`Test 6.3:\n${useManualInput}`);
 console.log("Imported items from \"./maps.js\"")
-console.log(`Test 6.4:\n${forteToPrime}`);
+// console.log(`Test 6.4:\n${forteToPrime}`);
 console.log("Imported items from \"./util.js\"")
-console.log(`Test 6.5:\n${FLAT_TIME_MS}`);
+// console.log(`Test 6.5:\n${FLAT_TIME_MS}`);
 
 export { parseManualInput }; // to "./index.js"
 

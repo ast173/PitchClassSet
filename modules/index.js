@@ -5,11 +5,11 @@ import { getForteNumber, getZMate, tryMatchForKnown } from "./maps.js";
 import { getNormalOrder, getPrimeForm, getICVector,
     getComplement, getTn, getTnI } from "./deep.js";
 console.log("Imported items from \"./util.js\"");
-console.log(`Test 7.1:\n${MAX_SEMITONES}`);
+// console.log(`Test 7.1:\n${MAX_SEMITONES}`);
 console.log("Imported items from \"./maps.js\"");
-console.log(`Test 7.2:\n${getForteNumber}`);
+// console.log(`Test 7.2:\n${getForteNumber}`);
 console.log("Imported items from \"./deep.js\"");
-console.log(`Test 7.3:\n${getNormalOrder}`);
+// console.log(`Test 7.3:\n${getNormalOrder}`);
 
 // ==================== INDEX ====================
 // private function
@@ -97,7 +97,6 @@ function calculate(manualOn) {
     savePCSToStorage([...pcs]);
 
     output.value = formatOutput([...pcs], UNORDERED);
-    // output.value = JSON.stringify(history, null, 2) +`\nLength: ${history.length}\nPointer: ${pointer}`;
 
     // console.log("Normal Order");
     normal_order.value = formatOutput(getNormalOrder([...pcs], packingType), NORMAL_ORDER);
@@ -113,9 +112,9 @@ function calculate(manualOn) {
     // TODO: temporary solution
     forte_number.value = getForteNumber([...prime]);
     // console.log("Z Mate");
-    z_mate.value = getZMate([...pcs]);
+    z_mate.value = getZMate([...prime]);
     // console.log("Known");
-    known.value = tryMatchForKnown([...pcs]);
+    known.value = tryMatchForKnown([...prime]);
 
     handleTranspositionAndInversion();
     resizeHeight(Tn_output);
@@ -199,7 +198,7 @@ function toggleAndRemember(pc) {
 // toggle(PC) -> undefined
 function toggle(pc) {
     pc = mod12(pc);
-    let checkbox = document.getElementById(pc.toString());
+    let checkbox = document.getElementById(getIDFromPC(pc));
     checkbox.checked = !checkbox.checked;
 }
 
@@ -231,13 +230,20 @@ function generateRandom() {
 function getPCS() {
     return [...pc_checkboxes]
                 .filter(check => check.checked)
-                .map(check => getPC(check));
+                .map(check => getPCFromCheckbox(check));
 }
 
 // private function
-// getPC(TODO:HTML) -> PC
-function getPC(check) {
+// getPCFromCheckbox(TODO:HTML) -> PC
+function getPCFromCheckbox(check) {
     return parseInt(check.id);
+}
+
+export { getIDFromPC }; // to "./history.js"
+// public function
+// getIDFromPC(PC) -> String
+function getIDFromPC(pc) {
+    return pc.toString();
 }
 
 // private function
@@ -257,7 +263,7 @@ export { getPCS }; // to "./keyboard.js";
 // EVENT LISTENERS
 for (let check of pc_checkboxes) {
     check.addEventListener("input", () => {
-        remember(getPC(check));
+        remember(getPCFromCheckbox(check));
         calculate(false);
     });
 }
@@ -302,7 +308,7 @@ function tryLoadPCS() {
 // setCheckboxStates() -> undefined
 function setCheckboxStates() {
     for (let pc of pcs) {
-        let checkbox = document.getElementById(pc.toString());
+        let checkbox = document.getElementById(getIDFromPC(pc));
         checkbox.checked = true;
     }
 }

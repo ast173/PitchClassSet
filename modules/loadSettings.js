@@ -3,9 +3,9 @@ console.log("==================== LOAD SETTINGS ====================");
 import { setPackingType, tryLoadPCS } from "./index.js";
 import { FORTE, RAHN } from "./util.js";
 console.log("Imported items from \"./index.js\"")
-console.log(`Test 5.1:\n${setPackingType}`);
+// console.log(`Test 5.1:\n${setPackingType}`);
 console.log("Imported items from \"./util.js\"")
-console.log(`Test 5.2:\n${String(FORTE)}`);
+// console.log(`Test 5.2:\n${String(FORTE)}`);
 
 export { useTAndE, displayAll }; // to "./index.js"
 export { useManualInput }; // to "./index.js", "./keyboard.js"

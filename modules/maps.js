@@ -2,7 +2,7 @@ console.log("==================== MAPS ====================");
 
 import { getPrimeForm } from "./deep.js";
 console.log("Imported items from \"./deep.js\"");
-console.log(`Test 3.1\n${getPrimeForm}`);
+// console.log(`Test 3.1\n${getPrimeForm}`);
 
 export { getForteNumber, getZMate, tryMatchForKnown }; // to "./index.js"
 export { forteToPrime }; // to "./keyboard.js"
@@ -29,7 +29,7 @@ function getZMate(pcs) {
 function tryMatchForKnown(pcs) {
     return forteToKnown.has(getForteNumber(pcs)) ?
         forteToKnown.get(getForteNumber(pcs)) :
-        "";
+        "None";
 }
 
 // private constant

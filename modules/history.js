@@ -1,11 +1,10 @@
 console.log("==================== HISTORY ====================");
-import { toggle } from "./index.js";
+import { toggle, getIDFromPC } from "./index.js";
 console.log("Imported items from \"./history.js\"");
-console.log(`Test 4.1\n${toggle}`);
+// console.log(`Test 4.1\n${toggle}`);
 
 export { remember }; // to "./index.js"
 export { undo, redo, rememberChangeOfState }; // to "./index.js", "./keyboard.js"
-export { logHistory }; // to "./onStart.js"
 
 // ==================== HISTORY ====================
 // private variable
@@ -17,7 +16,7 @@ let pointer = 0;
 // undo() -> undefined
 function undo() {
     if (pointer === -history.length) {
-        console.log("Pointer is already at END, cannot undo any more");
+        console.log("Pointer is already at START, cannot undo any more");
         return;
     }
     pointer--;
@@ -29,7 +28,7 @@ function undo() {
 // redo() -> undefined
 function redo() {
     if (pointer === 0) {
-        console.log("Pointer is already at START, cannot redo any more");
+        console.log("Pointer is already at END, cannot redo any more");
         return;
     }
     loadHistoryAtPointer();
@@ -46,7 +45,7 @@ function loadHistoryAtPointer() {
         toggleAll(pcs);
     } else {
         let pc = data
-        let pc_checkbox = document.getElementById(pc.toString());
+        let pc_checkbox = document.getElementById(getIDFromPC(pc));
         pc_checkbox.checked = !pc_checkbox.checked;
     }
 }
@@ -95,7 +94,7 @@ function getToToggle(lastPCS, currentPCS) {
     ];
 }
 
-// public function
+// private function
 // logHistory() -> undefined
 function logHistory() {
     console.log("==================== SNAPSHOT ====================");
@@ -108,33 +107,38 @@ function logHistory() {
 // private function
 // logHistoryString() -> undefined
 function logHistoryString() {
+    console.log("[");
+
     if (history.length === 0) {
-        console.log("[");
-        console.log(`      <- Pointer=END/START: ${pointer}`);
+        console.log(`      <- Pointer=START/END: ${pointer}`);
         console.log("]");
         return;
     }
 
-    console.log("[");
-    for (let i = 0; i < history.length; i++) {
-        if (i === 0 && pointer === -history.length) {
-            console.log(`      <- Pointer=END: ${pointer}`);
+    let pointerPosition = history.length + pointer;
+    
+    for (let i = 0; i <= history.length; i++) {
+        // if (pointer === -history.length && i === 0) {
+        if (pointerPosition === 0 && i === 0) {
+            console.log(`      <- Pointer=START: ${pointer}`);
         }
 
         let e = history[i];
-        if (e instanceof Number) {
-            console.log(`    ${i}: ${e}`);
-        } else if (e instanceof Array) {
+        if (e instanceof Array) {
             console.log(`    ${i}: [${e.join(", ")}]`);
         } else {
             console.log(`    ${i}: ${e}`);
         }
 
-        if (pointer === 0 && i === history.length - 1) {
-            console.log(`      <- Pointer=START: ${pointer}`);
-        } else if (pointer === i + 1 - history.length) {
+        if (pointer === 0 && i + 1 === history.length + pointer) {
+        // if (pointer === 0 && i === history.length - 1) {
+            console.log(`      <- Pointer=END: ${pointer}`);
+        } else if (i + 1 === pointerPosition) {
+        // } else if (pointer === i + 1 - history.length) {
             console.log(`      <- Pointer: ${pointer}`);
         }
     }
     console.log("]");
 }
+
+logHistory();

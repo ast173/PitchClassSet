@@ -1,5 +1,3 @@
-import { logHistory } from "./history.js";
-
 console.log("==================== ON START ====================");
 console.log("In \"./index.html\" load order:");
 console.log("\"./modules/onStart.js\"");
@@ -14,13 +12,12 @@ console.log("5. LOAD SETTINGS");
 console.log("6. KEYBOARD");
 console.log("7. INDEX");
 
-logHistory();
+// TODO wait until after everything is imported
+console.log("==================== Logging starts here ====================");
 
 /*
 TODO: add supersets and subsets
 TODO: add 'is subset of' options
-TODO: there is an extra redo needed at the start of history
-TODO: refine help menu text
 TODO:HTML needs work
 
 DATATYPES
