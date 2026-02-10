@@ -3,21 +3,21 @@ console.log("In \"./index.html\" load order:");
 console.log("\"./modules/onStart.js\"");
 console.log("\"./modules/index.js\"");
 console.log("\"./modules/loadSettings.js\"");
+
 console.log("Load order:");
 console.log("1. UTIL");
-console.log("2. DEEP");
+console.log("2. UTIL2");
 console.log("3. MAPS");
-console.log("4. HISTORY");
-console.log("5. LOAD SETTINGS");
-console.log("6. KEYBOARD");
-console.log("7. INDEX");
-
-// TODO wait until after everything is imported
-console.log("==================== Logging starts here ====================");
+console.log("4. DEEP");
+console.log("5. HISTORY");
+console.log("6. LOAD SETTINGS");
+console.log("7. KEYBOARD");
+console.log("8. INDEX");
 
 /*
 TODO: add supersets and subsets
 TODO: add 'is subset of' options
+TODO: show unique transpositions/inversions
 TODO:HTML needs work
 
 DATATYPES

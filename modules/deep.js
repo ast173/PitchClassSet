@@ -4,9 +4,7 @@ import { MAX_SEMITONES, FORTE, RAHN, mod12 } from "./util.js";
 console.log("Imported items from \"./util.js\"");
 // console.log(`Test 2.1:\n${mod12}`);
 
-export { getNormalOrder, getICVector,
-    getComplement, getTn, getTnI } // to "./index.js";
-export { getPrimeForm }; // to "./index.js", "./maps.js";
+export { getNormalOrder, getPrimeForm, getICVector, getComplement, getTn, getTnI } // to "./index.js";
 
 // ==================== DEEP ====================
 // public function

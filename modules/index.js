@@ -1,10 +1,12 @@
 console.log("==================== INDEX ====================");
 
-import { MAX_SEMITONES, UNORDERED, NORMAL_ORDER, PRIME_FORM, IC_VECTOR, mod12 } from "./util.js";
+import { MAX_SEMITONES, UNORDERED, NORMAL_ORDER, PRIME_FORM, IC_VECTOR } from "./util.js";
+import { toggle, getPCFromCheckbox, savePCSToStorage, setCheckboxStates } from "./util2.js";
 import { getForteNumber, getZMate, tryMatchForKnown } from "./maps.js";
 import { getNormalOrder, getPrimeForm, getICVector,
     getComplement, getTn, getTnI } from "./deep.js";
 console.log("Imported items from \"./util.js\"");
+console.log("Imported items from \"./util2.js\"");
 // console.log(`Test 7.1:\n${MAX_SEMITONES}`);
 console.log("Imported items from \"./maps.js\"");
 // console.log(`Test 7.2:\n${getForteNumber}`);
@@ -47,6 +49,19 @@ function resizeHeight(textarea) {
     textarea.style.height = textarea.scrollHeight + "px";
 }
 
+// private function
+// getPCS() -> PCS
+function getPCS() {
+    return [...pc_checkboxes]
+                .filter(check => check.checked)
+                .map(check => getPCFromCheckbox(check));
+}
+
+// private function
+// setPCS(PCS) -> undefined
+function setPCS(other) {
+    pcs = [...other];
+}
 
 
 
@@ -85,16 +100,14 @@ const TnI_select = document.getElementById("TnI-select");
 // calculate(Boolean) -> undefined
 function calculate(manualOn) {
     if (manualOn) {
-        for (let checkbox of pc_checkboxes) {
-            checkbox.checked = false;
-        }
+        clearAllPC();
         pcs = parseManualInput();
         setCheckboxStates();
     } else {
         pcs = getPCS();
     }
     pcs = pcs.sort((a, b) => a - b);
-    savePCSToStorage([...pcs]);
+    savePCSToStorage([...pcs], useManualInput);
 
     output.value = formatOutput([...pcs], UNORDERED);
 
@@ -140,6 +153,14 @@ function formatOutput(pcs, formatting) {
         formatted;
 }
 
+// private function
+// clearAllPC() -> undefined
+function clearAllPC() {
+    for (let checkbox of pc_checkboxes) {
+        checkbox.checked = false;
+    }
+}
+
 // button functions
 // public function
 // onReset() -> undefined
@@ -161,45 +182,24 @@ function onReset() {
     resizeHeight(Tn_output);
     resizeHeight(TnI_output);
     
-    rememberChangeOfState(getPCS(), []);
+    rememberAll(getPCS());
 
-    for (let checkbox of pc_checkboxes) {
-        checkbox.checked = false;
-    }
+    clearAllPC();
 
     pcs = [];
-    savePCSToStorage([...pcs]);
+    savePCSToStorage([...pcs], useManualInput);
 }
 
 // private function
 // switchToComplement() -> undefined
 function switchToComplement() {
-    let lastState = getPCS();
-    
     for (let pc = 0; pc < MAX_SEMITONES; pc++) {
         toggle(pc);
         calculate(false);
     }
-    
-    let currentState = getPCS();
-    rememberChangeOfState(lastState, currentState);
+    rememberAll([...Array(12).keys()]);
 
     calculate(false);
-}
-
-// public function
-// toggleAndRemember(PC) -> undefined
-function toggleAndRemember(pc) {
-    toggle(pc);
-    remember(pc);
-}
-
-// public function
-// toggle(PC) -> undefined
-function toggle(pc) {
-    pc = mod12(pc);
-    let checkbox = document.getElementById(getIDFromPC(pc));
-    checkbox.checked = !checkbox.checked;
 }
 
 // private function
@@ -213,7 +213,7 @@ function generateRandom() {
     }
 
     let currentPCS = getPCS();
-    rememberChangeOfState(lastPCS, currentPCS);
+    rememberDifference(lastPCS, currentPCS);
 
     calculate(false);
 }
@@ -224,41 +224,7 @@ function generateRandom() {
 
 
 
-// ==================== DATA ====================
-// public function
-// getPCS() -> PCS
-function getPCS() {
-    return [...pc_checkboxes]
-                .filter(check => check.checked)
-                .map(check => getPCFromCheckbox(check));
-}
 
-// private function
-// getPCFromCheckbox(TODO:HTML) -> PC
-function getPCFromCheckbox(check) {
-    return parseInt(check.id);
-}
-
-export { getIDFromPC }; // to "./history.js"
-// public function
-// getIDFromPC(PC) -> String
-function getIDFromPC(pc) {
-    return pc.toString();
-}
-
-// private function
-// savePCSToStorage(PCS) -> undefined
-function savePCSToStorage(pcs) {
-    if (useManualInput) localStorage.setItem("input-text", input.value);
-    localStorage.setItem("pcs", pcs.join(","));
-}
-
-
-
-// KEYBOARD
-import { parseManualInput } from "./keyboard.js";
-export { input, calculate, toggleAndRemember, onReset } // to "./keyboard.js";
-export { getPCS }; // to "./keyboard.js";
 
 // EVENT LISTENERS
 for (let check of pc_checkboxes) {
@@ -276,42 +242,23 @@ TnI_select.addEventListener("change", () => {
     TnI_output.value = formatOutput(getTnI([...pcs], parseInt(TnI_select.value)), UNORDERED);
 });
 
+// ==================== Imports ====================
+// KEYBOARD
+import { parseManualInput } from "./keyboard.js";
+console.log("Imported items from \"./keyboard.js\"");
+
 // HISTORY
-import { undo, redo, remember, rememberChangeOfState } from "./history.js";
-export { toggle }; // to "./history.js";
+import { undo, redo, remember, rememberAll, rememberDifference } from "./history.js";
+console.log("Imported items from \"./history.js\"");
 
-// ==================== LOAD SETTINGS ====================
+// LOAD SETTINGS
 import { useTAndE, displayAll, useManualInput } from "./loadSettings.js";
-export { setPackingType, tryLoadPCS }; // to "./loadSettings.js"
+console.log("Imported items from \"./loadSettings.js\"");
 
-// public function
-// tryLoadPCS() -> undefined
-function tryLoadPCS() {
-    let storedData = localStorage.getItem("pcs");
-
-    if (!storedData) {
-        pcs = [];
-        return;
-    }
-
-    pcs = storedData.split(",").map(pc => parseInt(pc));
-
-    setCheckboxStates();
-
-    let inputText = localStorage.getItem("input-text");
-    input.value = Boolean(inputText) ? inputText : "";
-
-    calculate(false);
-}
-
-// private function
-// setCheckboxStates() -> undefined
-function setCheckboxStates() {
-    for (let pc of pcs) {
-        let checkbox = document.getElementById(getIDFromPC(pc));
-        checkbox.checked = true;
-    }
-}
+// ==================== Exports ====================
+export { input, onReset, getPCS }; // to "./keyboard.js"
+export { calculate }; // to "./keyboard.js", "./loadSettings.js"
+export { setPackingType, setPCS }; // to "./loadSettings.js"
 
 // ==================== Elements accessible from index.html ====================
 window.calculate = calculate;

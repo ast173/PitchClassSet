@@ -1,8 +1,5 @@
 console.log("==================== MAPS ====================");
-
-import { getPrimeForm } from "./deep.js";
-console.log("Imported items from \"./deep.js\"");
-// console.log(`Test 3.1\n${getPrimeForm}`);
+console.log("\"./maps.js\" has no imports");
 
 export { getForteNumber, getZMate, tryMatchForKnown }; // to "./index.js"
 export { forteToPrime }; // to "./keyboard.js"
@@ -10,25 +7,25 @@ export { forteToPrime }; // to "./keyboard.js"
 // ==================== MAPS ====================
 // public function
 // getForteNumber(PCS) -> String
-function getForteNumber(pcs) {
-    return primeToForte.has(getPrimeForm(pcs).join(", ")) ?
-        primeToForte.get(getPrimeForm(pcs).join(", ")) :
+function getForteNumber(prime) {
+    return primeToForte.has(prime.join(", ")) ?
+        primeToForte.get(prime.join(", ")) :
         "None";
 }
 
 // public function
 // getZMate(PCS) -> String
-function getZMate(pcs) {
-    return zSets.has(getForteNumber(pcs)) ?
-        zSets.get(getForteNumber(pcs)) :
+function getZMate(prime) {
+    return zSets.has(getForteNumber(prime)) ?
+        zSets.get(getForteNumber(prime)) :
         "None";
 }
 
 // public function
 // tryMatchForKnown(PCS) -> String
-function tryMatchForKnown(pcs) {
-    return forteToKnown.has(getForteNumber(pcs)) ?
-        forteToKnown.get(getForteNumber(pcs)) :
+function tryMatchForKnown(prime) {
+    return forteToKnown.has(getForteNumber(prime)) ?
+        forteToKnown.get(getForteNumber(prime)) :
         "None";
 }
 

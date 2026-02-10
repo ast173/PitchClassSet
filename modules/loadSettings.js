@@ -1,10 +1,12 @@
 console.log("==================== LOAD SETTINGS ====================");
 
-import { setPackingType, tryLoadPCS } from "./index.js";
 import { FORTE, RAHN } from "./util.js";
-console.log("Imported items from \"./index.js\"")
+import { setCheckboxStates } from "./util2.js";
+import { setPackingType, calculate, setPCS } from "./index.js";
+console.log("Imported items from \"./util.js\"");
+console.log("Imported items from \"./util2.js\"");
+console.log("Imported items from \"./index.js\"");
 // console.log(`Test 5.1:\n${setPackingType}`);
-console.log("Imported items from \"./util.js\"")
 // console.log(`Test 5.2:\n${String(FORTE)}`);
 
 export { useTAndE, displayAll }; // to "./index.js"
@@ -60,7 +62,29 @@ function loadSettings() {
     }
 }
 
+// private function
+// tryLoadPCS() -> PCS
+function tryLoadPCS() {
+    let storedData = localStorage.getItem("pcs");
+
+    let pcs = [];
+    if (!storedData) {
+        return pcs;
+    }
+
+    pcs = storedData.split(",").map(pc => parseInt(pc));
+
+    let inputText = localStorage.getItem("input-text");
+    input.value = Boolean(inputText) ? inputText : "";
+
+    return pcs;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     loadSettings();
-    tryLoadPCS();
+    let pcs = tryLoadPCS();
+    setPCS(pcs);
+    setCheckboxStates(pcs);
+    calculate(false);
+    console.log("Loaded settings");
 });

@@ -2,9 +2,9 @@ console.log("==================== UTIL ====================");
 console.log("\"./util.js\" has no imports");
 
 export { UNORDERED, NORMAL_ORDER, PRIME_FORM, IC_VECTOR }; // to "./index.js"
-export { FORTE, RAHN }; // to "./deep.js"
-export { MAX_SEMITONES, mod12 }; // to "./index.js", "./deep.js"
-export { letterToPC, semitoneValue, FLAT_TIME_MS }; // to "./keyboard.js"
+export { FORTE, RAHN, mod12 }; // to "./deep.js"
+export { MAX_SEMITONES }; // to "./index.js"
+export { noteToPC, FLAT_TIME_MS }; // to "./keyboard.js"
 
 // ==================== UTIL ====================
 const MAX_SEMITONES = 12;
@@ -23,10 +23,16 @@ let letterToPC = new Map([
     ["a", 9], ["b", 11], ["c", 0], ["d", 2], ["e", 4], ["f", 5], ["g", 7],
 ]);
 
-let semitoneValue = new Map([
+let accedentalToValue = new Map([
     ["#", 1], ["b", -1],
     ["+", 1], ["-", -1],
+    [undefined, 0],
 ]);
+
+// public function
+function noteToPC(key, accedental) {
+    return mod12(letterToPC.get(key) + accedentalToValue.get(accedental));
+}
 
 const FLAT_TIME_MS = 500;
 

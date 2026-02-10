@@ -1,19 +1,20 @@
 console.log("==================== KEYBOARD ====================");
 
-import { undo, redo } from "./history.js";
-import { input, calculate, toggleAndRemember, onReset } from "./index.js";
-import { useManualInput } from "./loadSettings.js";
+import { noteToPC, FLAT_TIME_MS } from "./util.js";
 import { forteToPrime } from "./maps.js";
-import { letterToPC, semitoneValue, FLAT_TIME_MS } from "./util.js";
-console.log("Imported items from \"./history.js\"")
+import { undo, redo, remember, rememberAll } from "./history.js";
+import { input, calculate, onReset, getPCS } from "./index.js";
+import { useManualInput } from "./loadSettings.js";
+import { toggle, toggleAll } from "./util2.js";
+console.log("Imported items from \"./util.js\"");
+console.log("Imported items from \"./maps.js\"");
+console.log("Imported items from \"./history.js\"");
+console.log("Imported items from \"./index.js\"");
+console.log("Imported items from \"./loadSettings.js\"");
 // console.log(`Test 6.1:\n${undo}`);
-console.log("Imported items from \"./index.js\"")
 // console.log(`Test 6.2:\n${toggleAndRemember}`);
-console.log("Imported items from \"./loadSettings.js\"")
 // console.log(`Test 6.3:\n${useManualInput}`);
-console.log("Imported items from \"./maps.js\"")
 // console.log(`Test 6.4:\n${forteToPrime}`);
-console.log("Imported items from \"./util.js\"")
 // console.log(`Test 6.5:\n${FLAT_TIME_MS}`);
 
 export { parseManualInput }; // to "./index.js"
@@ -43,13 +44,16 @@ document.addEventListener("keydown", e => {
 
     // letter inputs
     if (/^[acdefg]$/i.test(key) || (key === "b" && (!lastNote || Date.now() - lastInputTime >= FLAT_TIME_MS))) {
-        toggleAndRemember(letterToPC.get(key));
+        let pc = noteToPC(key);
+        toggle(pc);
+        remember(pc);
         calculate(false);
         lastNote = key;
         lastInputTime = Date.now();
     } else if (/^[#b+\-]$/.test(key) && lastNote) {
-        toggleAndRemember(letterToPC.get(lastNote));
-        toggleAndRemember(letterToPC.get(lastNote) + semitoneValue.get(key));
+        let pcs = [noteToPC(lastNote), noteToPC(lastNote, key)];
+        toggleAll(pcs);
+        rememberAll(pcs);
         calculate(false);
         lastNote = "";
     } else if (!/^[a-g#+\-]$/i.test(key) && key !== "Shift") {
@@ -58,10 +62,13 @@ document.addEventListener("keydown", e => {
 
     // numerical inputs
     if (/^[0-9]$/.test(key)) {
-        toggleAndRemember(parseInt(key));
+        let pc = parseInt(key);
+        toggle(pc);
+        remember(pc);
         calculate(false);
     } else if (key === "t") {
-        toggleAndRemember(10);
+        toggle(10);
+        remember(10);
         calculate(false);
     }
 
@@ -78,14 +85,13 @@ document.addEventListener("keydown", e => {
     }
 });
 
-import { rememberChangeOfState } from "./history.js";
-import { getPCS } from "./index.js";
+// TODO: this
 document.addEventListener("DOMContentLoaded", () => {
     input.addEventListener("change", () => {
         let lastPCS = getPCS();
         calculate(useManualInput);
         let currentPCS = getPCS();
-        rememberChangeOfState(lastPCS, currentPCS);
+        rememberDifference(lastPCS, currentPCS);
     });
 });
 

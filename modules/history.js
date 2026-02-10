@@ -1,15 +1,16 @@
 console.log("==================== HISTORY ====================");
-import { toggle, getIDFromPC } from "./index.js";
-console.log("Imported items from \"./history.js\"");
+import { toggleAll, getIDFromPC } from "./util2.js";
+console.log("Imported items from \"./util2.js\"");
 // console.log(`Test 4.1\n${toggle}`);
 
-export { remember }; // to "./index.js"
-export { undo, redo, rememberChangeOfState }; // to "./index.js", "./keyboard.js"
+export { rememberDifference }; // to "./index.js"
+export { undo, redo, remember, rememberAll }; // to "./index.js", "./keyboard.js"
 
 // ==================== HISTORY ====================
 // private variable
 let history = [];
 // private variable
+// pointer <= 0
 let pointer = 0;
 
 // public function
@@ -50,95 +51,100 @@ function loadHistoryAtPointer() {
     }
 }
 
-// private function
-// toggleAll(PCS) -> undefined
-function toggleAll(pcs) {
-    for (let pc of pcs) {
-        toggle(pc);
-    }
-}
-
 // public function
 // remember(PC) -> undefined
 function remember(pc) {
-    if (pointer < 0) {
-        history = history.slice(0, pointer);
-        pointer = 0;
-        // console.log("Set pointer to 0"); // TODO: move this in front of the snapshot
-    }
+    sliceHistory();
     history.push(pc);
-
-    logHistory();
-}
-
-// public function
-// rememberChangeOfState(PCS, PCS) -> undefined
-function rememberChangeOfState(lastPCS, currentPCS) {
-    let toToggle = getToToggle(lastPCS, currentPCS);
-    if (pointer < 0) {
-        history = history.slice(0, pointer);
-        pointer = 0;
-        // console.log("Set pointer to 0");
-    }
-    history.push(toToggle);
-
     logHistory();
 }
 
 // private function
-// rememberChangeOfState(PCS, PCS) -> PCS
-function getToToggle(lastPCS, currentPCS) {
+// sliceHistoryTo() -> undefined
+function sliceHistory() {
+    if (pointer == 0) return;
+    history = history.slice(0, pointer);
+    pointer = 0;
+}
+
+// public function
+// rememberAll(PCS) -> undefined
+function rememberAll(pcs) {
+    sliceHistory();
+    if (pcs.length == 0) {
+        console.log("No change to history");
+        return;
+    }
+    history.push(pcs);
+    logHistory();
+}
+
+// public function
+// rememberDifference(PCS, PCS) -> undefined
+function rememberDifference(lastPCS, currentPCS) {
+    let toToggle = getDifference(lastPCS, currentPCS);
+    rememberAll(toToggle);
+}
+
+// private function
+// getDifference(PCS, PCS) -> PCS
+function getDifference(lastPCS, currentPCS) {
     return [
         ...currentPCS.filter(pc => !lastPCS.includes(pc)),
         ...lastPCS.filter(pc => !currentPCS.includes(pc))
     ];
 }
 
-// private function
+// public function
 // logHistory() -> undefined
 function logHistory() {
     console.log("==================== SNAPSHOT ====================");
-    console.log("History:")
-    logHistoryString();
+    console.log("History:");
+    getHistory();
     console.log(`History Length: ${history.length}`);
     console.log(`Pointer: ${pointer}`);
 }
 
 // private function
-// logHistoryString() -> undefined
-function logHistoryString() {
+// getHistory() -> undefined
+function getHistory() {
+    const TAB = " ".repeat(4);
+    const POINTER_TAB = " ".repeat(6);
+
     console.log("[");
 
     if (history.length === 0) {
-        console.log(`      <- Pointer=START/END: ${pointer}`);
+        console.log(`${POINTER_TAB}<- Pointer=START/END: ${pointer}`);
         console.log("]");
         return;
     }
 
-    let pointerPosition = history.length + pointer;
+    let pointerPosition = pointer + history.length;
     
-    for (let i = 0; i <= history.length; i++) {
-        // if (pointer === -history.length && i === 0) {
-        if (pointerPosition === 0 && i === 0) {
-            console.log(`      <- Pointer=START: ${pointer}`);
+    for (let i = 0; i < history.length; i++) {
+        if (pointerPosition === i && i === 0) {
+            console.log(`${POINTER_TAB}<- Pointer=START: ${pointer}`);
         }
 
         let e = history[i];
         if (e instanceof Array) {
-            console.log(`    ${i}: [${e.join(", ")}]`);
+            console.log(`${TAB}${i}: [${e.join(", ")}]`);
         } else {
-            console.log(`    ${i}: ${e}`);
+            console.log(`${TAB}${i}: ${e}`);
         }
 
-        if (pointer === 0 && i + 1 === history.length + pointer) {
-        // if (pointer === 0 && i === history.length - 1) {
-            console.log(`      <- Pointer=END: ${pointer}`);
-        } else if (i + 1 === pointerPosition) {
-        // } else if (pointer === i + 1 - history.length) {
-            console.log(`      <- Pointer: ${pointer}`);
+        if (pointerPosition === i + 1) {
+            if (pointer === 0) {
+                console.log(`${POINTER_TAB}<- Pointer=END: ${pointer}`);
+            } else {
+                console.log(`${POINTER_TAB}<- Pointer: ${pointer}`);
+            }
         }
     }
     console.log("]");
 }
 
-logHistory();
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("==================== Logging starts here ====================");
+    logHistory();
+});
