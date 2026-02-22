@@ -2,7 +2,7 @@ console.log("==================== UTIL2 ====================");
 console.log("\"./util2.js\" has no imports");
 
 export { getIDFromPC, toggleAll } // to "./history.js"
-export { getPCFromCheckbox, savePCSToStorage, setCheckboxStates }; // to "./index.js"
+export { getPCFromCheckbox, savePCS, saveInputText, setCheckboxStates }; // to "./index.js"
 export { toggle }; // to "./index.js", "./keyboard.js"
 
 // public function
@@ -33,16 +33,23 @@ function getPCFromCheckbox(check) {
 }
 
 // public function
-// savePCSToStorage(PCS) -> undefined
-function savePCSToStorage(pcs, useManualInput) {
-    if (useManualInput) localStorage.setItem("input-text", input.value);
+// savePCS(PCS) -> undefined
+function savePCS(pcs) {
     localStorage.setItem("pcs", pcs.join(","));
 }
 
 // public function
+// saveInputText() -> undefined
+function saveInputText(useManualInput) {
+    if (!useManualInput) {
+        localStorage.setItem("input-text", input.value);
+    }
+}
+
+// public function
 // setCheckboxStates() -> undefined
-function setCheckboxStates(other) {
-    for (let pc of other) {
+function setCheckboxStates(pcs) {
+    for (let pc of pcs) {
         let checkbox = document.getElementById(getIDFromPC(pc));
         checkbox.checked = true;
     }

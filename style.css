@@ -95,12 +95,12 @@ hr {
     resize: none;
 }
 
-div.bottom-row {
+div.selector-row {
     display: flex;
     gap: 0.3rem;
 }
 
-.hidden, .bottom-row.hidden {
+.hidden, .selector-row.hidden {
     display: none;
 }
 

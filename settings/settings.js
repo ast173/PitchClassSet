@@ -1,3 +1,5 @@
+// private function
+// getStorageAndSet(String, String) -> undefined
 function getStorageAndSet(htmlID, storageItem) {
     const htmlCheckbox = document.getElementById(htmlID);
     const setting = localStorage.getItem(storageItem);
@@ -11,6 +13,6 @@ function getStorageAndSet(htmlID, storageItem) {
 getStorageAndSet("notes-number", "setting:pc-display");
 getStorageAndSet("ten-eleven", "setting:ten-eleven");
 getStorageAndSet("forte-rahn", "setting:packing-type");
-getStorageAndSet("one-or-all", "setting:one-or-all");
-getStorageAndSet("show-unique", "setting:show-unique");
 getStorageAndSet("manual-input", "setting:manual-input");
+getStorageAndSet("show-multiple", "setting:show-multiple");
+getStorageAndSet("show-unique", "setting:show-unique");

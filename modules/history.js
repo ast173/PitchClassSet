@@ -1,10 +1,8 @@
 console.log("==================== HISTORY ====================");
 import { toggleAll, getIDFromPC } from "./util2.js";
 console.log("Imported items from \"./util2.js\"");
-// console.log(`Test 4.1\n${toggle}`);
 
-export { rememberDifference }; // to "./index.js"
-export { undo, redo, remember, rememberAll }; // to "./index.js", "./keyboard.js"
+export { undo, redo, remember, rememberAll, getDifference }; // to "./index.js", "./keyboard.js"
 
 // ==================== HISTORY ====================
 // private variable
@@ -60,9 +58,9 @@ function remember(pc) {
 }
 
 // private function
-// sliceHistoryTo() -> undefined
+// sliceHistory() -> undefined
 function sliceHistory() {
-    if (pointer == 0) return;
+    if (pointer === 0) return;
     history = history.slice(0, pointer);
     pointer = 0;
 }
@@ -80,13 +78,6 @@ function rememberAll(pcs) {
 }
 
 // public function
-// rememberDifference(PCS, PCS) -> undefined
-function rememberDifference(lastPCS, currentPCS) {
-    let toToggle = getDifference(lastPCS, currentPCS);
-    rememberAll(toToggle);
-}
-
-// private function
 // getDifference(PCS, PCS) -> PCS
 function getDifference(lastPCS, currentPCS) {
     return [
@@ -95,7 +86,7 @@ function getDifference(lastPCS, currentPCS) {
     ];
 }
 
-// public function
+// private function
 // logHistory() -> undefined
 function logHistory() {
     console.log("==================== SNAPSHOT ====================");
@@ -145,6 +136,6 @@ function getHistory() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("==================== Logging starts here ====================");
+    console.log("==================== LOGGING START ====================");
     logHistory();
 });

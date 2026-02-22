@@ -97,12 +97,12 @@ input[type="checkbox"].toggle:checked + label::after {
     content: "Rahn";
 }
 
-#one-or-all + label::after {
+#show-multiple + label::after {
     content: "One";
 }
 
-#one-or-all:checked + label::after {
-    content: "All";
+#show-multiple:checked + label::after {
+    content: "Many";
 }
 
 #manual-input + label::after, #show-unique + label::after {

@@ -15,10 +15,11 @@ console.log("7. KEYBOARD");
 console.log("8. INDEX");
 
 /*
+TODO: show unique transpositions/inversions
 TODO: add supersets and subsets
 TODO: add 'is subset of' options
-TODO: show unique transpositions/inversions
-TODO:HTML needs work
+TODO: remove the calculate button
+the datatype TODO:HTML needs refinement
 
 DATATYPES
 let a PC be of datatype Number and to be a positive integer of 0, 1, 2, ..., 11

@@ -1,45 +1,55 @@
 console.log("==================== INDEX ====================");
 
 import { MAX_SEMITONES, UNORDERED, NORMAL_ORDER, PRIME_FORM, IC_VECTOR } from "./util.js";
-import { toggle, getPCFromCheckbox, savePCSToStorage, setCheckboxStates } from "./util2.js";
+import { toggle, getPCFromCheckbox, savePCS, saveInputText, setCheckboxStates } from "./util2.js";
 import { getForteNumber, getZMate, tryMatchForKnown } from "./maps.js";
-import { getNormalOrder, getPrimeForm, getICVector,
-    getComplement, getTn, getTnI } from "./deep.js";
+import { getNormalOrder, getPrimeForm, getICVector, getComplement, getTn, getTnI } from "./deep.js";
 console.log("Imported items from \"./util.js\"");
 console.log("Imported items from \"./util2.js\"");
-// console.log(`Test 7.1:\n${MAX_SEMITONES}`);
 console.log("Imported items from \"./maps.js\"");
-// console.log(`Test 7.2:\n${getForteNumber}`);
 console.log("Imported items from \"./deep.js\"");
-// console.log(`Test 7.3:\n${getNormalOrder}`);
 
 // ==================== INDEX ====================
 // private function
 // handleTranspositionAndInversion() -> undefined
 function handleTranspositionAndInversion() {
-    if (!displayAll) {
+    if (!showMultiple) {
+        setTextAlign("center");
         Tn_output.value = formatOutput(getTn([...pcs], parseInt(Tn_select.value)), UNORDERED);
         TnI_output.value = formatOutput(getTnI([...pcs], parseInt(TnI_select.value)), UNORDERED);
         return;
     }
 
     if (pcs.length === 0) {
+        setTextAlign("center");
         Tn_output.value = "[]";
         TnI_output.value = "[]";
         return;
     }
 
+    setTextAlign("left");
+
     Tn_output.value = [...Array(MAX_SEMITONES).keys()]
-        .map(pc => textStart(pc) + formatOutput(getTn([...pcs], pc), UNORDERED)).join("\n");
+        .map(pc => getTextStart(pc) + formatOutput(getTn([...pcs], pc), UNORDERED))
+        .join("\n");
     TnI_output.value = [...Array(MAX_SEMITONES).keys()]
-        .map(pc => textStart(pc) + formatOutput(getTnI([...pcs], pc), UNORDERED)).join("\n");
+        .map(pc => getTextStart(pc) + formatOutput(getTnI([...pcs], pc), UNORDERED))
+        .join("\n");
+}
+
+// private function
+// setTextAlign(String) -> undefined
+function setTextAlign(align) {
+    Tn_output.style.textAlign = align;
+    TnI_output.style.textAlign = align;
 }
 
 // private function
 // resizeHeight(PC) -> String
-function textStart(pc) {
-    let spaces = "             ";
-    return pc.toString().length === 1 ? spaces + ` n = ${pc}: ` : spaces + `n = ${pc}: `;
+function getTextStart(pc) {
+    let result = " ".repeat(9 - pc.toString().length);
+    result += `n = ${pc}: `;
+    return result;
 }
 
 // private function
@@ -102,12 +112,13 @@ function calculate(manualOn) {
     if (manualOn) {
         clearAllPC();
         pcs = parseManualInput();
-        setCheckboxStates();
+        setCheckboxStates(pcs);
     } else {
         pcs = getPCS();
     }
     pcs = pcs.sort((a, b) => a - b);
-    savePCSToStorage([...pcs], useManualInput);
+    savePCS([...pcs]);
+    saveInputText(useManualInput);
 
     output.value = formatOutput([...pcs], UNORDERED);
 
@@ -185,9 +196,10 @@ function onReset() {
     rememberAll(getPCS());
 
     clearAllPC();
-
     pcs = [];
-    savePCSToStorage([...pcs], useManualInput);
+
+    savePCS([...pcs]);
+    saveInputText(useManualInput);
 }
 
 // private function
@@ -213,7 +225,7 @@ function generateRandom() {
     }
 
     let currentPCS = getPCS();
-    rememberDifference(lastPCS, currentPCS);
+    rememberAll(getDifference(lastPCS, currentPCS));
 
     calculate(false);
 }
@@ -248,11 +260,11 @@ import { parseManualInput } from "./keyboard.js";
 console.log("Imported items from \"./keyboard.js\"");
 
 // HISTORY
-import { undo, redo, remember, rememberAll, rememberDifference } from "./history.js";
+import { undo, redo, remember, rememberAll, getDifference } from "./history.js";
 console.log("Imported items from \"./history.js\"");
 
 // LOAD SETTINGS
-import { useTAndE, displayAll, useManualInput } from "./loadSettings.js";
+import { useTAndE, showMultiple, useManualInput } from "./loadSettings.js";
 console.log("Imported items from \"./loadSettings.js\"");
 
 // ==================== Exports ====================

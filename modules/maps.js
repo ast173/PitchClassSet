@@ -366,6 +366,7 @@ const forteToKnown = new Map([
     ["4-27", "Dominant 7th/Half Diminished 7th"],
     ["4-28", "Diminished 7th"],
 
+    ["5-27", "Major/Minor 9th"],
     ["5-35", "Pentatonic Scale"],
     ["6-35", "Whole Tone Scale"],
     ["7-35", "Major/Minor Scale"],

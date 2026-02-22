@@ -26,11 +26,12 @@ let letterToPC = new Map([
 let accedentalToValue = new Map([
     ["#", 1], ["b", -1],
     ["+", 1], ["-", -1],
-    [undefined, 0],
+    ["=", 0],
 ]);
 
 // public function
-function noteToPC(key, accedental) {
+// noteToPC(String, String) -> PC
+function noteToPC(key, accedental = "=") {
     return mod12(letterToPC.get(key) + accedentalToValue.get(accedental));
 }
 
