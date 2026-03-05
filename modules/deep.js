@@ -1,20 +1,22 @@
 console.log("==================== DEEP ====================");
 
-import { MAX_SEMITONES, FORTE, RAHN, mod12 } from "./util.js";
+// ==================== Imports ====================
+import { MAX_SEMITONES, FORTE, mod12 } from "./util.js";
 console.log("Imported items from \"./util.js\"");
 
+// ==================== Exports ====================
 export { getNormalOrder, getPrimeForm, getICVector, getComplement, getTn, getTnI } // to "./index.js";
 
 // ==================== DEEP ====================
 // public function
 // getNormalOrder(PCS, PackingType) -> PCS
 function getNormalOrder(pcs, packingType) {
-    let pcsCopy = transposeAndSort(pcs);
+    let pcsCopy = transposeAndSort([...pcs]);
 
     let minRange = MAX_SEMITONES;
     let order = [...pcsCopy];
     for (let i = 0; i < pcsCopy.length; i++) {
-        let rotation = rotate(pcsCopy, i);
+        let rotation = rotate([...pcsCopy], i);
 
         let first = rotation[0];
         rotation = rotation.map(pc => mod12(pc - first));
@@ -35,42 +37,34 @@ function getNormalOrder(pcs, packingType) {
 // private function
 // transposeAndSort(PCS) -> PCS
 function transposeAndSort(pcs) {
-    let pcsCopy = [...pcs]
-    pcsCopy = pcsCopy.sort((a, b) => a - b);
-    let first = pcsCopy[0];
-    pcsCopy = pcsCopy.map(pc => mod12(pc - first));
+    pcs = pcs.sort((a, b) => a - b);
+    let first = pcs[0];
+    pcs = pcs.map(pc => mod12(pc - first));
 
-    return pcsCopy.sort((a, b) => a - b);
+    return pcs.sort((a, b) => a - b);
 }
 
 // private function
-// rotate(Array, Number) -> Array
-function rotate(arr, i) {
-    let arrCopy = [...arr];
-    return arrCopy.slice(i).concat(arrCopy.slice(0, i));
+// rotate(PCS, Number) -> PCS
+function rotate(pcs, i) {
+    return pcs.slice(i).concat(pcs.slice(0, i));
 }
 
 // private function
 // tiebreak(NormalOrder, NormalOrder, PackingType) -> NormalOrder
-function tiebreak(oldSet, newSet, packingType) {
-    if (packingType === FORTE) {
-        for (let i = 0; i < oldSet.length; i++) {
-            if (oldSet[i] < newSet[i]) {
-                return [...oldSet];
-            } else if (oldSet[i] > newSet[i]) {
-                return [...newSet];
-            }
-        }
-    } else if (packingType === RAHN) {
-        for (let i = oldSet.length - 1; i >= 0; i--) {
-            if (oldSet[i] < newSet[i]) {
-                return [...oldSet];
-            } else if (oldSet[i] > newSet[i]) {
-                return [...newSet];
-            }
+function tiebreak(order1, order2, packingType) {
+    let start = packingType === FORTE ? 0 : order1.length - 1;
+    let stop = packingType === FORTE ? order1.length : -1;
+    let step = packingType === FORTE ? 1 : -1;
+    
+    for (let i = start; i != stop; i += step) {
+        if (order1[i] < order2[i]) {
+            return [...order1];
+        } else if (order1[i] > order2[i]) {
+            return [...order2];
         }
     }
-    return [...oldSet];
+    return [...order1];
 }
 
 // public function

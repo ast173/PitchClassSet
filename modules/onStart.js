@@ -1,18 +1,19 @@
 console.log("==================== ON START ====================");
 console.log("In \"./index.html\" load order:");
 console.log("\"./modules/onStart.js\"");
+console.log("\"./modules/keyboard.js\"");
 console.log("\"./modules/index.js\"");
-console.log("\"./modules/loadSettings.js\"");
 
 console.log("Load order:");
 console.log("1. UTIL");
 console.log("2. UTIL2");
 console.log("3. MAPS");
 console.log("4. DEEP");
-console.log("5. HISTORY");
-console.log("6. LOAD SETTINGS");
-console.log("7. KEYBOARD");
-console.log("8. INDEX");
+console.log("5. MANUAL");
+console.log("6. HISTORY");
+console.log("7. LOAD SETTINGS");
+console.log("8. KEYBOARD");
+console.log("9. INDEX");
 
 /*
 TODO: show unique transpositions/inversions

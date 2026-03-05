@@ -1,8 +1,11 @@
 console.log("==================== MAPS ====================");
+
+// ==================== Imports ====================
 console.log("\"./maps.js\" has no imports");
 
+// ==================== Exports ====================
 export { getForteNumber, getZMate, tryMatchForKnown }; // to "./index.js"
-export { forteToPrime }; // to "./keyboard.js"
+export { forteToPrime }; // to "./manual.js"
 
 // ==================== MAPS ====================
 // public function

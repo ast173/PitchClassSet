@@ -1,10 +1,15 @@
 console.log("==================== UTIL ====================");
+
+// ==================== Imports ====================
 console.log("\"./util.js\" has no imports");
 
+// ==================== Exports ====================
 export { UNORDERED, NORMAL_ORDER, PRIME_FORM, IC_VECTOR }; // to "./index.js"
-export { FORTE, RAHN, mod12 }; // to "./deep.js"
+export { mod12 }; // to "./deep.js"
 export { MAX_SEMITONES }; // to "./index.js"
 export { noteToPC }; // to "./keyboard.js"
+export { RAHN }; // to "./loadSettings.js"
+export { FORTE }; // to "./deep.js", "./loadSettings.js"
 
 // ==================== UTIL ====================
 const MAX_SEMITONES = 12;

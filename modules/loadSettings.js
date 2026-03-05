@@ -1,5 +1,6 @@
 console.log("==================== LOAD SETTINGS ====================");
 
+// ==================== Imports ====================
 import { FORTE, RAHN } from "./util.js";
 import { setCheckboxStates } from "./util2.js";
 import { setPackingType, calculate, setPCS } from "./index.js";
@@ -7,8 +8,12 @@ console.log("Imported items from \"./util.js\"");
 console.log("Imported items from \"./util2.js\"");
 console.log("Imported items from \"./index.js\"");
 
+// ==================== Exports ====================
 export { useTAndE, showMultiple }; // to "./index.js"
 export { useManualInput }; // to "./index.js", "./keyboard.js"
+
+// ==================== HTML Elements ====================
+const pc_btns = document.getElementsByClassName("pc-btn");
 
 // ==================== LOAD SETTINGS ====================
 const setting1 = localStorage.getItem("setting:pc-display");
@@ -27,7 +32,6 @@ const showMultiple = setting5 === "true";
 // private function
 // loadSettings() -> undefined
 function loadSettings() {
-    const pc_btns = document.getElementsByClassName("pc-btn");
     for (let btn of pc_btns) {
         btn.textContent = usePCNumbers ?
             btn.getAttribute("pc-number") :
@@ -65,6 +69,7 @@ function loadStoredPCS() {
 
     let pcs = [];
     if (!storedData) {
+        console.log("Item: \"pcs\" not found in local storage")
         return pcs;
     }
 

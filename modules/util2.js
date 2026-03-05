@@ -1,6 +1,9 @@
 console.log("==================== UTIL2 ====================");
+
+// ==================== Imports ====================
 console.log("\"./util2.js\" has no imports");
 
+// ==================== Exports ====================
 export { getIDFromPC, toggleAll } // to "./history.js"
 export { getPCFromCheckbox, savePCS, saveInputText, setCheckboxStates }; // to "./index.js"
 export { toggle }; // to "./index.js", "./keyboard.js"

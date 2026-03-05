@@ -1,8 +1,15 @@
 console.log("==================== HISTORY ====================");
+
+// ==================== Imports ====================
 import { toggleAll, getIDFromPC } from "./util2.js";
 console.log("Imported items from \"./util2.js\"");
 
+// ==================== Exports ====================
 export { undo, redo, remember, rememberAll, getDifference }; // to "./index.js", "./keyboard.js"
+
+// ==================== HTML Elements ====================
+document.getElementById("undo").addEventListener("click", undo);
+document.getElementById("redo").addEventListener("click", redo);
 
 // ==================== HISTORY ====================
 // private variable

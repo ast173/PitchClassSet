@@ -1,13 +1,57 @@
 console.log("==================== INDEX ====================");
 
-import { MAX_SEMITONES, UNORDERED, NORMAL_ORDER, PRIME_FORM, IC_VECTOR } from "./util.js";
+// ==================== Imports ====================
+import { MAX_SEMITONES, UNORDERED, NORMAL_ORDER, PRIME_FORM, IC_VECTOR, RAHN } from "./util.js";
 import { toggle, getPCFromCheckbox, savePCS, saveInputText, setCheckboxStates } from "./util2.js";
 import { getForteNumber, getZMate, tryMatchForKnown } from "./maps.js";
-import { getNormalOrder, getPrimeForm, getICVector, getComplement, getTn, getTnI } from "./deep.js";
 console.log("Imported items from \"./util.js\"");
 console.log("Imported items from \"./util2.js\"");
 console.log("Imported items from \"./maps.js\"");
+
+import { getNormalOrder, getPrimeForm, getICVector, getComplement, getTn, getTnI } from "./deep.js";
+import { parseManualInput } from "./manual.js";
+import { remember, rememberAll, getDifference } from "./history.js";
+import { useTAndE, showMultiple, useManualInput } from "./loadSettings.js";
+
 console.log("Imported items from \"./deep.js\"");
+console.log("Imported items from \"./manual.js\"");
+console.log("Imported items from \"./history.js\"");
+console.log("Imported items from \"./loadSettings.js\"");
+
+// ==================== Exports ====================
+export { onReset, getPCS }; // to "./keyboard.js"
+export { calculate }; // to "./keyboard.js", "./loadSettings.js"
+export { setPackingType, setPCS }; // to "./loadSettings.js"
+
+// ==================== HTML Elements ====================
+const input = document.getElementById("input");
+const output = document.getElementById("output");
+const pc_checkboxes = document.getElementsByClassName("pc");
+
+const normal_order = document.getElementById("normal-order");
+const prime_form = document.getElementById("prime-form");
+const ic_vector = document.getElementById("ic-vector");
+const complement = document.getElementById("complement");
+const forte_number = document.getElementById("forte-number");
+const z_mate = document.getElementById("z-mate");
+const known = document.getElementById("known");
+
+const Tn_output = document.getElementById("Tn-output");
+const TnI_output = document.getElementById("TnI-output");
+const Tn_select = document.getElementById("Tn-select");
+const TnI_select = document.getElementById("TnI-select");
+
+document.getElementById("calculate").addEventListener("click", calculate);
+document.getElementById("reset").addEventListener("click", onReset);
+document.getElementById("complement-btn").addEventListener("click", switchToComplement);
+document.getElementById("random").addEventListener("click", generateRandom);
+
+document.getElementById("settings").addEventListener("click", () => {
+    location.href="./settings/settings.html";
+});
+document.getElementById("help").addEventListener("click", () => {
+    window.open("help.html", "helpWindow", "width=600, height=500, resizable=yes, scrollbars=yes");
+});
 
 // ==================== INDEX ====================
 // private function
@@ -82,29 +126,14 @@ function setPCS(other) {
 
 
 // ==================== CONNECTS TO index.html ====================
-const input = document.getElementById("input");
-const output = document.getElementById("output");
-const pc_checkboxes = document.getElementsByClassName("pc");
 let pcs = [];
-let packingType;
+let packingType = RAHN;
+
 // public function
 // setPackingType(PackingType) -> undefined
 function setPackingType(type) {
     packingType = type;
 }
-
-const normal_order = document.getElementById("normal-order");
-const prime_form = document.getElementById("prime-form");
-const ic_vector = document.getElementById("ic-vector");
-const complement = document.getElementById("complement");
-const forte_number = document.getElementById("forte-number");
-const z_mate = document.getElementById("z-mate");
-const known = document.getElementById("known");
-
-const Tn_output = document.getElementById("Tn-output");
-const TnI_output = document.getElementById("TnI-output");
-const Tn_select = document.getElementById("Tn-select");
-const TnI_select = document.getElementById("TnI-select");
 
 // public function
 // calculate(Boolean) -> undefined
@@ -156,7 +185,7 @@ function formatOutput(pcs, formatting) {
     } else if (formatting === IC_VECTOR) {
         formatted = `<${pcs.join(" ")}>`;
     } else {
-        throw new Error("Unknown formatting " + formatting);
+        throw new Error("Unknown formatting: " + formatting);
     }
 
     return useTAndE ?
@@ -209,7 +238,7 @@ function switchToComplement() {
         toggle(pc);
         calculate(false);
     }
-    rememberAll([...Array(12).keys()]);
+    rememberAll([...Array(MAX_SEMITONES).keys()]);
 
     calculate(false);
 }
@@ -236,9 +265,6 @@ function generateRandom() {
 
 
 
-
-
-// EVENT LISTENERS
 for (let check of pc_checkboxes) {
     check.addEventListener("input", () => {
         remember(getPCFromCheckbox(check));
@@ -253,29 +279,3 @@ Tn_select.addEventListener("change", () => {
 TnI_select.addEventListener("change", () => {
     TnI_output.value = formatOutput(getTnI([...pcs], parseInt(TnI_select.value)), UNORDERED);
 });
-
-// ==================== Imports ====================
-// KEYBOARD
-import { parseManualInput } from "./keyboard.js";
-console.log("Imported items from \"./keyboard.js\"");
-
-// HISTORY
-import { undo, redo, remember, rememberAll, getDifference } from "./history.js";
-console.log("Imported items from \"./history.js\"");
-
-// LOAD SETTINGS
-import { useTAndE, showMultiple, useManualInput } from "./loadSettings.js";
-console.log("Imported items from \"./loadSettings.js\"");
-
-// ==================== Exports ====================
-export { input, onReset, getPCS }; // to "./keyboard.js"
-export { calculate }; // to "./keyboard.js", "./loadSettings.js"
-export { setPackingType, setPCS }; // to "./loadSettings.js"
-
-// ==================== Elements accessible from index.html ====================
-window.calculate = calculate;
-window.onReset = onReset;
-window.switchToComplement = switchToComplement;
-window.generateRandom = generateRandom;
-window.undo = undo;
-window.redo = redo;
