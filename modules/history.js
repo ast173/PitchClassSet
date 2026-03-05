@@ -5,7 +5,8 @@ import { toggleAll, getIDFromPC } from "./util2.js";
 console.log("Imported items from \"./util2.js\"");
 
 // ==================== Exports ====================
-export { undo, redo, remember, rememberAll, getDifference }; // to "./index.js", "./keyboard.js"
+export { remember, rememberAll, getDifference }; // to "./index.js", "./keyboard.js"
+export { undo, redo }; // to "./keyboard.js"
 
 // ==================== HTML Elements ====================
 document.getElementById("undo").addEventListener("click", undo);
