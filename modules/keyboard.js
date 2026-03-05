@@ -1,6 +1,6 @@
 console.log("==================== KEYBOARD ====================");
 
-import { noteToPC, FLAT_TIME_MS } from "./util.js";
+import { noteToPC } from "./util.js";
 import { forteToPrime } from "./maps.js";
 import { undo, redo, remember, rememberAll, getDifference } from "./history.js";
 import { input, calculate, onReset, getPCS } from "./index.js";
@@ -15,8 +15,6 @@ console.log("Imported items from \"./loadSettings.js\"");
 export { parseManualInput }; // to "./index.js"
 
 // ==================== KEYBOARD ====================
-// private variable
-let lastInputTime = 0;
 // private variable
 let lastNote = "";
 document.addEventListener("keydown", e => {
@@ -38,14 +36,13 @@ document.addEventListener("keydown", e => {
     }
 
     // letter inputs
-    if (/^[acdefg]$/i.test(key) || (key === "b" && (!lastNote || Date.now() - lastInputTime >= FLAT_TIME_MS))) {
+    if (/^[a-g]$/i.test(key)) {
         let pc = noteToPC(key);
         toggle(pc);
         remember(pc);
         calculate(false);
         lastNote = key;
-        lastInputTime = Date.now();
-    } else if (/^[#b+\-]$/.test(key) && lastNote) {
+    } else if (/^[#+\-]$/.test(key) && lastNote) {
         let pcs = [noteToPC(lastNote), noteToPC(lastNote, key)];
         toggleAll(pcs);
         rememberAll(pcs);
@@ -94,24 +91,58 @@ document.addEventListener("DOMContentLoaded", () => {
 function parseManualInput() {
     let text = input.value.toLowerCase().trim();
 
-    let forte = (text.toUpperCase().match(/^(?:1[01]|[0-9])-Z?(?:\d\d|\d)$/) || [])[0];
-    if (forte) {
-        let key = forteToPrime.has(forte) ? forte : forte.replace("-", "-Z")
-        if (forteToPrime.has(key)) {
-            return forteToPrime.get(key).split(", ");
-        }
+    let pcs = tryMatchForte(text);
+
+    if (pcs.length === 0) {
+        pcs = tryMatchPCS(text);
     }
 
-    let pcs = (text.match(/1[01]|[0-9]|t|[a-g][#b+\-]?/g) || []).map(pc => {
-        if (pc === "t") return 10;
-        if (/^[a-g]$/.test(pc)) {
-            return letterToPC.get(pc);
-        }
-        if (/^[a-g][#b+\-]$/.test(pc)) {
-            return mod12(letterToPC.get(pc[0]) + semitoneValue.get(pc[1]));
-        }
-        return parseInt(pc);
-    });
-
     return [...new Set(pcs)];
+}
+
+// private function
+// tryMatchForte(String) -> PCS
+function tryMatchForte(text) {
+    let forte = (text.match(/^(1[01]|[0-9])-(z?)(\d{1,2})$/) || [])[0];
+    if (!forte) return [];
+
+    if (forteToPrime.has(forte)) {
+        return forteToPrime.get(forte).split(", ").map(s => parseInt(s));
+    }
+
+    forte = forte.replace(/-(?!z)/, "-z");
+    if (forteToPrime.has(forte)) {
+        return forteToPrime.get(forte).split(", ").map(s => parseInt(s));
+    }
+
+    return []
+}
+
+// private function
+// tryMatchPCS(String) -> PCS
+function tryMatchPCS(text) {
+    let pcs = (text.match(/1[01]|[0-9]|t|[a-g][#b+\-]?/g) || []).map(s => stringToPC(s));
+    return pcs;
+}
+
+// private function
+// stringToPC(String) -> PC
+function stringToPC(string) {
+    if (0 <= string && string <= 11) {
+        return string;
+    }
+
+    if (/^[a-g]$/.test(string)) {
+        return noteToPC(string);
+    }
+    if (/^[a-g][#b+\-]$/.test(string)) {
+        return noteToPC(string[0], string[1]);
+    }
+
+    if (string === "t") return 10;
+    if (/^1[01]|[0-9]$/.test(string)) {
+        return parseInt(string);
+    }
+
+    throw console.error(`The string \"${string}\" cannot be converted to a PC`);
 }
