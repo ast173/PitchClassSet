@@ -26,7 +26,7 @@ export { setPackingType, setPCS }; // to "./loadSettings.js"
 // ==================== HTML Elements ====================
 const input = document.getElementById("input");
 const output = document.getElementById("output");
-const pc_checkboxes = document.getElementsByClassName("pc");
+const pc_checkboxes = document.getElementsByClassName("pc-check");
 
 const normal_order = document.getElementById("normal-order");
 const prime_form = document.getElementById("prime-form");
@@ -55,8 +55,8 @@ document.getElementById("help").addEventListener("click", () => {
 
 // ==================== INDEX ====================
 // private function
-// handleTranspositionAndInversion() -> undefined
-function handleTranspositionAndInversion() {
+// handleTransformations() -> undefined
+function handleTransformations() {
     if (!showMultiple) {
         setTextAlign("center");
         Tn_output.value = formatOutput(getTn([...pcs], parseInt(Tn_select.value)), UNORDERED);
@@ -169,7 +169,7 @@ function calculate(manualOn) {
     // console.log("Known");
     known.value = tryMatchForKnown([...prime]);
 
-    handleTranspositionAndInversion();
+    handleTransformations();
     resizeHeight(Tn_output);
     resizeHeight(TnI_output);
 }
