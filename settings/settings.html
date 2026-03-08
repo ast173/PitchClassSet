@@ -13,44 +13,48 @@
 
     <body>
         <h1>Settings</h1>
-        <h4>General</h4>
-        <div class="settings-row">
-            <label>Notes or letters:</label>
-            <input type="checkbox" id="notes-number" class="toggle">
-            <label for="notes-number"></label>
+        <div class="card">
+            <h3>General</h3>
+            <div class="settings-row">
+                <label class="text">Notes or letters:</label>
+                <input type="checkbox" id="notes-number" class="toggle">
+                <label for="notes-number"></label>
+            </div>
+
+            <div class="settings-row">
+                <label class="text">10/11 or T/E:</label>
+                <input type="checkbox" id="ten-eleven" class="toggle">
+                <label for="ten-eleven"></label>
+            </div>
+
+            <div class="settings-row">
+                <label class="text">Type of packing:</label>
+                <input type="checkbox" id="forte-rahn" class="toggle">
+                <label for="forte-rahn"></label>
+            </div>
+
+            <div class="settings-row">
+                <label class="text">Manual input on?</label>
+                <input type="checkbox" id="manual-input" class="toggle">
+                <label for="manual-input"></label>
+            </div>
         </div>
 
-        <div class="settings-row">
-            <label>10/11 or T/E:</label>
-            <input type="checkbox" id="ten-eleven" class="toggle">
-            <label for="ten-eleven"></label>
+        <div class="card">
+            <h3>Transformations</h3>
+            <div class="settings-row">
+                <label class="text">Show multiple?</label>
+                <input type="checkbox" id="show-multiple" class="toggle">
+                <label for="show-multiple"></label>
+            </div>
+
+            <div class="settings-row">
+                <label class="text">Show Unique Inversions?</label>
+                <input type="checkbox" id="show-unique" class="toggle">
+                <label for="show-unique"></label>
+            </div>
         </div>
 
-        <div class="settings-row">
-            <label>Type of packing:</label>
-            <input type="checkbox" id="forte-rahn" class="toggle">
-            <label for="forte-rahn"></label>
-        </div>
-
-        <div class="settings-row">
-            <label>Manual input on?</label>
-            <input type="checkbox" id="manual-input" class="toggle">
-            <label for="manual-input"></label>
-        </div>
-
-        <h4>Tₙ and TₙI</h4>
-        <div class="settings-row">
-            <label>Show multiple?</label>
-            <input type="checkbox" id="show-multiple" class="toggle">
-            <label for="show-multiple"></label>
-        </div>
-
-        <div class="settings-row">
-            <label>Show Unique Inversions?</label>
-            <input type="checkbox" id="show-unique" class="toggle">
-            <label for="show-unique"></label>
-        </div>
-
-        <button id="back" onclick="location.href='../index.html'">Back</button>
+        <button id="back" class="btn" onclick="location.href='../index.html'">Back</button>
     </body>
 </html>

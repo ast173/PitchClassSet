@@ -1,23 +1,101 @@
 :root {
-    --font: "Segoe UI", Tahoma, Geneva, Verdana, serif;
+    --font: "Lora", Georgia, serif;
+    --font-mono: "Fira Code", monospace;
+
+    --pc-btn-color: #fff;
+    --pc-btn-bg: linear-gradient(#3b4a57, #1f2a33);
+    --pc-btn-hover-color: #989d9f;
+    --pc-btn-hover-bg: linear-gradient(#254255, #152029);
+    --pc-btn-active-color: #4e4f50;
+    --pc-btn-active-bg: linear-gradient(#252f40, #121d27);
+
+    --title-color: #fff;
+    --subtitle-color: #505878;
+
+    --body-bg: #1a2233;
+
+    --card-color: #4c72a4;
+    --card-bg: #1f2c47;
+    --card-bg-hover: #232f47;
+
+    --btn-color: #3f5177;
+    --btn-bg: #142b46;
+    --btn-bg-hover: #1c3047;
+
+    --input-bg: #20232a;
+    --font-color: #dad6d6;
+
+    --focus-border-color: #4c72a4;
+
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+
+    --border-subtle: rgba(255,255,255,0.06); 
+    --border-card: rgba(255,255,255,0.08);
+    --shadow-card: 0 4px 24px rgba(0,0,0,0.4), 0 1px 4px rgba(0,0,0,0.3);
+    --shadow-card-hover: 0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35);
+}
+
+h1 {
+    color: var(--title-color);
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 1rem;
 }
 
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
     font-size: 150%;
+
+    background: var(--body-bg);
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem 4rem;
+    background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(74,111,165,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 100%, rgba(224,123,57,0.1) 0%, transparent 50%);
 }
 
-button {
-    width: 7rem;
-    height: 1.5rem;
+/* inputs */
+.btn {
+    width: 9rem;
+    height: 2rem;
+    color: var(--btn-color);
+    background-color: var(--btn-bg);
+    font-family: var(--font-mono);
+    border-radius: var(--radius-md);
 }
 
-.settings {
-    display: flex;
-    flex-direction: column;
+.btn:hover {
+    background-color: var(--btn-bg-hover);
+}
+
+/* cards */
+.card {
+    background-color: var(--card-bg);
+    color: var(--card-color);
+    font-family: var(--font);
+
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--border-card);
+    box-shadow: var(--shadow-card);
+    padding: 1.25rem 1.25rem;
+    padding-top: 0;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-card-hover);
+    background-color: var(--card-bg-hover);
+}
+
+.card h3 {
+    color: var(--title-color);
+}
+
+.card label.text {
+    margin-right: 1rem;
 }
 
 .settings-row {
@@ -28,34 +106,43 @@ button {
     max-width: 15em
 }
 
-#back {
-    margin-top: 10px;
-}
 
-input[type="checkbox"].toggle {
+
+
+
+
+
+
+
+
+
+
+
+/* toggle sliders */
+.card input[type="checkbox"].toggle {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-input[type="checkbox"].toggle + label {
+.card input[type="checkbox"].toggle + label {
     display: flex;
     position: relative;
     align-items: center;
     cursor: pointer;
 }
 
-input[type="checkbox"].toggle + label::before {
+.card input[type="checkbox"].toggle + label::before {
     content: "";
     width: 2em;
-    height: 1em;
+    height: 1.1em;
     border-radius: 1em;
     margin-right: 0.25em;
 
-    background-color: #ddd;
+    background-color: var(--input-bg);
 }
 
-input[type="checkbox"].toggle + label::after {
+.card input[type="checkbox"].toggle + label::after {
     content: "";
     position: absolute;
 
@@ -64,15 +151,16 @@ input[type="checkbox"].toggle + label::after {
     height: 0.9em;
     border-radius: 1em;
 
-    background-color: red;
+    background-color: #6b2525;
     transition: 200ms ease-in-out;
 }
 
-input[type="checkbox"].toggle:checked + label::after {
+.card input[type="checkbox"].toggle:checked + label::after {
     transform: translateX(100%);
-    background-color: green;
+    background-color: #41642c
 }
 
+/* variables */
 #notes-number + label::after {
     content: "C, C#, ...";
 }
@@ -97,18 +185,14 @@ input[type="checkbox"].toggle:checked + label::after {
     content: "Rahn";
 }
 
-#show-multiple + label::after {
-    content: "One";
-}
-
-#show-multiple:checked + label::after {
-    content: "Many";
-}
-
-#manual-input + label::after, #show-unique + label::after {
+#manual-input + label::after,
+#show-multiple + label::after,
+#show-unique + label::after {
     content: "Off";
 }
 
-#manual-input:checked + label::after, #show-unique:checked + label::after {
+#manual-input:checked + label::after,
+#show-multiple:checked + label::after,
+#show-unique:checked + label::after {
     content: "On";
 }
