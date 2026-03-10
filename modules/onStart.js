@@ -20,6 +20,7 @@ TODO: show unique transpositions/inversions
 TODO: add supersets and subsets
 TODO: add 'is subset of' options
 TODO: remove the calculate button
+TODO: add a play button that plays the chord solid and broken
 the datatype TODO:HTML needs refinement
 
 DATATYPES
