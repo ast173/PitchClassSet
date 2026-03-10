@@ -32,13 +32,13 @@
                     <label for="known">Recognized Set:</label>
                 </div>
                 <div class="outputs-column">
-                    <input type="text" id="normal-order" class="io-box" readonly>
-                    <input type="text" id="prime-form" class="io-box" readonly>
-                    <input type="text" id="ic-vector" class="io-box" readonly>
-                    <input type="text" id="complement" class="io-box" readonly>
-                    <input type="text" id="forte-number" class="io-box" readonly>
-                    <input type="text" id="z-mate" class="io-box" readonly>
-                    <input type="text" id="known" class="io-box" readonly>
+                    <input type="text" id="normal-order" class="io-field" readonly>
+                    <input type="text" id="prime-form" class="io-field" readonly>
+                    <input type="text" id="ic-vector" class="io-field" readonly>
+                    <input type="text" id="complement" class="io-field" readonly>
+                    <input type="text" id="forte-number" class="io-field" readonly>
+                    <input type="text" id="z-mate" class="io-field" readonly>
+                    <input type="text" id="known" class="io-field" readonly>
                 </div>
             </div>
         </div>
@@ -91,11 +91,11 @@
             <div class="input-section">
                 <div class="input-group">
                     <label for="input">Input a Set</label>
-                    <input type="text" id="input" class="io-box" placeholder="ex. 0 c# gb t">
+                    <input type="text" id="input" class="io-field" placeholder="ex. 0 c# gb t">
                 </div>
                 <div class="input-group">
                     <label for="output">Unordered Set</label>
-                    <input type="text" id="output" class="io-box" placeholder="[]" readonly>
+                    <input type="text" id="output" class="io-field" placeholder="[]" readonly>
                 </div>
             </div>
             <div class="btn-grid">
@@ -114,7 +114,7 @@
                 <label for="Tn-output">Transposition (Tₙ):</label>
                 <div class="selector-row">
                     <label for="Tn-select">n =</label>
-                    <select id="Tn-select" class="Tn io-box">
+                    <select id="Tn-select" class="Tn io-field">
                         <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -129,14 +129,12 @@
                         <option value="11">11</option>
                     </select>
                 </div>
-                <textarea id="Tn-output" class="io-box" readonly></textarea>
-            </div>
-
-            <div class="trans-group">
+                <textarea id="Tn-output" class="io-field" readonly></textarea>
+                
                 <label for="TnI-output">Inversion (TₙI):</label>
                 <div class="selector-row">
                     <label for="TnI-select">n =</label>
-                    <select id="TnI-select" class="TnI io-box">
+                    <select id="TnI-select" class="TnI io-field">
                         <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -151,7 +149,7 @@
                         <option value="11">11</option>
                     </select>
                 </div>
-                <textarea id="TnI-output" class="io-box" readonly></textarea>
+                <textarea id="TnI-output" class="io-field" readonly></textarea>
             </div>
         </div>
 

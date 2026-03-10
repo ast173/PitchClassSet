@@ -32,7 +32,7 @@
     --radius-lg: 18px;
 
     /* like hr vvv */
-    --border-subtle: rgba(255,255,255,0.06); 
+    --border-bottom: 2px solid rgba(255,255,255,0.06);
     --border-card: rgba(255,255,255,0.08);
     --shadow-card: 0 4px 24px rgba(0,0,0,0.4), 0 1px 4px rgba(0,0,0,0.3);
     --shadow-card-hover: 0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35);
@@ -48,7 +48,7 @@ header {
 
 header h1 {
     color: var(--title-color);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: var(--border-bottom);
     margin-bottom: 0;
 }
 
@@ -89,7 +89,7 @@ body {
 }
 
 /* general */
-.io-box {
+.io-field {
     color: var(--font-color);
     background-color: var(--input-bg);
     
@@ -97,10 +97,10 @@ body {
     font-size: 1rem;
 }
 
-.io-box:focus {
-  outline: none;
-  border: 1px solid var(--focus-border-color);
-  box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+.io-field:focus {
+    outline: none;
+    border: 1px solid var(--focus-border-color);
+    box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
 }
 
 /* outputs */
@@ -130,6 +130,7 @@ body {
     background-color: var(--btn-bg);
     font-family: var(--font-mono);
     border-radius: var(--radius-md);
+    margin-top: 0.25rem;
 }
 
 .btn:hover {
@@ -225,10 +226,15 @@ div.trans-group {
 div.selector-row {
     display: flex;
     gap: 0.3rem;
+    margin-bottom: 0.25rem;
 }
 
 /* other */
 div.btn-row {
     display: flex;
     gap: 0.3rem;
+}
+
+div.trans-group label {
+    margin-bottom: 0.25rem;
 }
