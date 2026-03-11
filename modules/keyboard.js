@@ -17,6 +17,13 @@ console.log("Imported items from \"./loadSettings.js\"");
 const input = document.getElementById("input");
 
 // ==================== KEYBOARD ====================
+input.addEventListener("change", () => {
+    let lastPCS = getPCS();
+    calculate(useManualInput);
+    let currentPCS = getPCS();
+    rememberAll(getDifference(lastPCS, currentPCS));
+});
+
 // private variable
 let lastNote = "";
 document.addEventListener("keydown", e => {
@@ -77,13 +84,4 @@ document.addEventListener("keydown", e => {
         undo();
         calculate(false);
     }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    input.addEventListener("change", () => {
-        let lastPCS = getPCS();
-        calculate(useManualInput);
-        let currentPCS = getPCS();
-        rememberAll(getDifference(lastPCS, currentPCS));
-    });
 });

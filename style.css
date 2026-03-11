@@ -2,40 +2,40 @@
     --font: "Lora", Georgia, serif;
     --font-mono: "Fira Code", monospace;
 
-    --pc-btn-color: #fff;
+    --pc-btn-color: #fffdf2;
     --pc-btn-bg: linear-gradient(#3b4a57, #1f2a33);
     --pc-btn-hover-color: #989d9f;
     --pc-btn-hover-bg: linear-gradient(#254255, #152029);
     --pc-btn-active-color: #4e4f50;
     --pc-btn-active-bg: linear-gradient(#252f40, #121d27);
 
-    --title-color: #fff;
-    --subtitle-color: #505878;
+    --title-color: #fffdf2;
+    --subtitle-color: #929077;
 
     --body-bg: #1a2233;
 
-    --card-color: #4c72a4;
+    --card-color: #d3b52e;
     --card-bg: #1f2c47;
     --card-bg-hover: #232f47;
+    --card-border: rgba(255,255,255,0.08);
+    --card-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 1px 4px rgba(0,0,0,0.3);
+    --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35);
 
-    --btn-color: #3f5177;
-    --btn-bg: #142b46;
+    --btn-color: #d3b52e;
+    --btn-bg: #323232;
     --btn-bg-hover: #1c3047;
 
-    --input-bg: #20232a;
-    --font-color: #dad6d6;
+    --io-bg: #20232a;
+    --io-color: #faf5e9;
 
-    --focus-border-color: #4c72a4;
+    /* old color: #4c72a4; */
+    --focus-border-color: #d3b52e;
 
     --radius-sm: 6px;
     --radius-md: 12px;
     --radius-lg: 18px;
 
-    /* like hr vvv */
     --border-bottom: 2px solid rgba(255,255,255,0.06);
-    --border-card: rgba(255,255,255,0.08);
-    --shadow-card: 0 4px 24px rgba(0,0,0,0.4), 0 1px 4px rgba(0,0,0,0.3);
-    --shadow-card-hover: 0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35);
 }
 
 /* header */
@@ -78,20 +78,20 @@ body {
 
     border-radius: var(--radius-lg);
     margin-bottom: 1.25rem;
-    border: 1px solid var(--border-card);
-    box-shadow: var(--shadow-card);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--card-shadow);
     padding: 1.25rem 1.25rem;
 }
 
 .card:hover {
-    box-shadow: var(--shadow-card-hover);
+    box-shadow: var(--card-shadow-hover);
     background-color: var(--card-bg-hover);
 }
 
 /* general */
 .io-field {
-    color: var(--font-color);
-    background-color: var(--input-bg);
+    color: var(--io-color);
+    background-color: var(--io-bg);
     
     font-family: var(--font-mono);
     font-size: 1rem;

@@ -27,7 +27,7 @@ const useManualInput = setting4 === "true";
 const setting5 = localStorage.getItem("setting:show-multiple");
 const showMultiple = setting5 === "true";
 // const setting6 = localStorage.getItem("setting:show-unique");
-// const showUnique = setting5 === "true";
+// const showUnique = setting6 === "true";
 
 // private function
 // loadSettings() -> undefined

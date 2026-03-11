@@ -24,7 +24,7 @@ TODO: add a play button that plays the chord solid and broken
 the datatype TODO:HTML needs refinement
 
 DATATYPES
-let a PC be of datatype Number and to be a positive integer of 0, 1, 2, ..., 11
+let a PC be of datatype Number and to be of 0, 1, 2, ..., 11
 let a PCS be of datatype Array[PC...] and to have no duplicates and be unordered
 let a NormalOrder be of datatype PCS but it is sorted in ascending order
 let a Integer be of datatype Number and to be an integer

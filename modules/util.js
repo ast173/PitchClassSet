@@ -6,9 +6,9 @@ console.log("\"./util.js\" has no imports");
 // ==================== Exports ====================
 export { UNORDERED, NORMAL_ORDER, PRIME_FORM, IC_VECTOR }; // to "./index.js"
 export { mod12 }; // to "./deep.js"
-export { MAX_SEMITONES }; // to "./index.js"
-export { noteToPC }; // to "./keyboard.js"
-export { RAHN }; // to "./loadSettings.js"
+export { MAX_SEMITONES }; // to "./index.js", "./deep.js", "./audio.js"
+export { noteToPC }; // to "./keyboard.js", "./manual.js"
+export { RAHN }; // to "./index.js", "./loadSettings.js"
 export { FORTE }; // to "./deep.js", "./loadSettings.js"
 
 // ==================== UTIL ====================
@@ -46,4 +46,26 @@ function noteToPC(key, accedental = "=") {
 // mod12(Integer) -> PC
 function mod12(pc) {
     return ((pc % 12) + 12) % 12;
+}
+
+// private function
+// isPC(Any) -> Boolean
+function isPC(any) {
+    return Number.isInteger(any) && 0 <= any && any < MAX_SEMITONES
+}
+
+// private function
+// isPCS(Any) -> Boolean
+function isPCS(any) {
+    return Array.isArray(any) &&
+            any.every(isPC) &&
+            new Set(any).size === any.length;
+}
+
+// private function
+// assert(Boolean) -> undefined
+function assert(bool) {
+    if (!bool) {
+        throw new Error("Assertion failed");
+    }
 }

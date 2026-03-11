@@ -11,6 +11,7 @@
         <script type="module" src="./modules/onStart.js" defer></script>
         <script type="module" src="./modules/keyboard.js" defer></script>
         <script type="module" src="./modules/index.js" defer></script>
+        <script type="module" src="./modules/audio.js" defer></script>
     </head>
 
     <header>
@@ -24,21 +25,21 @@
             <div class="outputs">
                 <div class="outputs-column">
                     <label for="normal-order">Normal Order:</label>
-                    <label for="prime-form">Prime Form:</label>
-                    <label for="ic-vector">IC Vector:</label>
-                    <label for="complement">Complement (Unordered):</label>
+                    <label for="prime-form"  >Prime Form:</label>
+                    <label for="ic-vector"   >IC Vector:</label>
+                    <label for="complement"  >Complement (Unordered):</label>
                     <label for="forte-number">Forte Number:</label>
-                    <label for="z-mate">Z Mate:</label>
-                    <label for="known">Recognized Set:</label>
+                    <label for="z-mate"      >Z Mate:</label>
+                    <label for="known"       >Recognized Set:</label>
                 </div>
                 <div class="outputs-column">
-                    <input type="text" id="normal-order" class="io-field" readonly>
-                    <input type="text" id="prime-form" class="io-field" readonly>
-                    <input type="text" id="ic-vector" class="io-field" readonly>
-                    <input type="text" id="complement" class="io-field" readonly>
-                    <input type="text" id="forte-number" class="io-field" readonly>
-                    <input type="text" id="z-mate" class="io-field" readonly>
-                    <input type="text" id="known" class="io-field" readonly>
+                    <input type="text" id="normal-order" class="io-field" placeholder="[]" readonly>
+                    <input type="text" id="prime-form"   class="io-field" placeholder="()" readonly>
+                    <input type="text" id="ic-vector"    class="io-field" placeholder="<>" readonly>
+                    <input type="text" id="complement"   class="io-field" placeholder="[]" readonly>
+                    <input type="text" id="forte-number" class="io-field" placeholder="?-?" readonly>
+                    <input type="text" id="z-mate"       class="io-field" placeholder="?-z?" readonly>
+                    <input type="text" id="known"        class="io-field" placeholder="?" readonly>
                 </div>
             </div>
         </div>
@@ -48,43 +49,43 @@
             <div class="pc-inputs">
                 <div class="pc-row black-keys">
                     <input type="checkbox" id="1" class="pc-check">
-                    <label for="1" class="pc-btn" pc-note="C#/Db" pc-number="1"></label>
+                    <label for="1"  class="pc-btn" pc-note="C#/Db" pc-number="1"></label>
 
                     <input type="checkbox" id="3" class="pc-check">
-                    <label for="3" class="pc-btn" pc-note="D#/Eb" pc-number="3"></label>
+                    <label for="3"  class="pc-btn" pc-note="D#/Eb" pc-number="3"></label>
 
                     <label id="space" class="pc-btn"></label>
 
                     <input type="checkbox" id="6" class="pc-check">
-                    <label for="6" class="pc-btn" pc-note="F#/Gb" pc-number="6"></label>
+                    <label for="6"  class="pc-btn" pc-note="F#/Gb" pc-number="6"></label>
 
                     <input type="checkbox" id="8" class="pc-check">
-                    <label for="8" class="pc-btn" pc-note="G#/Ab" pc-number="8"></label>
+                    <label for="8"  class="pc-btn" pc-note="G#/Ab" pc-number="8"></label>
 
                     <input type="checkbox" id="10" class="pc-check">
                     <label for="10" class="pc-btn" pc-note="A#/Bb" pc-number="10"></label>
                 </div>
                 <div class="pc-row white-keys">
                     <input type="checkbox" id="0" class="pc-check">
-                    <label for="0" class="pc-btn" pc-note="C" pc-number="0"></label>
+                    <label for="0"  class="pc-btn" pc-note="C"     pc-number="0"></label>
 
                     <input type="checkbox" id="2" class="pc-check">
-                    <label for="2" class="pc-btn" pc-note="D" pc-number="2"></label>
+                    <label for="2"  class="pc-btn" pc-note="D"     pc-number="2"></label>
 
                     <input type="checkbox" id="4" class="pc-check">
-                    <label for="4" class="pc-btn" pc-note="E" pc-number="4"></label>
+                    <label for="4"  class="pc-btn" pc-note="E"     pc-number="4"></label>
 
                     <input type="checkbox" id="5" class="pc-check">
-                    <label for="5" class="pc-btn" pc-note="F" pc-number="5"></label>
+                    <label for="5"  class="pc-btn" pc-note="F"     pc-number="5"></label>
 
                     <input type="checkbox" id="7" class="pc-check">
-                    <label for="7" class="pc-btn" pc-note="G" pc-number="7"></label>
+                    <label for="7"  class="pc-btn" pc-note="G"     pc-number="7"></label>
 
                     <input type="checkbox" id="9" class="pc-check">
-                    <label for="9" class="pc-btn" pc-note="A" pc-number="9"></label>
+                    <label for="9"  class="pc-btn" pc-note="A"     pc-number="9"></label>
 
                     <input type="checkbox" id="11" class="pc-check">
-                    <label for="11" class="pc-btn" pc-note="B" pc-number="11"></label>
+                    <label for="11" class="pc-btn" pc-note="B"     pc-number="11"></label>
                 </div>
             </div>
 
@@ -98,13 +99,16 @@
                     <input type="text" id="output" class="io-field" placeholder="[]" readonly>
                 </div>
             </div>
+            
             <div class="btn-grid">
-                <button id="calculate" class="btn">Calculate</button>
-                <button id="reset" class="btn">Reset</button>
+                <button id="play"           class="btn">Play</button>
+                <button id="stop"           class="btn">Stop</button>
+                <button id="calculate"      class="btn">Calculate</button>
+                <button id="reset"          class="btn">Reset</button>
                 <button id="complement-btn" class="btn">Complement</button>
-                <button id="random" class="btn">Random</button>
-                <button id="undo" class="btn">Undo</button>
-                <button id="redo" class="btn">Redo</button>
+                <button id="random"         class="btn">Random</button>
+                <button id="undo"           class="btn">Undo</button>
+                <button id="redo"           class="btn">Redo</button>
             </div>
         </div>
 
@@ -129,7 +133,7 @@
                         <option value="11">11</option>
                     </select>
                 </div>
-                <textarea id="Tn-output" class="io-field" readonly></textarea>
+                <textarea id="Tn-output" class="io-field" placeholder="[]" readonly></textarea>
                 
                 <label for="TnI-output">Inversion (TₙI):</label>
                 <div class="selector-row">
@@ -149,7 +153,7 @@
                         <option value="11">11</option>
                     </select>
                 </div>
-                <textarea id="TnI-output" class="io-field" readonly></textarea>
+                <textarea id="TnI-output" class="io-field" placeholder="[]" readonly></textarea>
             </div>
         </div>
 

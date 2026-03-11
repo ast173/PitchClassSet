@@ -19,9 +19,10 @@ console.log("Imported items from \"./history.js\"");
 console.log("Imported items from \"./loadSettings.js\"");
 
 // ==================== Exports ====================
-export { onReset, getPCS }; // to "./keyboard.js"
+export { onReset }; // to "./keyboard.js"
 export { calculate }; // to "./keyboard.js", "./loadSettings.js"
 export { setPackingType, setPCS }; // to "./loadSettings.js"
+export { getPCS }; // to "./keyboard.js", "./audio.js"
 
 // ==================== HTML Elements ====================
 const input = document.getElementById("input");
@@ -117,6 +118,12 @@ function setPCS(other) {
     pcs = [...other];
 }
 
+// public function
+// setPackingType(PackingType) -> undefined
+function setPackingType(type) {
+    packingType = type;
+}
+
 
 
 
@@ -128,12 +135,6 @@ function setPCS(other) {
 // ==================== CONNECTS TO index.html ====================
 let pcs = [];
 let packingType = RAHN;
-
-// public function
-// setPackingType(PackingType) -> undefined
-function setPackingType(type) {
-    packingType = type;
-}
 
 // public function
 // calculate(Boolean) -> undefined

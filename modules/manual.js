@@ -45,7 +45,7 @@ function tryMatchForte(text) {
 // private function
 // tryMatchPCS(String) -> PCS
 function tryMatchPCS(text) {
-    let pcs = (text.match(/1[01]|[0-9]|t|[a-g][#b+\-]?/g) || []).map(s => stringToPC(s));
+    let pcs = (text.match(/1[01]|[0-9]|t|[a-g][#b+\-]?/g) || []).map(stringToPC);
     return pcs;
 }
 

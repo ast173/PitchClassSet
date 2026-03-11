@@ -18,9 +18,7 @@ function toggle(pc) {
 // public function
 // toggleAll(PCS) -> undefined
 function toggleAll(pcs) {
-    for (let pc of pcs) {
-        toggle(pc);
-    }
+    pcs.forEach(toggle);
 }
 
 // public function
