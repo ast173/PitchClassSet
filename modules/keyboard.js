@@ -2,13 +2,16 @@ console.log("==================== KEYBOARD ====================");
 
 // ==================== Imports ====================
 import { noteToPC } from "./util.js";
-import { undo, redo, remember, rememberAll, getDifference } from "./history.js";
-import { calculate, onReset, getPCS } from "./index.js";
-import { useManualInput } from "./loadSettings.js";
 import { toggle, toggleAll } from "./util2.js";
+import { undo, redo, remember, rememberAll, getDifference } from "./history.js";
+import { calculate, getPCS } from "./index.js";
+import { onReset } from "./init.js";
+import { useManualInput } from "./loadSettings.js";
 console.log("Imported items from \"./util.js\"");
+console.log("Imported items from \"./util2.js\"");
 console.log("Imported items from \"./history.js\"");
 console.log("Imported items from \"./index.js\"");
+console.log("Imported items from \"./init.js\"");
 console.log("Imported items from \"./loadSettings.js\"");
 
 // ==================== Exports ====================

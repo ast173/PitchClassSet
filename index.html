@@ -6,13 +6,14 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Pitch Class Set Calculator</title>
+        <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
         <link rel="stylesheet" href="style.css">
         <script type="module" src="./modules/onStart.js" defer></script>
         <script type="module" src="./modules/keyboard.js" defer></script>
         <script type="module" src="./modules/index.js" defer></script>
         <script type="module" src="./modules/audio.js" defer></script>
-        <script type="module" src="./modules/eventListenersInit.js" defer></script>
+        <script type="module" src="./modules/init.js" defer></script>
     </head>
 
     <header>
@@ -103,8 +104,8 @@
             
             <div class="btn-grid">
                 <button id="play"           class="btn">Play</button>
-                <button id="stop"           class="btn">Stop</button>
-                <button id="calculate"      class="btn">Calculate</button>
+                <!-- <button id="stop"           class="btn">Stop</button> -->
+                <!-- <button id="calculate"      class="btn">Calculate</button> -->
                 <button id="reset"          class="btn">Reset</button>
                 <button id="complement-btn" class="btn">Complement</button>
                 <button id="random"         class="btn">Random</button>

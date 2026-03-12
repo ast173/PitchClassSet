@@ -1,16 +1,16 @@
 console.log("==================== LOAD SETTINGS ====================");
 
 // ==================== Imports ====================
-import { FORTE, RAHN } from "./util.js";
 import { setCheckboxStates } from "./util2.js";
-import { setPackingType, calculate, setPCS } from "./index.js";
+import { calculate, setPCS } from "./index.js";
 console.log("Imported items from \"./util.js\"");
 console.log("Imported items from \"./util2.js\"");
 console.log("Imported items from \"./index.js\"");
 
 // ==================== Exports ====================
 export { showMultiple }; // to "./transformations.js"
-export { useManualInput }; // to "./index.js", "./keyboard.js"
+export { useManualInput }; // to "./index.js", "./keyboard.js", "./init.js"
+export { useRahn }; // to "./index.js"
 
 // ==================== HTML Elements ====================
 const pc_btns = document.getElementsByClassName("pc-btn");
@@ -45,8 +45,6 @@ function loadSettings() {
         btn_10.textContent = "T";
         btn_11.textContent = "E";
     }
-
-    setPackingType(useRahn ? RAHN : FORTE);
 
     const bottom_rows = document.querySelectorAll("div.selector-row");
     for (let row of bottom_rows) {

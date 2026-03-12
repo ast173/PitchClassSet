@@ -18,6 +18,7 @@ const audioCtx = new AudioContext();
 let audioBuffers = [];
 let sources = [];
 let stopped = false;
+let playing = false;
 
 // private function
 // loadPiano() -> undefined
@@ -72,23 +73,31 @@ async function playBroken(pcs) {
 }
 
 await loadPiano();
-
 play_btn.addEventListener("click", async () => {
-    stopped = false;
+    audioCtx.resume();
+    
+    if (playing) return;
+    playing = true;
 
     let pcs = getPCS();
     pcs = pcs.sort((a, b) => a - b);
 
     await playBroken(pcs);
 
-    if (pcs.length > 1) {
+    if (pcs.length % 2 === 1) {
         await sleep(250);
-        playSolid(pcs);
     }
+
+    if (pcs.length > 1) {
+        playSolid(pcs);
+        await sleep(1000);
+    }
+
+    playing = false;
 });
 
-stop_btn.addEventListener("click", () => {
-    stopped = true;
-    sources.forEach(source => source.stop());
-    sources.length = 0;
-});
+// stop_btn.addEventListener("click", () => {
+//     stopped = true;
+//     sources.forEach(source => source.stop());
+//     sources.length = 0;
+// });
