@@ -10,9 +10,9 @@ function getStorageAndSet(htmlID, storageItem) {
     });
 }
 
-getStorageAndSet("notes-number", "setting:pc-display");
-getStorageAndSet("ten-eleven", "setting:ten-eleven");
-getStorageAndSet("forte-rahn", "setting:packing-type");
-getStorageAndSet("manual-input", "setting:manual-input");
+getStorageAndSet("notes-number",  "setting:pc-display");
+getStorageAndSet("ten-eleven",    "setting:ten-eleven");
+getStorageAndSet("forte-rahn",    "setting:packing-type");
+getStorageAndSet("manual-input",  "setting:manual-input");
 getStorageAndSet("show-multiple", "setting:show-multiple");
-getStorageAndSet("show-unique", "setting:show-unique");
+getStorageAndSet("show-unique",   "setting:show-unique");

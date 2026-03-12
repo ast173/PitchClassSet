@@ -4,9 +4,10 @@ console.log("==================== UTIL ====================");
 console.log("\"./util.js\" has no imports");
 
 // ==================== Exports ====================
-export { UNORDERED, NORMAL_ORDER, PRIME_FORM, IC_VECTOR }; // to "./index.js"
+export { NORMAL_ORDER, PRIME_FORM, IC_VECTOR }; // to "./index.js"
+export { UNORDERED, formatOutput }; // to "./index.js", "./transformations.js"
 export { mod12 }; // to "./deep.js"
-export { MAX_SEMITONES }; // to "./index.js", "./deep.js", "./audio.js"
+export { MAX_SEMITONES }; // to "./index.js", "./deep.js", "./audio.js", "./transformations.js"
 export { noteToPC }; // to "./keyboard.js", "./manual.js"
 export { RAHN }; // to "./index.js", "./loadSettings.js"
 export { FORTE }; // to "./deep.js", "./loadSettings.js"
@@ -23,6 +24,27 @@ const UNORDERED = Symbol("unordered");
 const NORMAL_ORDER = Symbol("normal_order");
 const PRIME_FORM = Symbol("prime_form");
 const IC_VECTOR = Symbol("ic_vector");
+
+const useTAndE = localStorage.getItem("setting:ten-eleven") === "true";
+
+// public function
+// formatOutput(PCS, FormatingType) -> String
+function formatOutput(pcs, formatting) {
+    let formatted = "";
+    if (formatting === NORMAL_ORDER || formatting === UNORDERED) {
+        formatted = `[${pcs.join(", ")}]`;
+    } else if (formatting === PRIME_FORM) {
+        formatted = `(${pcs.join(" ")})`;
+    } else if (formatting === IC_VECTOR) {
+        formatted = `<${pcs.join(" ")}>`;
+    } else {
+        throw new Error("Unknown formatting: " + formatting);
+    }
+
+    return useTAndE ?
+        formatted.replaceAll("10", "T").replaceAll("11", "E") :
+        formatted;
+}
 
 // private map
 let letterToPC = new Map([
@@ -48,24 +70,24 @@ function mod12(pc) {
     return ((pc % 12) + 12) % 12;
 }
 
-// private function
-// isPC(Any) -> Boolean
-function isPC(any) {
-    return Number.isInteger(any) && 0 <= any && any < MAX_SEMITONES
-}
+// // private function
+// // isPC(Any) -> Boolean
+// function isPC(any) {
+//     return Number.isInteger(any) && 0 <= any && any < MAX_SEMITONES
+// }
 
-// private function
-// isPCS(Any) -> Boolean
-function isPCS(any) {
-    return Array.isArray(any) &&
-            any.every(isPC) &&
-            new Set(any).size === any.length;
-}
+// // private function
+// // isPCS(Any) -> Boolean
+// function isPCS(any) {
+//     return Array.isArray(any) &&
+//             any.every(isPC) &&
+//             new Set(any).size === any.length;
+// }
 
-// private function
-// assert(Boolean) -> undefined
-function assert(bool) {
-    if (!bool) {
-        throw new Error("Assertion failed");
-    }
-}
+// // private function
+// // assert(Boolean) -> undefined
+// function assert(bool) {
+//     if (!bool) {
+//         throw new Error("Assertion failed");
+//     }
+// }

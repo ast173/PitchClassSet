@@ -81,8 +81,10 @@ play_btn.addEventListener("click", async () => {
 
     await playBroken(pcs);
 
-    await sleep(250);
-    playSolid(pcs);
+    if (pcs.length > 1) {
+        await sleep(250);
+        playSolid(pcs);
+    }
 });
 
 stop_btn.addEventListener("click", () => {

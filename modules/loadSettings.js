@@ -9,13 +9,13 @@ console.log("Imported items from \"./util2.js\"");
 console.log("Imported items from \"./index.js\"");
 
 // ==================== Exports ====================
-export { useTAndE, showMultiple }; // to "./index.js"
+export { showMultiple }; // to "./transformations.js"
 export { useManualInput }; // to "./index.js", "./keyboard.js"
 
 // ==================== HTML Elements ====================
 const pc_btns = document.getElementsByClassName("pc-btn");
 
-// ==================== LOAD SETTINGS ====================
+// ==================== Local Storage ====================
 const setting1 = localStorage.getItem("setting:pc-display");
 const usePCNumbers = setting1 === "true";
 const setting2 = localStorage.getItem("setting:ten-eleven");
@@ -29,6 +29,7 @@ const showMultiple = setting5 === "true";
 // const setting6 = localStorage.getItem("setting:show-unique");
 // const showUnique = setting6 === "true";
 
+// ==================== LOAD SETTINGS ====================
 // private function
 // loadSettings() -> undefined
 function loadSettings() {

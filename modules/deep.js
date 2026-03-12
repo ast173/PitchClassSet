@@ -5,7 +5,8 @@ import { MAX_SEMITONES, FORTE, mod12 } from "./util.js";
 console.log("Imported items from \"./util.js\"");
 
 // ==================== Exports ====================
-export { getNormalOrder, getPrimeForm, getICVector, getComplement, getTn, getTnI } // to "./index.js";
+export { getNormalOrder, getPrimeForm, getICVector, getComplement }; // to "./index.js"
+export { getTn, getTnI }; // to "./index.js", "./transformations.js"
 
 // ==================== DEEP ====================
 // public function

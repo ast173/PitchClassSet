@@ -3,24 +3,27 @@ console.log("In \"./index.html\" load order:");
 console.log("\"./modules/onStart.js\"");
 console.log("\"./modules/keyboard.js\"");
 console.log("\"./modules/index.js\"");
+console.log("\"./modules/audio.js\"");
+console.log("\"./modules/eventListenersInit.js\"");
 
 console.log("Load order:");
 console.log("1. UTIL");
 console.log("2. UTIL2");
-console.log("3. MAPS");
-console.log("4. DEEP");
-console.log("5. MANUAL");
-console.log("6. HISTORY");
+console.log("3. HISTORY");
+console.log("4. MAPS");
+console.log("5. DEEP");
+console.log("6. MANUAL");
 console.log("7. LOAD SETTINGS");
-console.log("8. KEYBOARD");
+console.log("8. TRANSFORMATIONS");
 console.log("9. INDEX");
+console.log("10. KEYBOARD");
+console.log("11. AUDIO");
+console.log("12. EVENT LISTENERS INIT");
 
 /*
 TODO: show unique transpositions/inversions
 TODO: add supersets and subsets
 TODO: add 'is subset of' options
-TODO: remove the calculate button
-TODO: add a play button that plays the chord solid and broken
 the datatype TODO:HTML needs refinement
 
 DATATYPES

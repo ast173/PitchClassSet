@@ -137,6 +137,10 @@ body {
     background-color: var(--btn-bg-hover);
 }
 
+.btn:focus {
+    outline: none;
+}
+
 div.btn-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -170,6 +174,14 @@ div.input-section div.input-group {
 }
 
 .pc-btn {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+
+    display: block;
+    text-align: center;
+    line-height: 200%;
+
     width: 3.25rem;
     height: 3.25rem;
     border-radius: 0.4rem;
@@ -181,10 +193,6 @@ div.input-section div.input-group {
     font-size: x-large;
 
     box-shadow: 0 4px 0 black, 0 6px 8px rgba(0,0,0,0.4);
-
-    display: block;
-    text-align: center;
-    line-height: 200%;
 }
 
 .pc-btn:hover {
