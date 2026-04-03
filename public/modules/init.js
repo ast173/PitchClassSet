@@ -1,8 +1,8 @@
 console.log("==================== EVENT LISTENERS INIT ====================");
 
 // ==================== Imports ====================
-import { MAX_SEMITONES } from "./util.js";
-import { toggle, getPCFromCheckbox, savePCS, saveInputText } from "./util2.js";
+import { MAX_SEMITONES } from "./util/util.js";
+import { toggle, getPCFromCheckbox, savePCS, saveInputText } from "./util/util2.js";
 import { calculate, getPCS, clearAllPC } from "./index.js";
 import { remember, getDifference, rememberAll } from "./history.js";
 import { resizeHeight } from "./transformations.js";

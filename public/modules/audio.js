@@ -1,7 +1,7 @@
 console.log("==================== AUDIO ====================");
 
 // ==================== Imports ====================
-import { MAX_SEMITONES } from "./util.js";
+import { MAX_SEMITONES } from "./util/util.js";
 import { getPCS } from "./index.js";
 console.log("Imported items from \"./util.js\"");
 console.log("Imported items from \"./index.js\"");
@@ -24,7 +24,7 @@ let playing = false;
 // loadPiano() -> undefined
 async function loadPiano() {
     for (let pc of [...Array(MAX_SEMITONES).keys()]) {
-        const file = await fetch(`../audio/pc_${pc}.mp3`);
+        const file = await fetch(`/audio/pc_${pc}.mp3`);
         const arrayBuffer = await file.arrayBuffer();
         audioBuffers[pc] = await audioCtx.decodeAudioData(arrayBuffer);
     }
@@ -95,9 +95,3 @@ play_btn.addEventListener("click", async () => {
 
     playing = false;
 });
-
-// stop_btn.addEventListener("click", () => {
-//     stopped = true;
-//     sources.forEach(source => source.stop());
-//     sources.length = 0;
-// });

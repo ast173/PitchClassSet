@@ -1,8 +1,8 @@
 console.log("==================== MANUAL ====================");
 
 // ==================== Imports ====================
-import { noteToPC } from "./util.js";
-import { forteToPrime } from "./maps.js";
+import { noteToPC } from "./util/util.js";
+import { forteToPrime } from "./util/maps.js";
 console.log("Imported items from \"./util.js\"");
 console.log("Imported items from \"./maps.js\"");
 

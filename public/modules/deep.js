@@ -1,7 +1,7 @@
 console.log("==================== DEEP ====================");
 
 // ==================== Imports ====================
-import { MAX_SEMITONES, FORTE, mod12 } from "./util.js";
+import { MAX_SEMITONES, FORTE, mod12 } from "./util/util.js";
 console.log("Imported items from \"./util.js\"");
 
 // ==================== Exports ====================

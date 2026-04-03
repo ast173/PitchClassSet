@@ -1,7 +1,7 @@
 console.log("==================== HISTORY ====================");
 
 // ==================== Imports ====================
-import { toggleAll, getIDFromPC } from "./util2.js";
+import { toggleAll, getIDFromPC } from "./util/util2.js";
 console.log("Imported items from \"./util2.js\"");
 
 // ==================== Exports ====================

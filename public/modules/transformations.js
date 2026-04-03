@@ -1,7 +1,7 @@
 console.log("==================== TRANSFORMATIONS ====================");
 
 // ==================== Imports ====================
-import { MAX_SEMITONES, UNORDERED, formatOutput } from "./util.js";
+import { MAX_SEMITONES, UNORDERED, formatOutput } from "./util/util.js";
 import { showMultiple } from "./loadSettings.js";
 import { getTn, getTnI } from "./deep.js";
 import { getPCS } from "./index.js";

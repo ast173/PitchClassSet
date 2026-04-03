@@ -55,6 +55,7 @@ header h1 {
 header p {
     color: var(--subtitle-color);
     font-family: var(--font-mono);
+    font-variant-ligatures: none;
 }
 
 /* body */
@@ -94,6 +95,7 @@ body {
     background-color: var(--io-bg);
     
     font-family: var(--font-mono);
+    font-variant-ligatures: none;
     font-size: 1rem;
 }
 
@@ -128,7 +130,10 @@ body {
     height: 2rem;
     color: var(--btn-color);
     background-color: var(--btn-bg);
+    
     font-family: var(--font-mono);
+    font-variant-ligatures: none;
+
     border-radius: var(--radius-md);
     margin-top: 0.25rem;
 }

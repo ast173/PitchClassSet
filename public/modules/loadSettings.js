@@ -1,7 +1,7 @@
 console.log("==================== LOAD SETTINGS ====================");
 
 // ==================== Imports ====================
-import { setCheckboxStates } from "./util2.js";
+import { setCheckboxStates } from "./util/util2.js";
 import { calculate, setPCS } from "./index.js";
 console.log("Imported items from \"./util.js\"");
 console.log("Imported items from \"./util2.js\"");

@@ -37,4 +37,10 @@ check "./util.js" for definitions of PackingType and FormatingType
 FUNCTION VISIBILITY
 private means only used within its own .js file
 public means exported and used in other .js files
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+firebase serve
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+firebase deploy
 */

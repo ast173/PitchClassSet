@@ -1,9 +1,9 @@
 console.log("==================== INDEX ====================");
 
 // ==================== Imports ====================
-import { UNORDERED, NORMAL_ORDER, PRIME_FORM, IC_VECTOR, FORTE, RAHN, formatOutput } from "./util.js";
-import { getPCFromCheckbox, savePCS, saveInputText, setCheckboxStates } from "./util2.js";
-import { getForteNumber, getZMate, tryMatchForKnown } from "./maps.js";
+import { UNORDERED, NORMAL_ORDER, PRIME_FORM, IC_VECTOR, FORTE, RAHN, formatOutput } from "./util/util.js";
+import { getPCFromCheckbox, savePCS, saveInputText, setCheckboxStates } from "./util/util2.js";
+import { getForteNumber, getZMate, tryMatchForKnown } from "./util/maps.js";
 console.log("Imported items from \"./util.js\"");
 console.log("Imported items from \"./util2.js\"");
 console.log("Imported items from \"./maps.js\"");
