@@ -9,6 +9,9 @@ console.log("Imported items from \"./maps.js\"");
 // ==================== Exports ====================
 export { parseManualInput }; // to "./index.js"
 
+// ==================== HTML Elements ====================
+const input = document.getElementById("input");
+
 // ==================== MANUAL ====================
 // public function
 // parseManualInput() -> PCS

@@ -20,7 +20,7 @@ console.log("Imported items from \"./loadSettings.js\"");
 console.log("Imported items from \"./transformations.js\"");
 
 // ==================== Exports ====================
-export { calculate }; // to "./keyboard.js", "./loadSettings.js", "./eventListenersInit.js"
+export { calculate }; // to "./keyboard.js", "./loadSettings.js", "./eventListenersInit.js", "./history.js"
 export { setPCS }; // to "./loadSettings.js"
 export { getPCS }; // to "./keyboard.js", "./audio.js", "./transformations.js"
 export { clearAllPC };

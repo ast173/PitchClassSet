@@ -1,8 +1,8 @@
 console.log("==================== KEYBOARD ====================");
 
 // ==================== Imports ====================
-import { noteToPC } from "./util.js";
-import { toggle, toggleAll } from "./util2.js";
+import { noteToPC } from "./util/util.js";
+import { toggle, toggleAll } from "./util/util2.js";
 import { undo, redo, remember, rememberAll, getDifference } from "./history.js";
 import { calculate, getPCS } from "./index.js";
 import { onReset } from "./init.js";

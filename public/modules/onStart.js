@@ -43,4 +43,6 @@ firebase serve
 
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 firebase deploy
+
+Select-String -Path "public\modules\*.js" -Pattern "from.*[""']\.\/util"
 */

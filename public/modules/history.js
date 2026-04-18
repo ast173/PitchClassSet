@@ -3,6 +3,8 @@ console.log("==================== HISTORY ====================");
 // ==================== Imports ====================
 import { toggleAll, getIDFromPC } from "./util/util2.js";
 console.log("Imported items from \"./util2.js\"");
+import { calculate } from "./index.js";
+console.log("Imported items from \"./index.js\"");
 
 // ==================== Exports ====================
 export { remember, rememberAll, getDifference }; // to "./index.js", "./keyboard.js"
@@ -29,6 +31,7 @@ function undo() {
     pointer--;
     loadHistoryAtPointer();
     logHistory();
+    calculate();
 }
 
 // public function
@@ -41,6 +44,7 @@ function redo() {
     loadHistoryAtPointer();
     pointer++;
     logHistory();
+    calculate();
 }
 
 // private function

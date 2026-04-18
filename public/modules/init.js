@@ -89,7 +89,6 @@ function onReset() {
 function switchToComplement() {
     for (let pc = 0; pc < MAX_SEMITONES; pc++) {
         toggle(pc);
-        calculate(false);
     }
     rememberAll([...Array(MAX_SEMITONES).keys()]);
 

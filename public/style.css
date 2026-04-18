@@ -82,6 +82,8 @@ body {
     border: 1px solid var(--card-border);
     box-shadow: var(--card-shadow);
     padding: 1.25rem 1.25rem;
+
+    width: 30rem;
 }
 
 .card:hover {
@@ -232,7 +234,7 @@ div.trans-group {
 }
 
 #Tn-output, #TnI-output {
-    width: 300px;
+    width: 25rem;
     resize: none;
 }
 
@@ -243,7 +245,12 @@ div.selector-row {
 }
 
 /* other */
-div.btn-row {
+.card.bottom {
+    display: flex;
+    justify-content: center;
+}
+
+div.bottom-row {
     display: flex;
     gap: 0.3rem;
 }

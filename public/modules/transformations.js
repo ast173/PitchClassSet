@@ -72,7 +72,7 @@ function setTextAlign(align) {
     TnI_output.style.textAlign = align;
 }
 
-const TRANS_SPACES = 9;
+const TRANS_SPACES = 4;
 // private function
 // resizeHeight(PC) -> String
 function getTextStart(pc) {
