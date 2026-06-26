@@ -23,8 +23,11 @@ let playing = false;
 // private function
 // loadPiano() -> undefined
 async function loadPiano() {
+    const canPlayMp3 = audioCtx.createBufferSource && new Audio().canPlayType("audio/mpeg") !== "";
+    const extension = canPlayMp3 ? "mp3" : "wav";
+
     for (let pc of [...Array(MAX_SEMITONES).keys()]) {
-        const file = await fetch(`/audio/pc_${pc}.mp3`);
+        const file = await fetch(`/audio/pc_${pc}.${extension}`);
         const arrayBuffer = await file.arrayBuffer();
         audioBuffers[pc] = await audioCtx.decodeAudioData(arrayBuffer);
     }
@@ -72,9 +75,9 @@ async function playBroken(pcs) {
     }
 }
 
-await loadPiano();
 play_btn.addEventListener("click", async () => {
     audioCtx.resume();
+    await loadPiano();
     
     if (playing) return;
     playing = true;

@@ -22,6 +22,7 @@ console.log("12. EVENT LISTENERS INIT");
 
 /*
 TODO: show unique transpositions/inversions
+TODO: mobile phone
 TODO: add supersets and subsets
 TODO: add 'is subset of' options
 the datatype TODO:HTML needs refinement
