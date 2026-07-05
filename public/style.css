@@ -89,7 +89,7 @@ body {
     margin-bottom: 1.25rem;
     border: 1px solid var(--card-border);
     box-shadow: var(--card-shadow);
-    padding: 1.25rem 1.25rem;
+    padding: 1.25rem;
 }
 
 .card {
@@ -229,14 +229,14 @@ body {
 }
 
 /* INPUT SECTION */
-div.btn-grid {
+.btn-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.3rem;
     justify-items: center;
 }
 
-div.input-group {
+.input-group {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -266,7 +266,7 @@ div.input-group {
 }
 
 /* ========== TRANSFORMATIONS CARD ========== */
-div.trans-group {
+.trans-group {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -277,7 +277,7 @@ div.trans-group {
     resize: none;
 }
 
-div.selector-row {
+.selector-row {
     display: flex;
     gap: 0.3rem;
     margin-bottom: 0.25rem;
@@ -289,17 +289,24 @@ div.selector-row {
     justify-content: center;
 }
 
-div.bottom-row {
+.bottom-row {
     display: flex;
     gap: 0.3rem;
 }
 
-div.trans-group label {
+.trans-group label {
     margin-bottom: 0.25rem;
 }
 
 /* ========== MOBILE ADJUSTMENTS ========== */
 @media (max-width: 520px) {
+    .main {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0;
+        background-color: var(--card-bg);
+    }
+
     .card {
         width: 100%;
         box-sizing: border-box;
@@ -314,6 +321,11 @@ div.trans-group label {
         width: 2.5rem;
         height: 2.5rem;
         font-size: large;
+    }
+
+    .black-keys .pc-btn {
+        line-height: 310%;
+        font-size: small;
     }
 
     .btn {
