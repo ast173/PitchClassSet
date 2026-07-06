@@ -8,7 +8,8 @@
     --pc-btn-hover-bg: linear-gradient(#d7d7c6, #bcb8b3);
     --pc-btn-active-color: #636465;
     --pc-btn-active-bg: linear-gradient(#c0bfad, #aaa7a2);
-    --pc-btn-box-shadow: 0 4px 0 #acaca7, 0 6px 8px rgba(176, 167, 160, 0.4);
+    --pc-btn-box-shadow: 0 4px 0 #acaca7;
+    --pc-btn-box-shadow-active: 0 2px 0 #acaca7;
 
     --pc-btn-bk-color: #cbcaca;
     --pc-btn-bk-bg: linear-gradient(#000119, #24282f);
@@ -16,20 +17,21 @@
     --pc-btn-hover-bk-bg: linear-gradient(#282839, #43474c);
     --pc-btn-active-bk-color: #9c9b9a;
     --pc-btn-active-bk-bg: linear-gradient(#3f4052, #55585d);
-    --pc-btn-box-bk-shadow: 0 4px 0 #535358, 0 6px 8px rgba(176, 167, 160, 0.4);
+    --pc-btn-box-bk-shadow: 0 4px 0 #535358;
+    --pc-btn-box-bk-shadow-active: 0 2px 0 #535358;
 
     --title-color: #fffdf2;
     --subtitle-color: #929077;
 
     --body-bg: #423b34;
-    --main-bg: #645e51;
+    --main-bg: #6f6758;
 
     --card-color: #343535;
     --card-bg: #6f6758;
     --card-bg-hover: #79705f;
-    --card-border: rgba(255,255,255,0.08);
-    --card-shadow: 0 4px 24px rgba(75, 73, 70, 0.4), 0 1px 4px rgba(0,0,0,0.3);
-    --card-shadow-hover: 0 8px 32px rgba(109, 105, 93, 0.5)px rgba(0,0,0,0.35);
+    --card-border: 1px solid rgba(255, 255, 255, 0.08);
+    --card-shadow: 0 4px 24px rgba(75, 73, 70, 0.4), 0 1px 4px rgba(0, 0, 0, 0.3);
+    --card-shadow-hover: 0 8px 32px rgba(109, 105, 93, 0.5)px rgba(0, 0, 0, 0.35);
 
     --btn-color: #fffdf2;
     --btn-bg: #303232;
@@ -38,21 +40,32 @@
     --io-bg: #303339;
     --io-color: #faf5e9;
     --io-focus-border-color: #ede3b7;
-    --io-box-shadow: 0 0 0 3px rgba(37, 32, 111, 0.2);
+    --io-box-shadow: 0 0 0 4px rgba(37, 32, 111, 0.2);
 
     --radius-sm: 6px;
     --radius-md: 12px;
     --radius-lg: 18px;
 
-    --border-bottom: 2px solid rgba(255,255,255,0.06);
+    --border-bottom: 2px solid rgba(255, 255, 255, 0.06);
+
+    /* settings only */
+    --red: #6b2525;
+    --green: #41642c;
 }
 
+/* ========== HEADER ========== */
 h1 {
     color: var(--title-color);
     border-bottom: var(--border-bottom);
     margin-bottom: 1rem;
 }
 
+h3 {
+    color: var(--title-color);
+    margin: 1rem 0;
+}
+
+/* ========== BODY ========== */
 body {
     display: flex;
     flex-direction: column;
@@ -61,11 +74,16 @@ body {
 
     background: var(--body-bg);
     min-height: 100vh;
-    padding: 2.5rem 1.5rem 4rem;
+    padding: 2.5rem;
     background-color: var(--body-bg);
 }
 
-/* inputs */
+.seperator {
+    border-top: var(--border-bottom);
+    margin-top: 1rem;
+}
+
+/* INPUTS */
 .btn {
     width: 9rem;
     height: 2rem;
@@ -79,7 +97,7 @@ body {
     background-color: var(--btn-bg-hover);
 }
 
-/* cards */
+/* CARD */
 .card {
     background-color: var(--card-bg);
     color: var(--card-color);
@@ -87,19 +105,9 @@ body {
 
     border-radius: var(--radius-lg);
     margin-bottom: 1.25rem;
-    border: 1px solid var(--border-card);
-    box-shadow: var(--shadow-card);
-    padding: 1.25rem 1.25rem;
+    border: var(--border-card);
+    padding: 1.25rem;
     padding-top: 0;
-}
-
-.card:hover {
-    box-shadow: var(--shadow-card-hover);
-    background-color: var(--card-bg-hover);
-}
-
-.card h3 {
-    color: var(--title-color);
 }
 
 .card label.text {
@@ -111,7 +119,8 @@ body {
     grid-template-columns: 1fr auto auto;
     align-items: center;
     width: 100%;
-    max-width: 15em
+    max-width: 15em;
+    margin: 1rem;
 }
 
 
@@ -126,7 +135,7 @@ body {
 
 
 
-/* toggle sliders */
+/* TOGGLE SLIDERS */
 .card input[type="checkbox"].toggle {
     opacity: 0;
     width: 0;
@@ -147,7 +156,7 @@ body {
     border-radius: 1em;
     margin-right: 0.25em;
 
-    background-color: var(--input-bg);
+    background-color: var(--io-bg);
 }
 
 .card input[type="checkbox"].toggle + label::after {
@@ -159,13 +168,14 @@ body {
     height: 0.9em;
     border-radius: 1em;
 
-    background-color: #6b2525;
+    color: var(--io-color);
+    background-color: var(--red);
     transition: 200ms ease-in-out;
 }
 
 .card input[type="checkbox"].toggle:checked + label::after {
     transform: translateX(100%);
-    background-color: #41642c
+    background-color: var(--green);
 }
 
 /* variables */
@@ -214,12 +224,6 @@ body {
     #Tn-output, #TnI-output {
         width: 100%;
         box-sizing: border-box;
-    }
-
-    .pc-btn {
-        width: 2.5rem;
-        height: 2.5rem;
-        font-size: large;
     }
 
     .btn {
